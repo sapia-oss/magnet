@@ -1,0 +1,255 @@
+<sapia:page title="core:path" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform">
+  <sapia:sect1 title="core:path">
+    <sapia:section>
+      <sapia:path name="home" href="../../../../home.html" />
+      <sapia:path name="projects" />
+      <sapia:path name="magnet" href="../../home.html" />
+      <sapia:path name="manual" href="../home.html#Core%20Elements" />
+    </sapia:section>
+    <toc />
+        
+    <sapia:sect2 title="Overview">
+	    <p>The <sapia:command>&lt;path&gt;</sapia:command> element can be use to define a
+	    list of resources that are used in a given context (defining the classpath of a
+	    java program for example). So the <sapia:command>&lt;path&gt;</sapia:command> element
+	    is a nested element that is always used in a given context. To select resources from
+	    a path you can define a protocol to use. Magnet provides two built-in protocols: file
+	    and http. The first one allows you to select files from the file system and the other
+	    gives the opportunity to access remote files that are available on a web server.
+	    </p>
+	
+	    <p>The attributes of the <sapia:command>&lt;path&gt;</sapia:command> element allow
+	    you to define the location of the resources to select. You can also define the sorting
+	    order of the selected resources. Finally, using <sapia:command>&lt;include&gt;</sapia:command>
+	    and <sapia:command>&lt;exclude&gt;</sapia:command> child elements you can refine the
+	    resources that are selected using pattern matching.
+	    </p>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Arguments">
+      <sapia:table>
+        <sapia:th>Name</sapia:th>
+        <sapia:th>Description</sapia:th>
+        <sapia:th>Required</sapia:th>
+        <sapia:th>Interpolation</sapia:th>
+        <tr>
+          <td>protocol</td>
+          <td>Defines the protocol to use to select the desired resource. The
+          two provided protocols with Magnet are "file" and "http". The default
+          protocol, if not provided, is always "file".</td>
+          <td>no</td>
+          <td>yes</td>
+        </tr>
+        <tr>
+          <td>host</td>
+          <td>Defines the hosts where the resources resides using the format
+          [machine][:port] where the port number is optional. The default
+          host used, if not provided, is always "localhost".</td>
+          <td>no</td>
+          <td>yes</td>
+        </tr>
+        <tr>
+          <td>directory</td>
+          <td>Defines the root directory of this path element.</td>
+          <td>no</td>
+          <td>yes</td>
+        </tr>
+        <tr>
+          <td>sorting</td>
+          <td>Defines the sort order that will be use to define the list of resources
+          that are selected by the path element. The two possible values are "ascending"
+          and "descending". If the value is not provided the order in which the resources
+          are retrieve is keep as the sorting order.</td>
+          <td>no</td>
+          <td>no</td>
+        </tr>
+      </sapia:table>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Rendering Operations">
+		  <p>When a <sapia:command>&lt;path&gt;</sapia:command> element is rendered, it performs the following
+		  operations in order:
+		    <ol>
+		      <li>Resolve the protocol, host and directory attributes (using variable interpolation).</li>
+		      <li>Renders all the <sapia:command>&lt;include&gt;</sapia:command> child elements, if any.</li>
+		      <li>Renders all the <sapia:command>&lt;exclude&gt;</sapia:command> child elements, if any.</li>
+		      <li>Creates a protocol handler for the specified protocol.</li>
+		      <li>Resolves the resources of the path using the protocol handler.</li>
+		    </ol>
+		  </p>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Examples">
+      <p>This first example creates a path element that uses the "file" protocol to
+      select all the jar files from the directory <sapia:command>${user.dir}/lib</sapia:command>:
+      </p>
+      <sapia:code><![CDATA[
+<core:magnet
+        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+        name="PathExample1"
+        description="This is a first path example.">
+...
+    <core:path directory="${user.dir}/lib">
+        <core:include pattern="*.jar" />
+    </core:path>
+...
+</core:magnet>]]></sapia:code>
+
+      <p>This second example shows a path element that uses the default "file" protocol
+      to select all jar files from the <sapia:command>${user.dir}/lib</sapia:command>
+      directory except the file <sapia:command>test.jar</sapia:command>. All the selected
+      files will be sorting in a descending alphabetical order:
+      </p>
+      <sapia:code><![CDATA[
+<core:magnet
+        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+        name="PathExample2"
+        description="This is a second path example.">
+...
+    <core:path directory="${user.dir}/lib"
+               sorting="descending">
+        <core:include pattern="*.jar" />
+        <core:exclude pattern="test.jar" />
+    </core:path>
+...
+</core:magnet>]]></sapia:code>
+
+		  <p>In this third example we see a path element that uses the "http" protocol to connect
+		  on the web server <sapia:command>myserver</sapia:command> on the port 8080 to retrieve
+		  the files <sapia:command>interfaces.jar</sapia:command> and <sapia:command>utils.jar</sapia:command>
+		  from the <sapia:command>commonlibs/</sapia:command> context of the web server. For people
+		  that are used to HTTP protocol, it is equivalent to doing get requetst on the URLs
+		  <sapia:command>http://myserer:8080/commonlibs/interfaces.jar</sapia:command> and
+		  <sapia:command>http://myserer:8080/commonlibs/utils.jar</sapia:command>.
+		  </p>
+		  <sapia:code><![CDATA[
+<core:magnet
+        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+        name="PathExample2"
+        description="This is a second path example.">
+...
+    <core:path protocol="http"
+               host="myserver:8080"
+               directory="commonlibs/">
+        <core:include pattern="interfaces.jar" />
+        <core:include pattern="utils.jar" />
+    </core:path>
+...
+</core:magnet>]]></sapia:code>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Protocol Handlers">
+		  <p>To be able to retrieves the resources specified in the <sapia:command>&lt;path&gt;</sapia:command> element,
+        Magnet uses an entity called protocol handler. It is represented by the Java interface 
+        <sapia:class>ProtocolHandlerIF</sapia:class> and it is responsible of retrieving a collection of
+        resources givin the path's configuration. Magnet comes with two implementations of this interface:
+        the <sapia:class>HttpProtocolHandler</sapia:class> (supports http URL protocol) and the <sapia:class>FileProtocolHandler</sapia:class>
+        (supports file URL protocol).
+		  </p>
+
+      <sapia:note>If you whish to create your own implementation of a protocol handler read the section about
+      the  <sapia:command>&lt;protocolHandlerDef&gt;</sapia:command> element in this manual. It explains how can
+      use your protocol handler in Magnet and how to associate you implementation to a custom protocol "type".</sapia:note>
+
+      <sapia:sect3 title="File">
+        <p>This is the default protocol handler when none is specified in a <sapia:command>&lt;path&gt;</sapia:command> element.
+        The file protocol handler contains some specific logic that pertains to the nature of using the file system
+        to retrieve resources. Here is the list of the these special rules:
+          <ul>
+            <li>The directory attribute can be absolute or can be relative to the value of the <sapia:command>${user.dir}</sapia:command>
+              system property. For more detail see the documentation of the <sapia:class>java.io.File</sapia:class> class.</li>
+            <li>If the <sapia:command>&lt;path&gt;</sapia:command> element contains <b>no</b> <sapia:command>&lt;include&gt;</sapia:command>
+              sub element, then it will select the directory itself has the resource. It is useful if one wants to select a
+              directory that contains .class files.</li>
+            <li>To resolve the patterns of the <sapia:command>&lt;include&gt;</sapia:command> and <sapia:command>&lt;exclude&gt;</sapia:command>
+              elements, magnet uses an internal class of Ant called <sapia:class>DirectoryScanner</sapia:class>. Basically a "*" matches zero
+              or more characters and a "?" matches one character. It also defines the "**" pattern that match multiple directory levels. For
+              more detail see the <a href="http://ant.apache.org/manual/dirtasks.html" target="ant_manual">ant manual</a>.</li>
+          </ul>
+        </p>
+      </sapia:sect3>
+
+      <sapia:sect3 title="HTTP">
+        <p>The HTTP protocol allow one to retrieve resources from a web server. Here is the list of special rules that applies:
+          <ul>
+            <li>If the host attribute of the <sapia:command>&lt;path&gt;</sapia:command> element is not specified this protocol
+              handler will connect on the localhost on the port 80.</li>
+            <li>Pattern macthing <b>is not available</b> to retrieve HTTP resources. Each file must be specified using 
+              <sapia:command>&lt;include&gt;</sapia:command> elements.</li>
+          </ul>
+        </p>
+      </sapia:sect3>
+		</sapia:sect2>
+
+	  <sapia:sect2 title="Nested Elements">
+      <sapia:sect3 title="Include">
+        <p>The <sapia:command>&lt;Include&gt;</sapia:command> element defines a resource to select in a
+          <sapia:command>&lt;path&gt;</sapia:command> element. It's pattern attribute is used to specify
+          the name of the resource. A pattern matching expression can be use instead of a specific name to
+          select more than one resource.
+        </p>
+
+        <sapia:note>Pattern matching evaluation is specific to the protocol used.</sapia:note>
+
+        <sapia:sect4 title="Arguments">
+          <sapia:table>
+            <sapia:th>Name</sapia:th>
+            <sapia:th>Description</sapia:th>
+            <sapia:th>Required</sapia:th>
+            <sapia:th>Interpolation</sapia:th>
+            <tr>
+              <td>pattern</td>
+              <td>The name of the resource to include or the pattern matching expression of the resources to include.</td>
+              <td>yes</td>
+              <td>yes</td>
+            </tr>
+          </sapia:table>
+        </sapia:sect4>
+
+        <sapia:sect4 title="Rendering Operations">
+          <p>When a <sapia:command>&lt;Include&gt;</sapia:command> element is rendered, it performs the following
+          operations in order:
+            <ol>
+              <li>Resolve the pattern attribute (using variable interpolation).</li>
+            </ol>
+          </p>
+        </sapia:sect4>
+      </sapia:sect3>
+
+      <sapia:sect3 title="Exclude">
+        <p>The <sapia:command>&lt;Exclude&gt;</sapia:command> element defines a resource to exclude from a
+          <sapia:command>&lt;path&gt;</sapia:command> element. It's pattern attribute is used to specify
+          the name of the resource. A pattern matching expression can be use instead of a specific name to
+          select more than one resource.
+        </p>
+
+        <sapia:note>Pattern matching evaluation is specific to the protocol used.</sapia:note>
+
+        <sapia:sect4 title="Arguments">
+          <sapia:table>
+            <sapia:th>Name</sapia:th>
+            <sapia:th>Description</sapia:th>
+            <sapia:th>Required</sapia:th>
+            <sapia:th>Interpolation</sapia:th>
+            <tr>
+              <td>pattern</td>
+              <td>The name of the resource to exclude or the pattern matching expression of the resources to exclude.</td>
+              <td>yes</td>
+              <td>yes</td>
+            </tr>
+          </sapia:table>
+        </sapia:sect4>
+
+        <sapia:sect4 title="Rendering Operations">
+          <p>When a <sapia:command>&lt;Exclude&gt;</sapia:command> element is rendered, it performs the following
+          operations in order:
+            <ol>
+              <li>Resolve the pattern attribute (using variable interpolation).</li>
+            </ol>
+          </p>
+        </sapia:sect4>
+      </sapia:sect3>
+
+	  </sapia:sect2>
+  </sapia:sect1>
+</sapia:page>

@@ -1,0 +1,71 @@
+<sapia:page title="system:environment" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform">
+  <sapia:sect1 title="system:environment">
+    <sapia:section>
+      <sapia:path name="home" href="../../../../home.html" />
+      <sapia:path name="projects" />
+      <sapia:path name="magnet" href="../../home.html" />
+      <sapia:path name="manual" href="../home.html#System%20Extension" />
+    </sapia:section>
+    <toc />
+        
+    <sapia:sect2 title="Overview">
+	    <p>The <sapia:command>&lt;Environment&gt;</sapia:command> element defines a group
+	    of variables that is passed to the system launcher as envrionment variables. By itself
+      this element does not define any variable but rather contains a list of
+      <sapia:command>&lt;Variable&gt;</sapia:command> elements. The main functionnality of
+      this element is to associate all the variables it contains into group to form logical
+      group of variable.
+	    </p>
+      
+      <p>Each envrionment can be assigned an identifier. This id is usefull when one create different
+        groups of environment variables to 1) identify each environment element and 2) to linked two 
+        environment elements together in a parent-child relationship (somewhat like inheritence). Under
+        this scenario, the child environment can override variables that are define in the parent
+        envrionment.
+      </p>
+      
+      <p><sapia:command>&lt;Environment&gt;</sapia:command> elements can be define in two different
+        places in a magnet: under the root <sapia:command>&lt;Magnet&gt;</sapia:command> element or
+        within <sapia:command>&lt;Profile&gt;</sapia:command> elements of a <b>system launcher</b>.
+        In the first case, the environment variables mainly allow one to categorize or to define
+        global sets of variables. In the second case, the environment variables are used by the
+        system launcher when the given profile is execute. One can then refer to global envrionment
+        definitions.
+      </p>
+    </sapia:sect2>
+        
+    <sapia:sect2 title="Arguments">
+		  <sapia:table>
+		    <sapia:th>Name</sapia:th>
+		    <sapia:th>Description</sapia:th>
+		    <sapia:th>Required</sapia:th>
+		    <sapia:th>Interpolation</sapia:th>
+		    <tr>
+		      <td>id</td>
+		      <td>An identifier for this environment variables definition.</td>
+		      <td>no</td>
+		      <td>yes</td>
+		    </tr>
+		    <tr>
+		      <td>parent</td>
+		      <td>The id of the parent environment of this environment.</td>
+		      <td>no</td>
+		      <td>yes</td>
+		    </tr>
+		  </sapia:table>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Rendering Operations">
+		  <p>When a <sapia:command>&lt;Parameters&gt;</sapia:command> element is rendered, it performs the following
+		  operations in order:
+		    <ol>
+          <li>Resolve the id and the parent attributes (using variable interpolation).</li>
+		      <li>Renders each variable definition it contains.</li>
+		    </ol>
+		  </p>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Examples">
+    </sapia:sect2>
+  </sapia:sect1>
+</sapia:page>

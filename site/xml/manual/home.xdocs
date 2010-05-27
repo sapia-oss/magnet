@@ -1,0 +1,59 @@
+<sapia:page title="Magnet Reference Manual" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform">
+  <sapia:refreshMenu page="leftmenu.html" />
+  <sapia:sect1 title="Magnet Reference Manual">
+    <sapia:section>
+      <sapia:path name="home" href="../../../home.html" />
+      <sapia:path name="projects" />
+      <sapia:path name="magnet" href="../home.html" />
+    </sapia:section>
+
+    <toc/>
+
+    <sapia:sect2 title="Overview">
+      <p>This manual provides technical information about the different elements of Magnet. Each
+      element is described in detail, with examples. Magnet provides a mechanism to add functionnalities 
+      to it using extensions. This document first describes the core elements of Magnet; these 
+      elements are the heart and soul of Magnet. The two following sections discuss the two extensions 
+      that are provided with the Magnet distribution ; the Java extension, that allows to start Java programs, 
+      and the system extension, that allows to start system processes.
+      </p>
+
+      <p>All the Magnet element must be associated to the following XML namespace:
+      <sapia:command>http://schemas.sapia-oss.org/magnet/core/</sapia:command>. The usage
+      of namespace prefix is up to the user, as long as it follows the rules defined by
+      the XML namespace definition.</p>
+
+      <sapia:note>This reference manual is under construction so you might end up on empty pages.
+      We provide this manual as a sneak preview. Please, do not be to severe on the grammar...;-)</sapia:note>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Core Elements">
+      <ul>
+        <li><a href="core/magnet.html">magnet</a></li>
+        <li><a href="core/parameters.html">parameters</a></li>
+        <li><a href="core/path.html">path</a></li>
+        <li><a href="core/protocolHandlerDef.html">protocolHandlerDef</a></li>
+        <li><a href="core/script.html">script</a></li>
+        <li><a href="core/scriptHandlerDef.html">scriptHandlerDef</a></li>
+        <li><a href="core/launcher.html">launcher</a></li>
+        <li><a href="core/launcherHandlerDef.html">launcherHandlerDef</a></li>
+      </ul>
+    </sapia:sect2>
+      
+    <sapia:sect2 title="System Extension">
+      <ul>
+        <li><a href="system/environment.html">environment</a></li>
+        <li><a href="system/launcher.html">launcher</a></li>
+      </ul>
+    </sapia:sect2>
+
+
+    <sapia:sect2 title="Java Extension">
+      <ul>
+        <li><a href="java/codebase.html">codebase</a></li>
+        <li><a href="java/classpath.html">classpath</a></li>
+        <li><a href="java/launcher.html">launcher</a></li>
+      </ul>
+    </sapia:sect2>
+  </sapia:sect1>
+</sapia:page>
