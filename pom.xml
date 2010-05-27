@@ -103,6 +103,13 @@
 
     <dependency>
       <groupId>org.sapia</groupId>
+      <artifactId>sapia_ubik</artifactId>
+      <version>2.5.5</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
       <artifactId>sapia_console</artifactId>
       <version>1.4</version>
     </dependency>
@@ -116,7 +123,15 @@
     <dependency>
       <groupId>org.sapia</groupId>
       <artifactId>sapia_corus_iop</artifactId>
+      <classifier>api</classifier>
       <version>2.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_corus_iop</artifactId>
+      <version>2.0-SNAPSHOT</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
