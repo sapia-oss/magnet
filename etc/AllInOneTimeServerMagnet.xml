@@ -1,0 +1,86 @@
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/" extends="etc/GenericUbikMagnet.xml"
+        name="AllinOneTimeServer" description="This magnet start all the processes to run the JNDI and time ever as well as the client">
+
+  <!-- Define a java launcher that will start the Ubik JNDI server. -->
+  <launcher type="java" name="jndiServer" mainClass="org.sapia.ubik.rmi.naming.remote.JNDIServer"
+            args="${jndi.portNumber} ${jndi.domainName}" default="remote" isDaemon="true" waitTime="5000">
+
+      <!-- Defines the example profile of this launcher. -->
+      <profile name="remote">
+        
+          <!-- Defines the example message to send to the java app. -->
+          <parameters>
+              <param name="jndi.domainName" value="sapia"/>
+          </parameters>
+
+          <!-- Defines the classpath of the ubik example jars. -->
+          <classpath>
+            <path directory="${magnet.home}/lib/examples">
+              <include pattern="*.jar" />
+            </path>
+          </classpath>
+      </profile>
+  </launcher>
+
+  <!-- Define a java launcher that will start the stateless time server. -->
+  <launcher type="java" name="timeServer" mainClass="org.sapia.ubik.rmi.examples.time.StatelessTimeServer"
+            args="${timeServer.jndiUrlProvider} ${timeServer.jndiInitialFactory}" default="colocated" isDaemon="true" waitTime="5000">
+
+      <!-- Defines the example profile of this launcher. -->
+      <profile name="colocated">
+          <parameters>
+            <param name="timeServer.jndiUrlProvider" value="ubik://localhost:${jndi.portNumber}" />
+            <param name="timeServer.jndiInitialFactory"
+                   value="org.sapia.ubik.rmi.naming.remote.RemoteInitialContextFactory" />
+          </parameters>
+        
+          <!-- Defines the classpath of the ubik example jars. -->
+          <classpath parent="ubik">
+            <path directory="${magnet.home}/lib/examples">
+              <include pattern="*example*.jar" />
+            </path>
+          </classpath>
+      </profile>
+
+      <!-- Defines the example profile of this launcher. -->
+      <profile name="remote">
+          <parameters>
+            <param name="timeServer.jndiUrlProvider" value="ubik://localhost:${jndi.portNumber}" />
+            <param name="timeServer.jndiInitialFactory"
+                   value="org.sapia.ubik.rmi.naming.remote.RemoteInitialContextFactory" />
+          </parameters>
+        
+          <!-- Defines the classpath of the ubik example jars. -->
+          <classpath>
+            <path directory="${magnet.home}/lib/examples">
+              <include pattern="*.jar" />
+            </path>
+          </classpath>
+      </profile>
+  </launcher>
+
+  <!-- Define a java launcher that will start the time client application. -->
+  <launcher type="java" name="timeClient" mainClass="org.sapia.ubik.rmi.examples.time.EndlessTimeClient"
+            default="colocated" waitTime="5000">
+
+      <!-- Defines the example profile of this launcher. -->
+      <profile name="colocated">
+          <!-- Defines the classpath of the ubik example jars. -->
+          <classpath parent="ubik">
+            <path directory="${magnet.home}/lib/examples">
+              <include pattern="*example*.jar" />
+            </path>
+          </classpath>
+      </profile>
+
+      <!-- Defines the example profile of this launcher. -->
+      <profile name="remote">
+          <!-- Defines the classpath of the ubik example jars. -->
+          <classpath>
+            <path directory="${magnet.home}/lib/examples">
+              <include pattern="*.jar" />
+            </path>
+          </classpath>
+      </profile>
+  </launcher>
+</magnet>        

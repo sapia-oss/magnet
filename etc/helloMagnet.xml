@@ -1,0 +1,107 @@
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+        name="HelloMagnet" description="A very simple Hello application">
+
+  <!-- Use a small script to make sure the magnet.home property exists -->
+<!--
+  <script type="bsh" isAbortingOnError="true">
+    if (System.getProperty("magnet.home") == null) {
+      System.setProperty("magnet.home", System.getProperty("user.dir"));
+    }
+  </script>
+-->  
+  
+  <!-- Define the global msg property that will added to the system property -->
+  <parameters>
+    <param name="msg" value="foo-bar" scope="system"/>
+    <param name="magnet.home" value="${user.dir}" unless="magnet.home" scope="system"/>
+    <param name="msg2" value="${magnet.home}" if="magnet.home" scope="system"/>
+  </parameters>
+    
+        
+  <!-- Define a classpath using hello_cp as identifier. -->
+  <classpath id="hello_cp">
+    
+    <!-- The path will contain the files that matche the provided pattern. -->
+    <path directory="${magnet.home}">
+      <include pattern="**/sapia_magnet_examples*.jar" />
+    </path>
+    <path directory="lib">
+      <include pattern="**/*.jar" />
+    </path>
+    
+  </classpath>
+
+  
+  <!-- Define a codebase - it will set the java.rmi.server.codebase system property -->
+  <codebase>
+    <path protocol="http" host="localhost:8080" directory="/config">
+      <include pattern="basic_configuration.jar" />
+    </path>
+  </codebase>
+    
+    
+  <!-- Define a java launcher that will start the hello world application. -->
+  <launcher type="java" name="helloWorld" mainClass="org.sapia.magnet.examples.HelloWorldApp"
+            args="hello ${msg}" default="fallback2" isDaemon="false" waitTime="2000">
+
+      <!-- Defines the english profile of this launcher. -->
+      <profile name="english">
+        
+          <!-- Defines the english message to send to the java app. -->
+          <parameters>
+              <param name="msg" value="world"/>
+          </parameters>
+
+          <!-- Defines the classpath of the java app to start. -->
+          <classpath parent="hello_cp" />
+      </profile>
+      
+      <!-- Defines the spanish profile of this launcher. -->
+      <profile name="spanish">
+
+          <!-- Defines the spanish message to send to the java app. -->
+          <parameters>
+              <param name="msg" value="el mundo" />
+          </parameters>
+
+          <!-- Defines the classpath of the java app to start. -->
+          <classpath parent="hello_cp"/>      
+      </profile>
+      
+      <!-- Defines the french profile of this launcher. -->
+      <profile name="french">
+
+          <!-- Defines the french message to send to the java app. -->
+          <parameters>
+              <param name="msg" value="le monde" />
+          </parameters>
+
+          <!-- Defines the classpath of the java app to start. -->
+          <classpath parent="hello_cp"/>
+      </profile>
+      
+      <!-- Defines the fallback profile of this launcher. -->
+      <profile name="fallback">
+          <!-- Defines the classpath of the java app to start. -->
+          <classpath parent="hello_cp" />
+      </profile>
+
+  </launcher>
+
+  <!-- Define a java launcher that will start the hello world application. -->
+  <launcher type="java" name="helloWorld2" mainClass="org.sapia.magnet.examples.HelloWorldApp"
+            args="only an english message" isDaemon="false" waitTime="2000" default="dev">
+
+      <!-- Defines the english profile of this launcher. -->
+      <profile name="english">
+        
+          <!-- Defines the english message to send to the java app. -->
+          <parameters>
+              <param name="msg" value="world"/>
+          </parameters>
+
+          <!-- Defines the classpath of the java app to start. -->
+          <classpath parent="hello_cp" />
+      </profile>
+  </launcher>
+</magnet>        

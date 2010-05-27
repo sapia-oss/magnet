@@ -1,0 +1,29 @@
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+        name="GenericUbik" description="Defines global parameters for Ubik examples">
+
+  <!-- Use a small script to make sure the magnet.home property exists -->
+  <script type="bsh" isAbortingOnError="true">
+    if (System.getProperty("magnet.home") == null) {
+      System.setProperty("magnet.home", System.getProperty("user.dir"));
+    }
+  </script>
+
+  <parameters>
+    <!-- Define the global jndi.domainName property -->
+    <param name="jndi.portNumber" value="1099" />
+
+    <!-- Define the global ubik.rmi.log.level property that will, once exported to
+         the system properties tell the Ubik runtime to use the debug log level -->
+    <param name="ubik.rmi.log.level" value="warning" scope="system" />
+  </parameters>
+
+  <!-- Defines the classpath of the ubik example jars. -->
+  <classpath id="ubik">
+    <!-- The path will contain the files that matche the provided pattern. -->
+    <path directory="${magnet.home}/lib/examples">
+      <include pattern="*.jar" />
+      <exclude pattern="*example*.jar" />
+    </path>
+  </classpath>
+
+</magnet>        
