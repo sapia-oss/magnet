@@ -1,0 +1,241 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <name>Sapia Magnet</name>
+  <description>Magnet allows launching a Java applications from the command-line in a generic way</description>
+  <url>http://www.sapia-oss.org/projects/corus/index.html</url>
+  <groupId>org.sapia</groupId>
+  <artifactId>sapia_magnet</artifactId>
+  <version>2.0-SNAPSHOT</version>
+
+  <organization>
+    <name>Sapia OSS</name>
+    <url>http://www.sapia-oss.org</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>yduchesne</id>
+      <name>Yanick Duchesne</name>
+      <email>yd@sapia-oss.org</email>
+      <url>http://www.sapia-oss.org</url>
+      <organization>Sapia</organization>
+      <organizationUrl>http://www.sapia-oss.org</organizationUrl>
+      <roles>
+        <role>architect</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>jcdesrochers</id>
+      <name>Jean-Cedric Desrochers</name>
+      <email>jc@sapia-oss.org</email>
+      <url>http://www.sapia-oss.org</url>
+      <organization>Sapia</organization>
+      <organizationUrl>http://www.sapia-oss.org</organizationUrl>
+      <roles>
+        <role>architect</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <repositories>
+    <repository>
+      <id>java.net</id>
+      <name>Java.net Maven2 Repository</name>
+      <layout>default</layout>
+      <url>http://download.java.net/maven/2</url>
+    </repository>
+  </repositories>
+
+  <scm>
+    <connection>scm:svn:http://sapia.googlecode.com/svn/branches/magnet</connection>
+    <developerConnection>scm:svn:https://sapia.googlecode.com/svn/branches/magnet</developerConnection>
+    <url>scm:svn:https://sapia.googlecode.com/svn/branches/magnet</url>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+     </license>
+  </licenses>
+
+  <packaging>jar</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.7</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.8</version>
+    </dependency>
+
+    <dependency>
+        <groupId>piccolo</groupId>
+        <artifactId>piccolo</artifactId>
+        <version>1.0.3</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.ant</groupId>
+        <artifactId>ant</artifactId>
+        <version>1.7.0</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.beanshell</groupId>
+        <artifactId>bsh</artifactId>
+        <version>1.3.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_utils</artifactId>
+      <version>1.8-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_console</artifactId>
+      <version>1.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_as</artifactId>
+      <version>1.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_corus_iop</artifactId>
+      <version>2.0-SNAPSHOT</version>
+    </dependency>
+
+  </dependencies>
+
+  <distributionManagement>
+    <repository>
+      <id>java.net-m2-repository</id>
+      <url>java-net:/maven2-repository/trunk/repository/</url>
+    </repository>
+  </distributionManagement>
+
+  <build>
+    <directory>target</directory>
+    <outputDirectory>target/classes</outputDirectory>
+    <finalName>${artifactId}-${version}</finalName>
+    <testOutputDirectory>target/test-classes</testOutputDirectory>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+	        <source>1.6</source>
+	        <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.0-beta-7</version>
+        <configuration>
+          <tagBase>https://sapia.googlecode.com/svn/branches/magnet</tagBase>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/Test*.java</exclude>
+          </excludes>
+          <forkMode>pertest</forkMode>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+						      <groupId>org.sapia</groupId>
+						      <artifactId>sapia_ubik</artifactId>
+						      <version>2.5.5</version>                  
+                  <type>jar</type>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.sapia</groupId>
+                  <artifactId>sapia_archie</artifactId>
+                  <version>1.0.1</version>                  
+                  <type>jar</type>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${basedir}/lib/examples</outputDirectory>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+
+    <extensions>
+      <extension>
+        <groupId>org.jvnet.wagon-svn</groupId>
+        <artifactId>wagon-svn</artifactId>
+        <version>1.9</version>
+      </extension>
+    </extensions>
+
+  </build>
+
+ <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.0-alpha-4</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
+
+</project>
