@@ -1,14 +1,10 @@
 package org.sapia.magnet.domain.system;
 
-// Import of Apache's log4j
-// ------------------------
-import org.apache.log4j.Logger;
-import org.sapia.magnet.Log;
-
-// Import of Sun's JDK classes
-// ---------------------------
 import java.io.File;
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
+import org.sapia.magnet.Log;
 
 
 /**
@@ -107,9 +103,14 @@ public class ProcessTask implements Runnable {
         }
 
         // Check the status of the running process (throws exception if not terminated)
-        int anExitValue = aProcess.exitValue();
-        isTerminated = true;
-        _theLogger.info("Process terminated with exit value: " + anExitValue);
+        try {
+          int anExitValue = aProcess.exitValue();
+          isTerminated = true;
+          _theLogger.info("Process terminated with exit value: " + anExitValue);
+
+        } catch (IllegalThreadStateException itse) {
+          // Called aProcess.exitValue() on a running process... continue
+        }
 
       } catch (InterruptedException ie) {
         isTerminated = true;
@@ -120,13 +121,11 @@ public class ProcessTask implements Runnable {
         String aMessage = "Caugh an I/O error while monitoring the running process";
         _theLogger.warn(aMessage, ioe);
 
-      } catch (IllegalThreadStateException itse) {
-        // Called exitValue() on a running process... continue
-
       } catch (RuntimeException re) {
         String aMessage = "Caugh a system error while monitoring the running process";
         _theLogger.warn(aMessage, re);
       }
     }
   }
+  
 }

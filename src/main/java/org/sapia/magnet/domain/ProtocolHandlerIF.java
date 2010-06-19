@@ -1,11 +1,7 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.Collection;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.render.RenderingException;
 
 
@@ -31,5 +27,5 @@ public interface ProtocolHandlerIF {
    * @return The collection of <CODE>Resource</CODE> objects.
    * @exception RenderingException If an error occurs while resolving the path.
    */
-  public Collection resolveResources(Path aPath, String aSortingOrder) throws RenderingException;
+  public Collection<Resource> resolveResources(Path aPath, String aSortingOrder) throws RenderingException;
 }

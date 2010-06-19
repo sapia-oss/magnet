@@ -1,16 +1,11 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.render.AbstractRenderable;
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderingException;
@@ -37,10 +32,10 @@ public class Parameters extends AbstractRenderable {
   private String _theProfile;
 
   /** The list of params of this parameters. */
-  private List _theParams;
+  private List<Param> _theParams;
 
   /** The map of params identified with the name of each param. */
-  private Map _theParamsByName;
+  private Map<String, Param> _theParamsByName;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
@@ -53,8 +48,8 @@ public class Parameters extends AbstractRenderable {
    * Creates a new Parameters instance.
    */
   public Parameters() {
-    _theParams = new ArrayList();
-    _theParamsByName =  new HashMap();
+    _theParams = new ArrayList<Param>();
+    _theParamsByName =  new HashMap<String, Param>();
   }
   
   void setOrder(int order) {
@@ -71,8 +66,8 @@ public class Parameters extends AbstractRenderable {
    * @param aProfile The profile name of this parameters.
    */
   public Parameters(String aProfile) {
-    _theParams = new ArrayList();
-    _theParamsByName =  new HashMap();
+    _theParams = new ArrayList<Param>();
+    _theParamsByName =  new HashMap<String, Param>();
     _theProfile = aProfile;
   }
 
@@ -94,7 +89,7 @@ public class Parameters extends AbstractRenderable {
    *
    * @return The collection of param objects.
    */
-  public Collection getParams() {
+  public Collection<Param> getParams() {
     return _theParams;
   }
 
@@ -111,7 +106,7 @@ public class Parameters extends AbstractRenderable {
       throw new IllegalArgumentException("The name passed in is null");
     }
 
-    return (Param) _theParamsByName.get(aName);
+    return _theParamsByName.get(aName);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +136,7 @@ public class Parameters extends AbstractRenderable {
       throw new IllegalArgumentException("The name of the parameter passed in is null");
     }
 
-    Param anOldParam = (Param) _theParamsByName.get(aParam.getName());
+    Param anOldParam = _theParamsByName.get(aParam.getName());
     if (anOldParam != null) {
       _theParams.remove(anOldParam);
     }
@@ -190,27 +185,26 @@ public class Parameters extends AbstractRenderable {
     if (_theProfile == null ||
         (aContext.getProfile() != null && _theProfile.equals(aContext.getProfile()))) {
 
-      for (Iterator it = _theParams.iterator(); it.hasNext(); ) {
-        Param aParam = (Param) it.next();
+      for (Param param: _theParams) {
       
         // Validate if we render the param or not
-        if ((aParam.getIfDefine() == null ||
-                aContext.getValue(aParam.getIfDefine()) != null) &&
-            (aParam.getUnlessDefine() == null ||
-                aContext.getValue(aParam.getUnlessDefine()) == null)) {
+        if ((param.getIfDefine() == null || aContext.getValue(param.getIfDefine()) != null) &&
+            (param.getUnlessDefine() == null || aContext.getValue(param.getUnlessDefine()) == null)) {
 
           // Render the parameter
-          aParam.render(aContext);
+          param.render(aContext);
           
           // Add the param in the right context
-          if (aParam.getScope().equals(Param.SCOPE_MAGNET)) {
-            aContext.addParameter(aParam, (_theProfile != null));
-          } else if (aParam.getScope().equals(Param.SCOPE_SYSTEM)) {
-            System.setProperty(aParam.getName(), aParam.getValue());
+          if (param.getScope().equals(Param.SCOPE_MAGNET)) {
+            aContext.addParameter(param, (_theProfile != null));
+            
+          } else if (param.getScope().equals(Param.SCOPE_SYSTEM)) {
+            System.setProperty(param.getName(), param.getValue());
+            
           } else {
             StringBuffer aBuffer = new StringBuffer();
-            aBuffer.append("The param ").append(aParam.getName()).
-                    append(" has an invalid scope: ").append(aParam.getScope()).
+            aBuffer.append("The param ").append(param.getName()).
+                    append(" has an invalid scope: ").append(param.getScope()).
                     append(". The scope must either be ").append(Param.SCOPE_MAGNET).
                     append(" or ").append(Param.SCOPE_SYSTEM);
             throw new RenderingException(aBuffer.toString());

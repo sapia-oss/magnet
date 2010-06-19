@@ -1,21 +1,14 @@
 package org.sapia.magnet.domain.java;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-// Import of Apache's log4j
-// ------------------------
 import org.apache.log4j.Logger;
-
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.console.CmdLine;
-import org.sapia.magnet.MagnetException;
 import org.sapia.magnet.Log;
+import org.sapia.magnet.MagnetException;
 import org.sapia.magnet.domain.DefaultLaunchHandler;
 import org.sapia.magnet.domain.Magnet;
 import org.sapia.magnet.domain.Param;
@@ -144,7 +137,7 @@ public class JavaLauncher extends DefaultLaunchHandler {
    * @return The found classpath or <CODE>null</CODE> if it's not found.
    * @exception IllegalArgumentException If the id passed in is null.
    */
-  protected Classpath findClasspath(String anId, Collection someMagnets) {
+  protected Classpath findClasspath(String anId, Collection<Magnet> someMagnets) {
     // Validate the arguments
     if (anId == null) {
       throw new IllegalArgumentException("The classpath identifer passed in is null");
@@ -153,8 +146,8 @@ public class JavaLauncher extends DefaultLaunchHandler {
     }
     
     Classpath aResult = null;
-    for (Iterator it = someMagnets.iterator(); aResult == null && it.hasNext(); ) {
-      Magnet aParentMagnet = (Magnet) it.next();
+    for (Iterator<Magnet> it = someMagnets.iterator(); aResult == null && it.hasNext(); ) {
+      Magnet aParentMagnet = it.next();
       aResult = findClasspath(anId, aParentMagnet);
     }
     
@@ -181,7 +174,7 @@ public class JavaLauncher extends DefaultLaunchHandler {
     boolean isFound = false;
     Classpath aResult = null;
 
-    for (Iterator it = aMagnet.getObjectsFor("classpath").iterator(); !isFound && it.hasNext(); ) {
+    for (Iterator<Object> it = aMagnet.getObjectsFor("classpath").iterator(); !isFound && it.hasNext(); ) {
       Classpath aClasspath = (Classpath) it.next();
       if (anId.equals(aClasspath.getId())) {
         isFound = true;
@@ -208,14 +201,14 @@ public class JavaLauncher extends DefaultLaunchHandler {
       throw new RuntimeException("The classpath passed in is null");
     }
 
-    ArrayList someIdentifiers = new ArrayList();
+    ArrayList<String> someIdentifiers = new ArrayList<String>();
     return getParentClassloaderIter(aClasspath, someIdentifiers);
   }
 
   /**
    *
    */
-  private ClassLoader getParentClassloaderIter(Classpath aClasspath, List someIdentifiers) throws MagnetException {
+  private ClassLoader getParentClassloaderIter(Classpath aClasspath, List<String> someIdentifiers) throws MagnetException {
     // Validate for circular references
     if (someIdentifiers.contains(aClasspath.getId())) {
       throw new IllegalStateException("Circular referenced classpath objects detected: " + aClasspath.getId());
@@ -299,9 +292,8 @@ public class JavaLauncher extends DefaultLaunchHandler {
       aProfile.render(aContext);
       MagnetContext aSubContext = new MagnetContext(aContext);
       if (aProfile.getParameters() != null) {
-        for (Iterator it = aProfile.getParameters().getParams().iterator(); it.hasNext(); ) {
-          Param aParam = (Param) it.next();
-          aSubContext.addParameter(aParam, false);
+        for (Param param: aProfile.getParameters().getParams()) {
+          aSubContext.addParameter(param, false);
         }
       }
 
@@ -309,6 +301,7 @@ public class JavaLauncher extends DefaultLaunchHandler {
       _theMainClass = resolveValue(aSubContext, _theMainClass);
       _theArguments = resolveValue(aSubContext, _theArguments);
       _isDaemon = resolveValue(aSubContext, _isDaemon);
+      
     } else {
       // The profile specified is not found
       if (aContext.getProfile() == null || aContext.getProfile().length() == 0) {
@@ -341,7 +334,7 @@ public class JavaLauncher extends DefaultLaunchHandler {
 
       // Find the classpath
       ClassLoader aClassloader = ClassLoader.getSystemClassLoader();
-      Collection someClasspath = aProfile.getObjectsFor("classpath");
+      Collection<Object> someClasspath = aProfile.getObjectsFor("classpath");
       if (!someClasspath.isEmpty()) {
         // Create the class loader
         Classpath aClasspath = (Classpath) someClasspath.iterator().next();
@@ -371,7 +364,7 @@ public class JavaLauncher extends DefaultLaunchHandler {
       }
       
       // Load the main class
-      Class aClass = aClassloader.loadClass(_theMainClass);
+      Class<?> aClass = aClassloader.loadClass(_theMainClass);
       JavaTask aTask = new JavaTask(aClass, someArguments);
       Thread aThread = new Thread(aTask);
       aThread.setName("MagnetThread-" + getName() + ":" + aProfile.getName());
@@ -410,5 +403,5 @@ public class JavaLauncher extends DefaultLaunchHandler {
 
     return aBuffer.toString();
   }
+  
 }
-

@@ -1,17 +1,10 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-// Import of Apache's log4j
-// ------------------------
 import org.apache.log4j.Logger;
-
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderingException;
 
@@ -62,7 +55,7 @@ public class DefaultLaunchHandler extends AbstractObjectHandler implements Launc
   private Magnet _theMagnet;
 
   /** The list of profiles of this default launcher. */
-  private Map _theProfiles;
+  private Map<String, Profile> _theProfiles;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
@@ -72,7 +65,7 @@ public class DefaultLaunchHandler extends AbstractObjectHandler implements Launc
    * Creates a new DefaultLaunchHandler instance.
    */
   protected DefaultLaunchHandler() {
-    _theProfiles = new HashMap();
+    _theProfiles = new HashMap<String, Profile>();
     _theWaitTime = DEFAULT_WAIT_TIME;
   }
 
@@ -130,7 +123,7 @@ public class DefaultLaunchHandler extends AbstractObjectHandler implements Launc
    *
    * @return The collection of <CODE>Profile</CODE> objects of this default launch handler.
    */
-  public Collection getProfiles() {
+  public Collection<Profile> getProfiles() {
     return _theProfiles.values();
   }
 
@@ -141,7 +134,7 @@ public class DefaultLaunchHandler extends AbstractObjectHandler implements Launc
    * @return The profile for the profile name passed in.
    */
   public Profile getProfile(String aProfileName) {
-    return (Profile) _theProfiles.get(aProfileName);
+    return _theProfiles.get(aProfileName);
   }
 
   /**

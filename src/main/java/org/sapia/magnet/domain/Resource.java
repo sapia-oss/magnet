@@ -1,9 +1,7 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Comparator;
 
 /**
@@ -16,7 +14,7 @@ import java.util.Comparator;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class Resource implements Comparable {
+public class Resource implements Comparable<Resource> {
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////  INSTANCE ATTRIBUTES  /////////////////////////////////
@@ -136,8 +134,8 @@ public class Resource implements Comparable {
    * @exception ClassCastException if the specified object's type prevents it
    *            from being compared to this Object.
    */
-  public int compareTo(Object anObject) {
-    return _theIndex - ((Resource) anObject)._theIndex;
+  public int compareTo(Resource aResource) {
+    return _theIndex - aResource._theIndex;
   }
 
 
@@ -145,15 +143,15 @@ public class Resource implements Comparable {
   ///////////////////////////////////  INNER CLASSES  /////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  public static class AscendingComparator implements Comparator {
-    public int compare(Object anObject, Object anotherObject) {
-      return ((Resource) anObject)._theURL.compareTo(((Resource) anotherObject)._theURL);
+  public static class AscendingComparator implements Comparator<Resource> {
+    public int compare(Resource anObject, Resource anotherObject) {
+      return anObject._theURL.compareTo(anotherObject._theURL);
     }
   }
 
-  public static class DescendingComparator implements Comparator {
-    public int compare(Object anObject, Object anotherObject) {
-      return ((Resource) anObject)._theURL.compareTo(((Resource) anotherObject)._theURL) * -1;
+  public static class DescendingComparator implements Comparator<Resource> {
+    public int compare(Resource anObject, Resource anotherObject) {
+      return anObject._theURL.compareTo(anotherObject._theURL) * -1;
     }
   }
 }

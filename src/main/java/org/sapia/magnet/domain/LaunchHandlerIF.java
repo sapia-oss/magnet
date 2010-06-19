@@ -1,11 +1,7 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.Collection;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.render.RenderableIF;
 
 
@@ -67,7 +63,7 @@ public interface LaunchHandlerIF extends RenderableIF {
    *
    * @return The collection of <CODE>Profile</CODE> objects of this launcher.
    */
-  public Collection getProfiles();
+  public Collection<Profile> getProfiles();
 
 
   /**

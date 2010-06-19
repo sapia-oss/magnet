@@ -1,7 +1,5 @@
 package org.sapia.magnet.domain.system;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,12 +7,8 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-// Import of Apache's log4j
-// ------------------------
 import org.apache.log4j.Logger;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.console.CmdLine;
 import org.sapia.magnet.Log;
 import org.sapia.magnet.domain.DefaultLaunchHandler;
@@ -122,7 +116,7 @@ public class SystemLauncher extends DefaultLaunchHandler {
    * @return The find environment of <CODE>null</CODE> if it's not found.
    * @exception IllegalArgumentException If the id passed in is null.
    */
-  protected Environment findEnvironment(String anId, Collection someMagnets) {
+  protected Environment findEnvironment(String anId, Collection<Magnet> someMagnets) {
     // Validate the arguments
     if (anId == null) {
       throw new IllegalArgumentException("The environment identifer passed in is null");
@@ -131,8 +125,8 @@ public class SystemLauncher extends DefaultLaunchHandler {
     }
     
     Environment aResult = null;
-    for (Iterator it = someMagnets.iterator(); aResult == null && it.hasNext(); ) {
-      Magnet aParentMagnet = (Magnet) it.next();
+    for (Iterator<Magnet> it = someMagnets.iterator(); aResult == null && it.hasNext(); ) {
+      Magnet aParentMagnet = it.next();
       aResult = findEnvironment(anId, aParentMagnet);
     }
     
@@ -159,7 +153,7 @@ public class SystemLauncher extends DefaultLaunchHandler {
     boolean isFound = false;
     Environment aResult = null;
 
-    for (Iterator it = aMagnet.getObjectsFor("Environment").iterator(); !isFound && it.hasNext(); ) {
+    for (Iterator<Object> it = aMagnet.getObjectsFor("Environment").iterator(); !isFound && it.hasNext(); ) {
       Environment anEnvironment = (Environment) it.next();
       if (anId.equals(anEnvironment.getId())) {
         isFound = true;
@@ -181,14 +175,14 @@ public class SystemLauncher extends DefaultLaunchHandler {
    * @return The list of variables extracted.
    * @exception IllegalArgumentException If the environment passed in is null.
    */
-  protected List extractVariables(Environment anEnvironment) {
+  protected List<Variable> extractVariables(Environment anEnvironment) {
     // Validate the arguments
     if (anEnvironment == null) {
       throw new IllegalArgumentException("The environment passed in is null");
     }
 
-    ArrayList someVariables = new ArrayList();
-    ArrayList someIdentifiers = new ArrayList();
+    ArrayList<Variable> someVariables = new ArrayList<Variable>();
+    ArrayList<String> someIdentifiers = new ArrayList<String>();
     extractVariablesIter(anEnvironment, someVariables, someIdentifiers);
 
     return someVariables;
@@ -197,7 +191,7 @@ public class SystemLauncher extends DefaultLaunchHandler {
   /**
    * Iter-recursive method to extract the variables from the environment object.
    */
-  private void extractVariablesIter(Environment anEnvironment, List someVariables, List someIdentifiers) {
+  private void extractVariablesIter(Environment anEnvironment, List<Variable> someVariables, List<String> someIdentifiers) {
     // Validate for circular references
     if (someIdentifiers.contains(anEnvironment.getId())) {
       throw new IllegalStateException("Circular referenced environment objects detected");
@@ -216,9 +210,8 @@ public class SystemLauncher extends DefaultLaunchHandler {
       }
     }
 
-    for (Iterator it = anEnvironment.getVariables().iterator(); it.hasNext(); ) {
-      Variable aVariable = (Variable) it.next();
-      someVariables.add(aVariable);
+    for (Variable var: anEnvironment.getVariables()) {
+      someVariables.add(var);
     }
   }
 
@@ -253,14 +246,14 @@ public class SystemLauncher extends DefaultLaunchHandler {
       // Render the profile and generate a new context
       aProfile.render(aContext);
       MagnetContext aSubContext = new MagnetContext(aContext);
-      for (Iterator it = aProfile.getParameters().getParams().iterator(); it.hasNext(); ) {
-        Param aParam = (Param) it.next();
-        aSubContext.addParameter(aParam, false);
+      for (Param param: aProfile.getParameters().getParams()) {
+        aSubContext.addParameter(param, false);
       }
 
       // Resolving the attribute with the subcontext
       _theCommand = resolveValue(aSubContext, _theCommand);
       _theWorkingDirectory = resolveValue(aSubContext, _theWorkingDirectory);
+      
     } else {
       // The profile specified is not found
       if (aContext.getProfile() == null || aContext.getProfile().length() == 0) {
@@ -300,16 +293,15 @@ public class SystemLauncher extends DefaultLaunchHandler {
       String[] someCommands = parseCommandString();
 
       // Setup the environment variables
-      TreeMap someEnvironmentVariables = new TreeMap();
+      TreeMap<String, String> someEnvironmentVariables = new TreeMap<String, String>();
 
-      for (Iterator it = aProfile.getObjectsFor("environment").iterator(); it.hasNext(); ) {
+      for (Iterator<Object> it = aProfile.getObjectsFor("environment").iterator(); it.hasNext(); ) {
         Environment anEnvironment = (Environment) it.next();
 
-        for (Iterator someVariables = extractVariables(anEnvironment).iterator(); someVariables.hasNext(); ) {
-          Variable aVariable = (Variable) someVariables.next();
+        for (Variable var: extractVariables(anEnvironment)) {
           StringBuffer aBuffer = new StringBuffer();
-          aBuffer.append(aVariable.getName()).append("=").append(aVariable.getValue());
-          someEnvironmentVariables.put(aVariable.getName(), aBuffer.toString());
+          aBuffer.append(var.getName()).append("=").append(var.getValue());
+          someEnvironmentVariables.put(var.getName(), aBuffer.toString());
         }
       }
 
@@ -332,9 +324,9 @@ public class SystemLauncher extends DefaultLaunchHandler {
       
       if (someEnvironmentVariables.size() > 0) {
         Log.info("Environment variables of the system process:", this);
-        for (Iterator it = someEnvironmentVariables.values().iterator(); it.hasNext(); ) {
+        for (String envVar: someEnvironmentVariables.values()) {
           aBuffer.setLength(0);
-          aBuffer.append("\t").append(it.next());
+          aBuffer.append("\t").append(envVar);
           Log.info(aBuffer.toString(), this);
         }
       }
@@ -345,7 +337,7 @@ public class SystemLauncher extends DefaultLaunchHandler {
       Thread aThread = new Thread(aTask);
       aThread.setName(getName() + "-" + aProfile.getName());
       aThread.start();
-
+      
     } catch (RuntimeException re) {
       String aMessage = "System error spawning this process";
       _theLogger.error(aMessage, re);
@@ -365,4 +357,5 @@ public class SystemLauncher extends DefaultLaunchHandler {
 
     return aBuffer.toString();
   }
+  
 }

@@ -1,13 +1,7 @@
 package org.sapia.magnet.domain;
 
-// Import of Apache's log4j
-// ------------------------
-import org.apache.log4j.Logger;
-
-// Import of Sapia's Corus classes
-// --------------------------------
-import org.sapia.magnet.MagnetException;
 import org.sapia.magnet.Log;
+import org.sapia.magnet.MagnetException;
 import org.sapia.magnet.render.AbstractRenderable;
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderingException;
@@ -25,13 +19,6 @@ import org.sapia.magnet.render.RenderingException;
  * </dl>
  */
 public class Script extends AbstractRenderable {
-
-  /////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////  CLASS ATTRIBUTES  ///////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////////////////
-
-  /** Defines the logger instance for this class. */
-  private static final Logger _theLogger = Logger.getLogger(Script.class);
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////  INSTANCE ATTRIBUTES  /////////////////////////////////

@@ -1,16 +1,11 @@
 package org.sapia.magnet.domain.java;
 
-// Import of Sun's JDK classes
-// ---------------------------
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.MagnetException;
 import org.sapia.magnet.domain.Path;
 import org.sapia.magnet.domain.Resource;
@@ -43,7 +38,7 @@ public class Classpath extends AbstractRenderable {
   private String _theParent;
 
   /** The path elements of this classpath. */
-  private List _thePaths;
+  private List<Path> _thePaths;
 
   /** The class loader that is created by this classpath. */
   private ClassLoader _theClassLoader;
@@ -56,7 +51,7 @@ public class Classpath extends AbstractRenderable {
    * Creates a new Classpath instance.
    */
   public Classpath() {
-    _thePaths = new ArrayList();
+    _thePaths = new ArrayList<Path>();
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +81,7 @@ public class Classpath extends AbstractRenderable {
    *
    * @return The path elements of this classpath.
    */
-  public List getPaths() {
+  public List<Path> getPaths() {
     return _thePaths;
   }
 
@@ -152,11 +147,10 @@ public class Classpath extends AbstractRenderable {
 
     if (_theClassLoader == null) {
       try {
-        ArrayList someURLs = new ArrayList();
-        for (Iterator somePaths = _thePaths.iterator(); somePaths.hasNext(); ) {
-          Path aPath = (Path) somePaths.next();
-          for (Iterator it = aPath.getSelectedResources().iterator(); it.hasNext(); ) {
-            someURLs.add(((Resource) it.next()).toURL());
+        ArrayList<URL> someURLs = new ArrayList<URL>();
+        for (Path path: _thePaths) {
+          for (Resource resource: path.getSelectedResources()) {
+            someURLs.add(resource.toURL());
           }
         }
   
@@ -202,9 +196,8 @@ public class Classpath extends AbstractRenderable {
   
     // Render the paths
     try {
-      for (Iterator it = _thePaths.iterator(); it.hasNext(); ) {
-        Path aPath = (Path) it.next();
-        aPath.render(aContext);
+      for (Path path: _thePaths) {
+        path.render(aContext);
       }
     } catch (RenderingException re) {
       StringBuffer aBuffer = new StringBuffer("Unable to render the");
@@ -232,5 +225,6 @@ public class Classpath extends AbstractRenderable {
 
     return aBuffer.toString();
   }
+  
 }
 

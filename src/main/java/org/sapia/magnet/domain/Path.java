@@ -1,14 +1,9 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.render.AbstractRenderable;
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderingException;
@@ -66,13 +61,13 @@ public class Path extends AbstractRenderable {
   private String _theSorting;
 
   /** The list of the includes patterns of this path element. */
-  private List _theIncludePatterns;
+  private List<Include> _theIncludePatterns;
 
   /** The list of the excludes patterns of this path element. */
-  private List _theExcludePatterns;
+  private List<Exclude> _theExcludePatterns;
 
   /** The collection of selected resources (result of rendering). */
-  private Collection _theSelectedResources;
+  private Collection<Resource> _theSelectedResources;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
@@ -84,8 +79,8 @@ public class Path extends AbstractRenderable {
   public Path() {
     _theProtocol = DEFAULT_PROTOCOL;
     _theHost = DEFAULT_HOST;
-    _theIncludePatterns = new ArrayList();
-    _theExcludePatterns = new ArrayList();
+    _theIncludePatterns = new ArrayList<Include>();
+    _theExcludePatterns = new ArrayList<Exclude>();
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -133,7 +128,7 @@ public class Path extends AbstractRenderable {
    *
    * @return The collection of <CODE>Include</CODE> objects.
    */
-  public Collection getIncludes() {
+  public Collection<Include> getIncludes() {
     return _theIncludePatterns;
   }
 
@@ -142,7 +137,7 @@ public class Path extends AbstractRenderable {
    *
    * @return The collection of <CODE>Exclude</CODE> objects.
    */
-  public Collection getExcludes() {
+  public Collection<Exclude> getExcludes() {
     return _theExcludePatterns;
   }
 
@@ -151,7 +146,7 @@ public class Path extends AbstractRenderable {
    *
    * @return The collection of <CODE>Resource</CODE> of this path.
    */
-  public Collection getSelectedResources() {
+  public Collection<Resource> getSelectedResources() {
     return _theSelectedResources;
   }
 
@@ -293,15 +288,13 @@ public class Path extends AbstractRenderable {
 
     try {
       // Rendering the include patterns
-      for (Iterator it = _theIncludePatterns.iterator(); it.hasNext(); ) {
-        Include anInclude = (Include) it.next();
-        anInclude.render(aContext);
+      for (Include incl: _theIncludePatterns) {
+        incl.render(aContext);
       }
 
       // Rendering the excludes patterns
-      for (Iterator it = _theExcludePatterns.iterator(); it.hasNext(); ) {
-        Exclude anExclude = (Exclude) it.next();
-        anExclude.render(aContext);
+      for (Exclude excl: _theExcludePatterns) {
+        excl.render(aContext);
       }
 
       // Delegate the resolution of the resource to the protocol handler

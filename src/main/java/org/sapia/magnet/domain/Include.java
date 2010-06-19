@@ -1,7 +1,5 @@
 package org.sapia.magnet.domain;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.render.AbstractRenderable;
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderingException;

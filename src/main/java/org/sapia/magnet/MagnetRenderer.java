@@ -1,16 +1,9 @@
 package org.sapia.magnet;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.Iterator;
 import java.util.List;
 
-// Import of Apache's log4j
-// ------------------------
 import org.apache.log4j.Logger;
-
-// Import of Sapia's Corus classes
-// --------------------------------
 import org.sapia.magnet.domain.Magnet;
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderingException;
@@ -58,22 +51,23 @@ public class MagnetRenderer {
    * @return The context of the rendering state of the magnet.
    * @exception MagnetException If an error occurs while rendering the magnet.
    */
-  public MagnetContext render(List someMagnets, String aProfile) throws MagnetException {
+  public MagnetContext render(List<Magnet> someMagnets, String aProfile) throws MagnetException {
     Magnet aMagnet = null;
     MagnetContext aContext = null;
 
     try {
-      for (Iterator it = someMagnets.iterator(); it.hasNext(); ) {
+      for (Iterator<Magnet> it = someMagnets.iterator(); it.hasNext(); ) {
         if (aContext == null) {
           aContext = new MagnetContext(aProfile);
         } else {
           aContext = new MagnetContext(aContext);
         }
-        aMagnet = (Magnet) it.next();
+        aMagnet = it.next();
         aMagnet.render(aContext);
       }
 
       return aContext;
+      
     } catch (RenderingException re) {
       String aMessage = "Unable to render the profile " + aProfile + " of the magnet " + aMagnet.getName();
       _theLogger.error(aMessage, re);
@@ -85,4 +79,5 @@ public class MagnetRenderer {
       throw new MagnetException(aMessage, re);
     }
   }
+  
 }

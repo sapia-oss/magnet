@@ -1,19 +1,11 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.TreeSet;
-import java.util.Iterator;
 
-// Import of Apache's Ant classes
-// --------------------------------
 import org.apache.tools.ant.DirectoryScanner;
-
-// Import of Sapia's Corus classes
-// --------------------------------
 import org.sapia.magnet.render.RenderingException;
 
 
@@ -39,7 +31,7 @@ public class FileProtocolHandler implements ProtocolHandlerIF {
    * @return The collection of <CODE>Resource</CODE> objects.
    * @exception RenderingException If an error occurs while resolving the path.
    */
-  public Collection resolveResources(Path aPath, String aSortingOrder) throws RenderingException {
+  public Collection<Resource> resolveResources(Path aPath, String aSortingOrder) throws RenderingException {
     // Validate the arguments
     if (aPath == null) {
     } else if (!aPath.getProtocol().equals(Path.PROTOCOL_FILE)) {
@@ -58,13 +50,13 @@ public class FileProtocolHandler implements ProtocolHandlerIF {
     }
 
     // Create the resources for the included directories
-    TreeSet someResources;
+    TreeSet<Resource> someResources;
     if (aSortingOrder != null && aSortingOrder.equals(Path.SORTING_ASCENDING)) {
-      someResources = new TreeSet(new Resource.AscendingComparator());
+      someResources = new TreeSet<Resource>(new Resource.AscendingComparator());
     } else if (aSortingOrder != null && aSortingOrder.equals(Path.SORTING_DESCENDING)) {
-      someResources = new TreeSet(new Resource.DescendingComparator());
+      someResources = new TreeSet<Resource>(new Resource.DescendingComparator());
     } else {
-      someResources = new TreeSet();
+      someResources = new TreeSet<Resource>();
     }
 
     if (aPath.getIncludes().size() == 0) {
@@ -72,11 +64,12 @@ public class FileProtocolHandler implements ProtocolHandlerIF {
 			StringBuffer pathStr = new StringBuffer();      
       
 			pathStr.append(aTargetDirectory.getAbsolutePath()).append(File.separator);
-			try{
-        someResources.add(new Resource(new File(pathStr.toString()).toURL().toExternalForm(), 0));
-			}catch(MalformedURLException e){
+			try {
+        someResources.add(new Resource(new File(pathStr.toString()).toURI().toURL().toExternalForm(), 0));
+			} catch(MalformedURLException e) {
 				throw new RenderingException("Invalid path: " + pathStr.toString(), e);
 			}
+			
     } else {
       // Create the directory scanner
       DirectoryScanner aScanner = new DirectoryScanner();
@@ -87,16 +80,16 @@ public class FileProtocolHandler implements ProtocolHandlerIF {
       // Add the inclusion patterns  
       String[] someIncludes = new String[aPath.getIncludes().size()];
       int anIndex = 0;
-      for (Iterator it = aPath.getIncludes().iterator(); it.hasNext(); ) {
-        someIncludes[anIndex++] = ((Include) it.next()).getPattern();
+      for (Include incl: aPath.getIncludes()) {
+        someIncludes[anIndex++] = incl.getPattern();
       }
       aScanner.setIncludes(someIncludes);
   
       // Add the exclusion patterns  
       String[] someExcludes = new String[aPath.getExcludes().size()];
       anIndex = 0;
-      for (Iterator it = aPath.getExcludes().iterator(); it.hasNext(); ) {
-        someExcludes[anIndex++] = ((Exclude) it.next()).getPattern();
+      for (Exclude excl: aPath.getExcludes()) {
+        someExcludes[anIndex++] = excl.getPattern();
       }
       aScanner.setExcludes(someExcludes);
   
@@ -110,9 +103,9 @@ public class FileProtocolHandler implements ProtocolHandlerIF {
         StringBuffer pathStr = new StringBuffer();
 				pathStr .append(aTargetDirectory.getAbsolutePath()).append(File.separator).
               append(someDirectories[i]).append(File.separator);
-        try{
-          someResources.add(new Resource(new File(pathStr.toString()).toURL().toExternalForm(), anIndex++));
-        }catch(MalformedURLException e){
+        try {
+          someResources.add(new Resource(new File(pathStr.toString()).toURI().toURL().toExternalForm(), anIndex++));
+        } catch (MalformedURLException e) {
 					throw new RenderingException("Invalid path: " + pathStr.toString(), e);        	
         }
       }
@@ -123,9 +116,9 @@ public class FileProtocolHandler implements ProtocolHandlerIF {
         StringBuffer pathStr = new StringBuffer();
         pathStr.append(aTargetDirectory.getAbsolutePath()).append(File.separator).
               append(someFiles[i]);
-        try{
-          someResources.add(new Resource(new File(pathStr.toString()).toURL().toExternalForm(), anIndex++));
-        }catch(MalformedURLException e){
+        try {
+          someResources.add(new Resource(new File(pathStr.toString()).toURI().toURL().toExternalForm(), anIndex++));
+        } catch (MalformedURLException e) {
 					throw new RenderingException("Invalid path: " + pathStr.toString(), e);        	
         }
       }

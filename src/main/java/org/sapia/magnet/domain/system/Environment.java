@@ -1,15 +1,9 @@
 package org.sapia.magnet.domain.system;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.render.AbstractRenderable;
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderingException;
@@ -39,7 +33,7 @@ public class Environment extends AbstractRenderable {
   private String _theParent;
 
   /** The list of environment variables of this environment . */
-  private Map _theVariables;
+  private Map<String, Variable> _theVariables;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
@@ -49,7 +43,7 @@ public class Environment extends AbstractRenderable {
    * Creates a new Environment instance.d
    */
   public Environment() {
-    _theVariables = new TreeMap();
+    _theVariables = new TreeMap<String, Variable>();
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +74,7 @@ public class Environment extends AbstractRenderable {
    * @return The collection of <CODE>Variable</CODE> objects.
    * @see Variable
    */
-  public Collection getVariables() {
+  public Collection<Variable> getVariables() {
     return _theVariables.values();
   }
 
@@ -157,9 +151,8 @@ public class Environment extends AbstractRenderable {
     // Render the path
     Variable aVariable = null;
     try {
-      for (Iterator it = _theVariables.values().iterator(); it.hasNext(); ) {
-        aVariable = (Variable) it.next();
-        aVariable.render(aContext);
+      for (Variable var: _theVariables.values()) {
+        var.render(aContext);
       }
     } catch (RenderingException re) {
       StringBuffer aBuffer = new StringBuffer("Unable to render the variable");

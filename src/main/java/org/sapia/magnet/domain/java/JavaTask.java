@@ -1,9 +1,7 @@
 package org.sapia.magnet.domain.java;
 
-// Import of Sun's JDK classes
-// ---------------------------
-import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.sapia.magnet.Log;
 
@@ -26,7 +24,7 @@ public class JavaTask implements Runnable {
   /////////////////////////////////////////////////////////////////////////////////////////
 
   /** The main class of this java task. */
-  private Class _theMainClass;
+  private Class<?> _theMainClass;
 
   /** The arguments of this java task. */
   private String[] _theArguments;
@@ -38,7 +36,7 @@ public class JavaTask implements Runnable {
   /**
    * Creates a new JavaTask instance with the passed in arguments.
    */
-  public JavaTask(Class aMainClas, String[] someArguments) {
+  public JavaTask(Class<?> aMainClas, String[] someArguments) {
     _theMainClass = aMainClas;
     _theArguments = someArguments;
   }
@@ -67,5 +65,6 @@ public class JavaTask implements Runnable {
       throw new RuntimeException(message + " ==> " + iae, iae);
     }
   }
+  
 }
 

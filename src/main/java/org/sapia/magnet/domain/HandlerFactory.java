@@ -1,16 +1,12 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-// Import of Apache's log4j
-// ------------------------
 import org.apache.log4j.Logger;
 
 
@@ -64,13 +60,13 @@ public class HandlerFactory {
   /////////////////////////////////////////////////////////////////////////////////////////
 
   /** Defines the map that contains the classes for launch handlers. */
-  private Map _theLaunchHandlerClasses;
+  private Map<String, String> _theLaunchHandlerClasses;
 
   /** Defines the map that contains the classes for protocol handlers. */
-  private Map _theProtocolHandlerClasses;
+  private Map<String, String> _theProtocolHandlerClasses;
 
   /** Defines the map that contains the classes for script handlers. */
-  private Map _theScriptHandlerClasses;
+  private Map<String, String> _theScriptHandlerClasses;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
@@ -80,9 +76,9 @@ public class HandlerFactory {
    * Creates a new HandlerFactory instance. Constructor is hidden on purpose.
    */
   protected HandlerFactory() {
-    _theLaunchHandlerClasses = new HashMap();
-    _theProtocolHandlerClasses = new HashMap();
-    _theScriptHandlerClasses = new HashMap();
+    _theLaunchHandlerClasses = new HashMap<String, String>();
+    _theProtocolHandlerClasses = new HashMap<String, String>();
+    _theScriptHandlerClasses = new HashMap<String, String>();
     initialize();
   }
 
@@ -102,11 +98,12 @@ public class HandlerFactory {
       anInput = getClass().getResourceAsStream(RESOURCE_LAUNCH_HANDLER_FACTORY);
       someProperties = new Properties();
       someProperties.load(anInput);
-      for (Enumeration enumeration = someProperties.propertyNames(); enumeration.hasMoreElements(); ) {
+      for (Enumeration<?> enumeration = someProperties.propertyNames(); enumeration.hasMoreElements(); ) {
         String aName = (String) enumeration.nextElement();
         String aValue = someProperties.getProperty(aName);
         _theLaunchHandlerClasses.put(aName, aValue);
       }
+      
     } catch (IOException ioe) {
       _theLogger.warn("Error getting the input stream of the laucnh handler factory configuration", ioe);
     } finally {
@@ -124,7 +121,7 @@ public class HandlerFactory {
       anInput = getClass().getResourceAsStream(RESOURCE_PROTOCOL_HANDLER_FACTORY);
       someProperties = new Properties();
       someProperties.load(anInput);
-      for (Enumeration enumeration = someProperties.propertyNames(); enumeration.hasMoreElements(); ) {
+      for (Enumeration<?> enumeration = someProperties.propertyNames(); enumeration.hasMoreElements(); ) {
         String aName = (String) enumeration.nextElement();
         String aValue = someProperties.getProperty(aName);
         _theProtocolHandlerClasses.put(aName, aValue);
@@ -146,7 +143,7 @@ public class HandlerFactory {
       anInput = getClass().getResourceAsStream(RESOURCE_SCRIPT_HANDLER_FACTORY);
       someProperties = new Properties();
       someProperties.load(anInput);
-      for (Enumeration enumeration = someProperties.propertyNames(); enumeration.hasMoreElements(); ) {
+      for (Enumeration<?> enumeration = someProperties.propertyNames(); enumeration.hasMoreElements(); ) {
         String aName = (String) enumeration.nextElement();
         String aValue = someProperties.getProperty(aName);
         _theScriptHandlerClasses.put(aName, aValue);
@@ -212,26 +209,31 @@ public class HandlerFactory {
     String aClassName = (String) _theProtocolHandlerClasses.get(aProtocol);
     if (aClassName != null) {
       try {
-        Class aClass = Class.forName(aClassName);
+        Class<?> aClass = Class.forName(aClassName);
         Object aHandler = aClass.newInstance();
         return (ProtocolHandlerIF) aHandler;
+        
       } catch (ClassNotFoundException cnfe) {
         String aMessage = "Unable to create a handler for the protocol " + aProtocol +
                           " - the associated class is not found " + aClassName;
         throw new ObjectCreationException(aMessage, cnfe);
+        
       } catch (IllegalAccessException iae) {
         String aMessage = "Unable to create a handler for the protocol " + aProtocol +
                           " - could not access the associated class " + aClassName;
         throw new ObjectCreationException(aMessage, iae);
+        
       } catch (InstantiationException ie) {
         String aMessage = "Unable to create a handler for the protocol " + aProtocol +
                           " - could not call the default constructor of " + aClassName;
         throw new ObjectCreationException(aMessage, ie);
+        
       } catch (ClassCastException cce) {
         String aMessage = "Unable to create a handler for the protocol " + aProtocol +
                           " - the associated class " + aClassName + " is not a ProtocolHandlerIF";
         throw new ObjectCreationException(aMessage, cce);
       }
+      
     } else {
       throw new ObjectCreationException("The protocol of the path to render is invalid: " + aProtocol);
     }
@@ -248,26 +250,31 @@ public class HandlerFactory {
     String aClassName = (String) _theLaunchHandlerClasses.get(aLauncherType);
     if (aClassName != null) {
       try {
-        Class aClass = Class.forName(aClassName);
+        Class<?> aClass = Class.forName(aClassName);
         Object aHandler = aClass.newInstance();
         return (LaunchHandlerIF) aHandler;
+        
       } catch (ClassNotFoundException cnfe) {
         String aMessage = "Unable to create a handler for the launcher type " + aLauncherType +
                           " - the associated class is not found " + aClassName;
         throw new ObjectCreationException(aMessage, cnfe);
+        
       } catch (IllegalAccessException iae) {
         String aMessage = "Unable to create a handler for the launcher type " + aLauncherType +
                           " - could not access the associated class " + aClassName;
         throw new ObjectCreationException(aMessage, iae);
+        
       } catch (InstantiationException ie) {
         String aMessage = "Unable to create a handler for the launcher type " + aLauncherType +
                           " - could not call the default constructor of " + aClassName;
         throw new ObjectCreationException(aMessage, ie);
+        
       } catch (ClassCastException cce) {
         String aMessage = "Unable to create a handler for the launcher type " + aLauncherType +
                           " - the associated class " + aClassName + " is not a LaunchHandlerIF";
         throw new ObjectCreationException(aMessage, cce);
       }
+      
     } else {
       throw new ObjectCreationException("The launcher type is invalid: " + aLauncherType);
     }
@@ -284,26 +291,31 @@ public class HandlerFactory {
     String aClassName = (String) _theScriptHandlerClasses.get(aScriptType);
     if (aClassName != null) {
       try {
-        Class aClass = Class.forName(aClassName);
+        Class<?> aClass = Class.forName(aClassName);
         Object aHandler = aClass.newInstance();
         return (ScriptHandlerIF) aHandler;
+        
       } catch (ClassNotFoundException cnfe) {
         String aMessage = "Unable to create a handler for the script type " + aScriptType +
                           " - the associated class is not found " + aClassName;
         throw new ObjectCreationException(aMessage, cnfe);
+        
       } catch (IllegalAccessException iae) {
         String aMessage = "Unable to create a handler for the script type " + aScriptType +
                           " - could not access the associated class " + aClassName;
         throw new ObjectCreationException(aMessage, iae);
+        
       } catch (InstantiationException ie) {
         String aMessage = "Unable to create a handler for the script type " + aScriptType +
                           " - could not call the default constructor of " + aClassName;
         throw new ObjectCreationException(aMessage, ie);
+        
       } catch (ClassCastException cce) {
         String aMessage = "Unable to create a handler for the script type " + aScriptType +
                           " - the associated class " + aClassName + " is not a LaunchHandlerIF";
         throw new ObjectCreationException(aMessage, cce);
       }
+      
     } else {
       throw new ObjectCreationException("The script type is invalid: " + aScriptType);
     }

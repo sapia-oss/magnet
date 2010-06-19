@@ -1,11 +1,5 @@
 package org.sapia.magnet.domain.java;
 
-// Import of Sun's JDK classes
-// ---------------------------
-import java.util.Iterator;
-
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.domain.Path;
 import org.sapia.magnet.domain.Resource;
 import org.sapia.magnet.render.MagnetContext;
@@ -89,15 +83,14 @@ public class Codebase extends Classpath {
           aBuffer.append(System.getProperty("java.rmi.server.codebase")).append(" ");
         }
 
-        for (Iterator somePaths = getPaths().iterator(); somePaths.hasNext(); ) {
-          Path aPath = (Path) somePaths.next();
-          for (Iterator it = aPath.getSelectedResources().iterator(); it.hasNext(); ) {
-            Resource aResource = (Resource) it.next();
-            aBuffer.append(aResource.getURL()).append(" ");
+        for (Path path: getPaths()) {
+          for (Resource resource: path.getSelectedResources()) {
+            aBuffer.append(resource.getURL()).append(" ");
           }
         }
   
         System.setProperty("java.rmi.server.codebase", aBuffer.toString());
+        
       } catch (RenderingException re) {
         StringBuffer aBuffer = new StringBuffer("Unable to render the codebase of the");
         if (_theProfileName == null) {
@@ -123,5 +116,5 @@ public class Codebase extends Classpath {
 
     return aBuffer.toString();
   }
+  
 }
-

@@ -1,35 +1,27 @@
 package org.sapia.magnet;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-// Import of Apache's log4j
-// ------------------------
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
-
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.corus.interop.client.InteropClient;
 import org.sapia.corus.interop.client.ProtocolAlreadySetException;
 import org.sapia.corus.interop.http.HttpProtocol;
 import org.sapia.magnet.domain.Launcher;
 import org.sapia.magnet.domain.Magnet;
-import org.sapia.magnet.render.MagnetContext;
 
 
 /**
@@ -84,13 +76,14 @@ public class MagnetRunner {
     try {
       String aMagnetFilename = DEFAULT_MAGNET_FILENAME;
       String aProfile = "";
-      ArrayList otherArgs = new ArrayList();
+      ArrayList<String> otherArgs = new ArrayList<String>();
       _theLogLevel = Level.OFF;
 
       if (args.length == 0) {
         version();
         usage();
         return;
+        
       } else {
         for (int i = 0; i < args.length; i++) {
           String anArgument = args[i];
@@ -136,8 +129,8 @@ public class MagnetRunner {
         // Process the other arguments to be used as ${magnet.args.1}
         int i = 0;
         StringBuffer allArgs = new StringBuffer(); 
-        for (Iterator it = otherArgs.iterator(); it.hasNext(); ) {
-          String anArg = (String) it.next();
+        for (Iterator<String> it = otherArgs.iterator(); it.hasNext(); ) {
+          String anArg = it.next();
           System.setProperty("magnet.args." + ++i, anArg);
           allArgs.append(anArg).append(" ");
         }
@@ -149,6 +142,7 @@ public class MagnetRunner {
       
       // Run the magnet
       runFile(aMagnetFilename, aProfile);
+      
     } catch (MagnetException me) {
       Log.error(Log.extactMessage(me));
       System.exit(1);
@@ -208,25 +202,25 @@ public class MagnetRunner {
       _theLogger.info("Parsing the magnet input stream...");
     }
     MagnetParser aMagnetParser = new MagnetParser();
-    List someMagnets = aMagnetParser.parse(aMagnetStream);
+    List<Magnet> someMagnets = aMagnetParser.parse(aMagnetStream);
 
     // Render the magnet
     if (_theLogger.isInfoEnabled()) {
       _theLogger.info("Rendering the magnets...");
     }
     MagnetRenderer aMagnetRenderer = new MagnetRenderer();
-    MagnetContext aContext = aMagnetRenderer.render(someMagnets, aProfile);
+    aMagnetRenderer.render(someMagnets, aProfile);
 
     // Logging the system properties
     _theLogger.info(Log.formatProperties(System.getProperties()));
 
     // Execute the launchers of each magnet
-    for (Iterator it = someMagnets.iterator(); it.hasNext(); ) {
-      Magnet aMagnet = (Magnet) it.next();
+    for (Iterator<Magnet> it = someMagnets.iterator(); it.hasNext(); ) {
+      Magnet aMagnet = it.next();
       Log.info("\n----------------------------------------------\nMAGNET - Executing the magnet " + aMagnet.getName());
 
-      for (Iterator someLaunchers = aMagnet.getLaunchers().iterator(); someLaunchers.hasNext(); ) {
-        Launcher aLauncher = (Launcher) someLaunchers.next();
+      for (Iterator<Launcher> someLaunchers = aMagnet.getLaunchers().iterator(); someLaunchers.hasNext(); ) {
+        Launcher aLauncher = someLaunchers.next();
         aLauncher.execute(aProfile);
         
         if (aLauncher.getLaunchHandler().geWaitTime() > 0) {

@@ -1,32 +1,22 @@
 package org.sapia.magnet;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-// Import of Apache's log4j
-// ------------------------
 import org.apache.log4j.Logger;
-
-// Import of Sapia's utility classes
-// ---------------------------------
+import org.sapia.magnet.domain.Magnet;
 import org.sapia.util.xml.ProcessingException;
 import org.sapia.util.xml.confix.CompositeObjectFactory;
-import org.sapia.util.xml.confix.ConfixProcessorIF;
 import org.sapia.util.xml.confix.ConfixProcessorFactory;
+import org.sapia.util.xml.confix.ConfixProcessorIF;
 import org.sapia.util.xml.confix.ReflectionFactory;
-
-// Import of Sapia's Corus classes
-// --------------------------------
-import org.sapia.magnet.domain.Magnet;
 
 
 /**
@@ -71,8 +61,8 @@ public class MagnetParser {
    * @return The list of magnet object created
    * @exception MagnetException If an error occurs while parsing the input stream.
    */
-  public List parse(InputStream anInput) throws MagnetException {
-    LinkedList someMagnets = new LinkedList();
+  public List<Magnet> parse(InputStream anInput) throws MagnetException {
+    LinkedList<Magnet> someMagnets = new LinkedList<Magnet>();
 
     // Create the Confix object factory
     ReflectionFactory aFactory = new ReflectionFactory(
@@ -89,7 +79,7 @@ public class MagnetParser {
 
     // Recursively parse the input stream
     try {
-      parseMagnetIter(anInput, aProcessor, someMagnets, new ArrayList());
+      parseMagnetIter(anInput, aProcessor, someMagnets, new ArrayList<String>());
     } catch (CircularReferenceException cre) {
     }
 
@@ -110,7 +100,7 @@ public class MagnetParser {
    * @exception MagnetException If an error occurs while parsing the magnet.
    */
   private Magnet parseMagnetIter(InputStream anInput, ConfixProcessorIF aProcessor, 
-          LinkedList someMagnets, List magnetStack) throws MagnetException, CircularReferenceException {
+          LinkedList<Magnet> someMagnets, List<String> magnetStack) throws MagnetException, CircularReferenceException {
     Magnet aMagnet = null;
     
     try {
@@ -202,20 +192,24 @@ public class MagnetParser {
     }
   }
   
+  /*
+   * 
+   */
 	private String[] split(String toSplit, char splitChar, boolean trim) {
-		List         tokens = new ArrayList();
+		List<String> tokens = new ArrayList<String>();
 
 		StringBuffer token = new StringBuffer();
 
 		for (int i = 0; i < toSplit.length(); i++) {
 			if (toSplit.charAt(i) == splitChar) {
-				if(trim){
+				if (trim) {
 					tokens.add(token.toString().trim());      		
-				}
-				else{
+				} else {
 					tokens.add(token.toString());
 				}
+				
 				token.delete(0, token.length());
+				
 			} else {
 				token.append(toSplit.charAt(i));
 			}
@@ -229,7 +223,7 @@ public class MagnetParser {
 			}
 		}
 
-		return (String[]) tokens.toArray(new String[tokens.size()]);
+		return tokens.toArray(new String[tokens.size()]);
 	}    
   
   public class CircularReferenceException extends Exception {

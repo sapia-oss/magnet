@@ -165,7 +165,7 @@ public class Log {
   public static String formatProperties(Properties someProperties) {
     StringBuffer aBuffer = new StringBuffer("\n ---------- listing properties ----------\n");
                     
-    for (Iterator it = new TreeSet(someProperties.keySet()).iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = new TreeSet<Object>(someProperties.keySet()).iterator(); it.hasNext(); ) {
       String aName = (String) it.next();
       String aValue = someProperties.getProperty(aName);
       aBuffer.append(aName).append("=").append(aValue).append("\n");

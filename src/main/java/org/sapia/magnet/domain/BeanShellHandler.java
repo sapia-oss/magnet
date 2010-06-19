@@ -1,18 +1,11 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.io.InputStreamReader;
 
-
-// Import of Bean Shell classes
-// ----------------------------
-import bsh.Interpreter;
-import bsh.EvalError;
-
-// Import of Sapia's utility classes
-// ---------------------------------
 import org.sapia.magnet.MagnetException;
+
+import bsh.EvalError;
+import bsh.Interpreter;
 
 
 /**

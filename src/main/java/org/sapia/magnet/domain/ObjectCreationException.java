@@ -1,7 +1,5 @@
 package org.sapia.magnet.domain;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.MagnetException;
 
 

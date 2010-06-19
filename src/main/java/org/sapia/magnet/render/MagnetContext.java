@@ -1,18 +1,11 @@
 package org.sapia.magnet.render;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-// Import of Sapia's utility classes
-// ---------------------------------
-import org.sapia.util.text.TemplateContextIF;
-
-// Import of Sapia's magnet classes
-// ---------------------------------
 import org.sapia.magnet.domain.Param;
+import org.sapia.util.text.TemplateContextIF;
 
 
 /**
@@ -39,7 +32,7 @@ public class MagnetContext implements TemplateContextIF {
   private MagnetContext _theParent;
 
   /** The map of parameters of this context associated with theyre param name. */
-  private Map _theParameters;
+  private Map<String, Param> _theParameters;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
@@ -52,7 +45,7 @@ public class MagnetContext implements TemplateContextIF {
    */
   public MagnetContext(String aProfile) {
     _theProfile = aProfile;
-    _theParameters = new HashMap();
+    _theParameters = new HashMap<String, Param>();
   }
 
   /**
@@ -63,7 +56,7 @@ public class MagnetContext implements TemplateContextIF {
   public MagnetContext(MagnetContext aParent) {
     _theParent = aParent;
     _theProfile = aParent.getProfile();
-    _theParameters = new HashMap();
+    _theParameters = new HashMap<String, Param>();
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -94,7 +87,7 @@ public class MagnetContext implements TemplateContextIF {
    * @return The collection of <CODE>Param</CODE> objects.
    * @see org.sapia.magnet.domain.Param
    */
-  public Collection getParameters() {
+  public Collection<Param> getParameters() {
     return _theParameters.values();
   }
 
@@ -110,7 +103,7 @@ public class MagnetContext implements TemplateContextIF {
       throw new IllegalArgumentException("The name passed in is null");
     }
 
-    Param aParam = (Param) _theParameters.get(aName);
+    Param aParam = _theParameters.get(aName);
     if (aParam == null && _theParent != null) {
       aParam = _theParent.getParameterFor(aName);
     }

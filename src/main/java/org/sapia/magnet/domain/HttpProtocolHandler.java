@@ -1,13 +1,8 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.TreeSet;
 
-// Import of Sapia's magnet classes
-// --------------------------------
 import org.sapia.magnet.render.RenderingException;
 
 
@@ -33,7 +28,7 @@ public class HttpProtocolHandler implements ProtocolHandlerIF {
    * @return The collection of <CODE>Resource</CODE> objects.
    * @exception RenderingException If an error occurs while resolving the path.
    */
-  public Collection resolveResources(Path aPath, String aSortingOrder) throws RenderingException {
+  public Collection<Resource> resolveResources(Path aPath, String aSortingOrder) throws RenderingException {
     // Validate the arguments
     if (aPath == null) {
       throw new IllegalArgumentException("The path object passed in null");
@@ -44,25 +39,26 @@ public class HttpProtocolHandler implements ProtocolHandlerIF {
     }
 
     // Create the resources for the included files
-    TreeSet someResources;
+    TreeSet<Resource> someResources;
     if (aSortingOrder != null && aSortingOrder.equals(Path.SORTING_ASCENDING)) {
-      someResources = new TreeSet(new Resource.AscendingComparator());
+      someResources = new TreeSet<Resource>(new Resource.AscendingComparator());
     } else if (aSortingOrder != null && aSortingOrder.equals(Path.SORTING_DESCENDING)) {
-      someResources = new TreeSet(new Resource.DescendingComparator());
+      someResources = new TreeSet<Resource>(new Resource.DescendingComparator());
     } else {
-      someResources = new TreeSet();
+      someResources = new TreeSet<Resource>();
     }
     int anIndex = 0;
 
-    for (Iterator it = aPath.getIncludes().iterator(); it.hasNext(); ) {
+    for (Include incl: aPath.getIncludes()) {
       StringBuffer anURL = new StringBuffer();
       anURL.append(Path.PROTOCOL_HTTP).append("://").
             append(aPath.getHost()).
             append(aPath.getDirectory()).append("/").
-            append(((Include) it.next()).getPattern());
+            append(incl.getPattern());
       someResources.add(new Resource(anURL.toString(), anIndex++));
     }
 
     return someResources;
   }
+  
 }

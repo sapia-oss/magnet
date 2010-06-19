@@ -1,7 +1,6 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -12,8 +11,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-// Import of Sapia's Corus classes
-// --------------------------------
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderingException;
 
@@ -36,7 +33,7 @@ public class Magnet extends AbstractObjectHandler {
   /////////////////////////////////////////////////////////////////////////////////////////
 
   /** Defines a null object for mapping of null profiles. */
-  private static final Object _theNullProfile = new Object();
+  private static final String _theNullProfile = Magnet.class.getName()+".NULL_PROFILE";
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////  INSTANCE ATTRIBUTES  /////////////////////////////////
@@ -52,16 +49,16 @@ public class Magnet extends AbstractObjectHandler {
   private String _theExtends;
   
   /** The parent magnets of this magnet. */
-  private List _theParents;
+  private List<Magnet> _theParents;
 
   /** The map of scripts objects of this magnet by the profile name. */
-  private Map _theScriptsByProfile;
+  private Map<String, Script> _theScriptsByProfile;
 
   /** The map of parameters objects of this magnet by the profile name. */
-  private Map _theParametersByProfile;
+  private Map<String, Parameters> _theParametersByProfile;
 
   /** The list of launchers of this magnet. */
-  private List _theLaunchers;
+  private List<Launcher> _theLaunchers;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
@@ -72,10 +69,10 @@ public class Magnet extends AbstractObjectHandler {
    */
   public Magnet() {
     super();
-    _theParametersByProfile = new HashMap();
-    _theScriptsByProfile = new HashMap();
-    _theParents = new ArrayList();
-    _theLaunchers = new ArrayList();
+    _theParametersByProfile = new HashMap<String, Parameters>();
+    _theScriptsByProfile = new HashMap<String, Script>();
+    _theParents = new ArrayList<Magnet>();
+    _theLaunchers = new ArrayList<Launcher>();
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +111,7 @@ public class Magnet extends AbstractObjectHandler {
    *
    * @return The parent magnets of this magnet.
    */
-  public Collection getParents() {
+  public Collection<Magnet> getParents() {
     return _theParents;
   }
 
@@ -124,7 +121,7 @@ public class Magnet extends AbstractObjectHandler {
    * @return The collection of <CODE>Script</CODE> objects.
    * @see Script
    */
-  public Collection getScripts() {
+  public Collection<Script> getScripts() {
     return _theScriptsByProfile.values();
   }
 
@@ -134,13 +131,13 @@ public class Magnet extends AbstractObjectHandler {
    * @return The collection of <CODE>Parameters</CODE> objects.
    * @see Parameters
    */
-  public Collection getParameters() {
-    Set sorted = new TreeSet(new Comparator() {
-      @Override
-      public int compare(Object o1, Object o2) {
-        return ((Parameters)o1).getOrder() - ((Parameters)o2).getOrder();
+  public Collection<Parameters> getParameters() {
+    Set<Parameters> sorted = new TreeSet<Parameters>(new Comparator<Parameters>() {
+      public int compare(Parameters p1, Parameters p2) {
+        return p1.getOrder() - p2.getOrder();
       }
     });
+    
     sorted.addAll(_theParametersByProfile.values());
     return sorted;
   }
@@ -151,7 +148,7 @@ public class Magnet extends AbstractObjectHandler {
    * @return The collection of <CODE>Launcher</CODE> objects.
    * @see Launcher
    */
-  public Collection getLaunchers() {
+  public Collection<Launcher> getLaunchers() {
     return _theLaunchers;
   }
 
@@ -250,18 +247,18 @@ public class Magnet extends AbstractObjectHandler {
     aParameters.setOrder(_theParametersByProfile.size());
 
     // Look if we are getting the global parameters or not
-    Object aKey;
+    String aKey;
     if (aParameters.getProfile() == null) {
       aKey = _theNullProfile;
     } else {
       aKey = aParameters.getProfile(); 
     }
 
-    // Add all the param tot he existing parameters
+    // Add all the param to the existing parameters
     if (_theParametersByProfile.containsKey(aKey)) {
       Parameters aMasterParameters = (Parameters) _theParametersByProfile.get(aKey);
-      for (Iterator it = aParameters.getParams().iterator(); it.hasNext(); ) {
-        aMasterParameters.addParam((Param) it.next());
+      for (Param p: aParameters.getParams()) {
+        aMasterParameters.addParam(p);
       }
     } else {
       // Add the new parameters
@@ -346,7 +343,6 @@ public class Magnet extends AbstractObjectHandler {
         aParameters.render(aContext);
       }
     } catch (RenderingException re) {
-      StringBuffer aBuffer = new StringBuffer();
       throw new RenderingException("Unable to render the global properties", re);
     }
 
@@ -407,8 +403,8 @@ public class Magnet extends AbstractObjectHandler {
     // Render the launchers of this magnet
     Launcher aLauncher = null;
     try {
-      for (Iterator it = _theLaunchers.iterator(); it.hasNext(); ) {
-        aLauncher = (Launcher) it.next();
+      for (Iterator<Launcher> it = _theLaunchers.iterator(); it.hasNext(); ) {
+        aLauncher = it.next();
         aLauncher.render(aContext);
       }
     } catch (RenderingException re) {

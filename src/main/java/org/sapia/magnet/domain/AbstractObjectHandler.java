@@ -1,25 +1,17 @@
 package org.sapia.magnet.domain;
 
-// Import of Sun's JDK classes
-// ---------------------------
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-// Import of Sapia's utility classes
-// ---------------------------------
-import org.sapia.util.xml.confix.ObjectHandlerIF;
-
-// Import of Sapia's Corus classes
-// --------------------------------
 import org.sapia.magnet.render.AbstractRenderable;
 import org.sapia.magnet.render.MagnetContext;
 import org.sapia.magnet.render.RenderableIF;
 import org.sapia.magnet.render.RenderingException;
+import org.sapia.util.xml.confix.ObjectHandlerIF;
 
 
 /**
@@ -40,23 +32,24 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
   /////////////////////////////////////////////////////////////////////////////////////////
 
   /** Defines an empty immutable list. */
-  private static final List EMPTY_LIST = Collections.unmodifiableList(new ArrayList(0));
+  private static final List<String> EMPTY_NAME_LIST = Collections.unmodifiableList(new ArrayList<String>(0));
+  private static final List<Object> EMPTY_OBJECT_LIST = Collections.unmodifiableList(new ArrayList<Object>(0));
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////  INSTANCE ATTRIBUTES  /////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
 
   /** The list of script handler definitions. */
-  private List _theScriptHandlerDefs;
+  private List<ScriptHandlerDef> _theScriptHandlerDefs;
 
   /** The list of protocol handler definitions. */
-  private List _theProtocolHandlerDefs;
+  private List<ProtocolHandlerDef> _theProtocolHandlerDefs;
 
   /** The list of launch handler definitions. */
-  private List _theLaunchHandlerDefs;
+  private List<LaunchHandlerDef> _theLaunchHandlerDefs;
 
   /** The map of objects identified by the element name. */
-  private Map _theObjects;
+  private Map<String, List<Object>> _theObjects;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
@@ -66,9 +59,9 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
    * Creates a new AbstractObjectHandler instance.
    */
   protected AbstractObjectHandler() {
-    _theLaunchHandlerDefs = new ArrayList();
-    _theProtocolHandlerDefs = new ArrayList();
-    _theScriptHandlerDefs = new ArrayList();
+    _theLaunchHandlerDefs = new ArrayList<LaunchHandlerDef>();
+    _theProtocolHandlerDefs = new ArrayList<ProtocolHandlerDef>();
+    _theScriptHandlerDefs = new ArrayList<ScriptHandlerDef>();
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +73,7 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
    *
    * @return The list of <CODE>LaunchHandlerDef</CODE> objects.
    */
-  public Collection getLaunchHandlerDefs() {
+  public Collection<LaunchHandlerDef> getLaunchHandlerDefs() {
     return _theLaunchHandlerDefs;
   }
 
@@ -89,7 +82,7 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
    *
    * @return The list of <CODE>ProtocolHandlerDef</CODE> objects.
    */
-  public Collection getProtocolHandlerDefs() {
+  public Collection<ProtocolHandlerDef> getProtocolHandlerDefs() {
     return _theProtocolHandlerDefs;
   }
 
@@ -98,7 +91,7 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
    *
    * @return The list of <CODE>ScriptHandlerDef</CODE> objects.
    */
-  public Collection getScriptHandlerDefs() {
+  public Collection<ScriptHandlerDef> getScriptHandlerDefs() {
     return _theScriptHandlerDefs;
   }
 
@@ -109,14 +102,14 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
    * @param anElementName The element name for which to retrieve the objects.
    * @return A collection of <CODE>Object</CODE> objects.
    */
-  public Collection getObjectsFor(String anElementName) {
-    List someObjects = EMPTY_LIST;
+  public Collection<Object> getObjectsFor(String anElementName) {
+    List<Object> someObjects = EMPTY_OBJECT_LIST;
 
     if (_theObjects != null) {
-      someObjects = (List) _theObjects.get(anElementName.toLowerCase());
+      someObjects = _theObjects.get(anElementName.toLowerCase());
 
       if (someObjects == null) {
-        someObjects = EMPTY_LIST;
+        someObjects = EMPTY_OBJECT_LIST;
       }
     }
 
@@ -129,8 +122,8 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
    *
    * @return The collection of element name.
    */
-  public Collection getElementNames() {
-    Collection someNames = EMPTY_LIST;
+  public Collection<String> getElementNames() {
+    Collection<String> someNames = EMPTY_NAME_LIST;
 
     if (_theObjects != null) {
       someNames = _theObjects.keySet();
@@ -182,21 +175,18 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
    */
   public void renderHandlerDefs(MagnetContext aContext) throws RenderingException {
     // Render the launch handler definitions
-    for (Iterator it = _theLaunchHandlerDefs.iterator(); it.hasNext(); ) {
-      LaunchHandlerDef aHandlerDef = (LaunchHandlerDef) it.next();
-      aHandlerDef.render(aContext);
+    for (LaunchHandlerDef handlerDef: _theLaunchHandlerDefs) {
+      handlerDef.render(aContext);
     }
 
     // Render the protocol handler definitions
-    for (Iterator it = _theProtocolHandlerDefs.iterator(); it.hasNext(); ) {
-      ProtocolHandlerDef aHandlerDef = (ProtocolHandlerDef) it.next();
-      aHandlerDef.render(aContext);
+    for (ProtocolHandlerDef handlerDef: _theProtocolHandlerDefs) {
+      handlerDef.render(aContext);
     }
 
     // Render the script handler definitions
-    for (Iterator it = _theScriptHandlerDefs.iterator(); it.hasNext(); ) {
-      ScriptHandlerDef aHandlerDef = (ScriptHandlerDef) it.next();
-      aHandlerDef.render(aContext);
+    for (ScriptHandlerDef handlerDef: _theScriptHandlerDefs) {
+      handlerDef.render(aContext);
     }
   }
 
@@ -207,14 +197,10 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
    * @exception RenderingException If an error occurs while rendering this object.
    */
   public void render(MagnetContext aContext) throws RenderingException {
-    for (Iterator it = getElementNames().iterator(); it.hasNext(); ) {
-      String anElementName = (String) it.next();
-
-      for (Iterator someObjects = getObjectsFor(anElementName).iterator(); someObjects.hasNext(); ) {
-        Object anObject = someObjects.next();
-
-        if (anObject instanceof RenderableIF) {
-          ((RenderableIF) anObject).render(aContext);
+    for (String elementName: getElementNames()) {
+      for (Object obj: getObjectsFor(elementName)) {
+        if (obj instanceof RenderableIF) {
+          ((RenderableIF) obj).render(aContext);
         }
       }
     }
@@ -229,13 +215,13 @@ public abstract class AbstractObjectHandler extends AbstractRenderable implement
   public void handleObject(String anElementName, Object anObject) {
     // Lazy creation of the map
     if (_theObjects == null) {
-      _theObjects = new HashMap();
+      _theObjects = new HashMap<String, List<Object>>();
     }
 
     // Retrieve the list associated with the element name
-    List someObjects = (List) _theObjects.get(anElementName.toLowerCase());
+    List<Object> someObjects = _theObjects.get(anElementName.toLowerCase());
     if (someObjects == null) {
-      someObjects = new ArrayList();
+      someObjects = new ArrayList<Object>();
       _theObjects.put(anElementName.toLowerCase(), someObjects);
     }
 
