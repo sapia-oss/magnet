@@ -20,6 +20,25 @@ import org.sapia.magnet.render.RenderingException;
  */
 public class Script extends AbstractRenderable {
 
+  /**
+   * Factory method that creates a new {@link Script} instance.
+   * 
+   * @param aType
+   * @param aProfile
+   * @param someCode
+   * @param isAbortingOnError
+   * @return The created instance.
+   */
+  public static Script createNew(String aType, String aProfile, String someCode, boolean isAbortingOnError) {
+    Script created = new Script();
+    created.setType(aType);
+    created.setProfile(aProfile);
+    created.setCode(someCode);
+    created.setIsAbortingOnError(String.valueOf(isAbortingOnError));
+    
+    return created;
+  }
+  
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////  INSTANCE ATTRIBUTES  /////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +103,7 @@ public class Script extends AbstractRenderable {
    * @return The abort on error indicator of this script.
    */
   public boolean isAbortingOnError() {
-    return _isAbortingOnError.equals("true");
+    return (_isAbortingOnError != null && _isAbortingOnError.equalsIgnoreCase("true"));
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////

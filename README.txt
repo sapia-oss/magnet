@@ -47,17 +47,17 @@ Apache Software Foundation  (http://www.apache.org/).
 DEPENDENCIES
 ============
 
-Ant 1.5.1                (http://ant.apache.org)
+Ant 1.7.0                (http://ant.apache.org)
 
-Log4j 1.2.5              (http://jakarta.apache.org/log4j)
+Log4j 1.2.16             (http://jakarta.apache.org/log4j)
 
 Piccolo XML parser 1.0.3 (http://piccolo.sourceforge.net)
 
-Junit 3.7.               (http://www.junit.org/index.htm)
+Junit 4.7                (http://www.junit.org/index.htm)
 
-JDOM 1.0 beta 9          (http://www.jdom.org)
+JDOM 1.1                 (http://www.jdom.org)
 
-BeanShell                (http://www.beanshell.org)
+BeanShell 1.3            (http://www.beanshell.org)
 
 
 SUPPORT
@@ -73,10 +73,8 @@ INSTALLATION
 
 1. Download
 
-Download the distribution from SourceForge 
-(http://www.sourceforge.net/projects/magnet). The download
-link appears in the "Files" section; the latest "magnet"
-release should be downloaded.
+Download the lastest magnet distribution from Google Code 
+(http://code.google.com/p/sapia/downloads/list).
 
 
 2. Extract

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>Sapia Magnet</name>
   <description>Magnet allows launching a Java applications from the command-line in a generic way</description>
-  <url>http://www.sapia-oss.org/projects/corus/index.html</url>
+  <url>http://www.sapia-oss.org/projects/magnet/index.html</url>
   <groupId>org.sapia</groupId>
   <artifactId>sapia_magnet</artifactId>
   <version>2.0-SNAPSHOT</version>
@@ -74,7 +74,7 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.8</version>
+      <version>1.2.16</version>
     </dependency>
 
     <dependency>
@@ -189,9 +189,9 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-						      <groupId>org.sapia</groupId>
-						      <artifactId>sapia_ubik</artifactId>
-						      <version>2.5.5</version>                  
+                  <groupId>org.sapia</groupId>
+                  <artifactId>sapia_ubik</artifactId>
+                  <version>2.5.5</version>                  
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
