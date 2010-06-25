@@ -1,8 +1,7 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
-import org.sapia.magnet.MagnetRunner;
+import org.junit.Before;
+import org.junit.Test;
 
 
 /**
@@ -14,17 +13,14 @@ import org.sapia.magnet.MagnetRunner;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class MainMagnetTest extends TestCase {
+public class MainMagnetTest extends BaseMagnetTestCase {
 
-  public static void main(String[] args) {
-    org.apache.log4j.BasicConfigurator.configure();
-    TestRunner.run(MainMagnetTest.class);
+  @Before
+  public void setUp() throws Exception {
+    super.baseSetUp();
   }
 
-  public MainMagnetTest(String aName) {
-    super(aName);
-  }
-
+  @Test
   public void testSystemMagnet() throws Exception {
     try {
       StringBuffer aName = new StringBuffer().
@@ -33,12 +29,13 @@ public class MainMagnetTest extends TestCase {
             append(java.io.File.separator).append("mainMagnet.xml");
       for (int i = 0; i < 1; i++) {
         MagnetRunner.main(new String[]
-        { "-magnetfile", aName.toString(), "dev" } );
+        { "-magnetfile", aName.toString(), "-p", "dev" } );
       }
     } catch (Exception e) {
     }
   }
 
+  @Test
   public void testSystemMagnet_NoProfile() throws Exception {
     try {
       StringBuffer aName = new StringBuffer().
@@ -52,4 +49,5 @@ public class MainMagnetTest extends TestCase {
     } catch (Exception e) {
     }
   }
+  
 }

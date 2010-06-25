@@ -28,6 +28,27 @@ public class Param extends AbstractRenderable {
   /** Defines the MAGNET paramter scope. */
   public static final String SCOPE_MAGNET = "magnet";
 
+  /**
+   * Factory method to create a new {@link Param} with the passed in arguments.
+   * 
+   * @param aName
+   * @param aValue
+   * @param aScope
+   * @param aIf
+   * @param aUnless
+   * @return
+   */
+  public static Param createNew(String aName, String aValue, String aScope, String aIf, String aUnless) {
+    Param created = new Param();
+    created.setName(aName);
+    created.setValue(aValue);
+    created.setScope(aScope);
+    created.setIf(aIf);
+    created.setUnless(aUnless);
+    
+    return created;
+  }
+  
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////  INSTANCE ATTRIBUTES  /////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -118,13 +139,33 @@ public class Param extends AbstractRenderable {
    * 
    * @return The name of the variable that MUST exist to
    *         use this parameter.
+   * @deprecated use {@link #getIf()}
    */
   public String getIfDefine() {
+    return getIf();
+  }
+  
+  /**
+   * Returns the name of the variable that MUST exist to
+   * use this parameter.
+   * 
+   * @return The name of the variable that MUST exist to
+   *         use this parameter.
+   */
+  public String getIf(){
     return _theIfDefine;
   }
   
-  public String getIf(){
-    return getIfDefine();
+  /**
+   * Returns the name of the variable that must NOT exist to
+   * use this parameter.
+   * 
+   * @return The name of the variable that must NOT exist to
+   *         use this parameter.
+   * @deprecated Use {@link #getUnless()}
+   */
+  public String getUnlessDefine() {
+    return getUnlessDefine();
   }
   
   /**
@@ -134,12 +175,8 @@ public class Param extends AbstractRenderable {
    * @return The name of the variable that must NOT exist to
    *         use this parameter.
    */
-  public String getUnlessDefine() {
-    return _theUnlessDefine;
-  }
-  
   public String getUnless(){
-    return getUnlessDefine();
+    return _theUnlessDefine;
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -177,14 +214,32 @@ public class Param extends AbstractRenderable {
    * Changes the name of the parameters that MUST exist to use
    * this parameter
    * 
-   * @param aParamName The name of the parameter that need to exist. 
+   * @param aParamName The name of the parameter that need to exist.
+   * @deprecated Use {@link #setIf(String)} 
    */
   public void setIfDefine(String aParamName) {
+    this.setIf(aParamName);
+  }
+  
+  /**
+   * Changes the name of the parameters that MUST exist to use
+   * this parameter
+   * 
+   * @param aParamName The name of the parameter that need to exist. 
+   */
+  public void setIf(String aParamName){
     _theIfDefine = aParamName;
   }
   
-  public void setIf(String aParamName){
-    this.setIfDefine(aParamName);
+  /**
+   * Changes the name of the parameters that must NOT exist to use
+   * this parameter
+   * 
+   * @param aParamName The name of the parameter that need to be inexistant.
+   * @deprecated Use {@link #setUnless(String)} 
+   */
+  public void setUnlessDefine(String aParamName) {
+    setUnless(aParamName);
   }
   
   /**
@@ -193,12 +248,8 @@ public class Param extends AbstractRenderable {
    * 
    * @param aParamName The name of the parameter that need to be inexistant. 
    */
-  public void setUnlessDefine(String aParamName) {
-    _theUnlessDefine = aParamName;
-  }
-  
   public void setUnless(String aParamName){
-    setUnlessDefine(aParamName);
+    _theUnlessDefine = aParamName;
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -215,6 +266,9 @@ public class Param extends AbstractRenderable {
     try {
       _theValue = resolveValue(aContext, _theValue);
       _theScope = resolveValue(aContext, _theScope);
+      _theIfDefine = resolveValue(aContext, _theIfDefine);
+      _theUnlessDefine = resolveValue(aContext, _theUnlessDefine);
+      
     } catch (RenderingException re) { 
       StringBuffer aBuffer = new StringBuffer();
       aBuffer.append("Unable to resolve an attribute of the param '").

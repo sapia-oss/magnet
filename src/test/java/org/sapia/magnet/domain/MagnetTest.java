@@ -93,12 +93,5 @@ public class MagnetTest extends BaseMagnetTestCase {
 
     doRenderMagnets(someMagnets, null);
   }
-  
-  
-  
-  
-//  public void testRender_emptyMagnet
-
 
 }
-

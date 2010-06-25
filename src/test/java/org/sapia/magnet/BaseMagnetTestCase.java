@@ -1,11 +1,20 @@
 package org.sapia.magnet;
 
+import java.util.Iterator;
+
 import junit.framework.Assert;
 
 import org.apache.log4j.Logger;
 import org.sapia.magnet.domain.AbstractObjectHandler;
+import org.sapia.magnet.domain.Exclude;
+import org.sapia.magnet.domain.Include;
 import org.sapia.magnet.domain.Magnet;
+import org.sapia.magnet.domain.Param;
+import org.sapia.magnet.domain.Parameters;
+import org.sapia.magnet.domain.Path;
 import org.sapia.magnet.domain.Script;
+import org.sapia.magnet.domain.java.Classpath;
+import org.sapia.magnet.domain.java.Codebase;
 
 public abstract class BaseMagnetTestCase {
 
@@ -87,6 +96,138 @@ public abstract class BaseMagnetTestCase {
   }
   
   
+  /**
+   * 
+   * @param eName
+   * @param eValue
+   * @param eScope
+   * @param eIf
+   * @param eUnless
+   * @param actual
+   */
+  public static void assertParam(String eName, String eValue, String eScope,
+          String eIf, String eUnless, Param actual) {
+    Assert.assertNotNull("The param passed in should not be null", actual);
+    Assert.assertEquals("The name of the param is invalid", eName, actual.getName());
+    Assert.assertEquals("The value of the param is invalid", eValue, actual.getValue());
+    Assert.assertEquals("The scope of the param is invalid", eScope, actual.getScope());
+    Assert.assertEquals("The if condition of the param is invalid", eIf, actual.getIf());
+    Assert.assertEquals("The unless condition of the param is invalid", eUnless, actual.getUnless());
+  }
+  
+  /**
+   * 
+   * @param eProfile
+   * @param eParams
+   * @param actual
+   */
+  public static void assertParameters(String eProfile, Param[] eParams, Parameters actual) {
+    Assert.assertNotNull("The parameters passed in should not be null", actual);
+    Assert.assertEquals("The profile of the parameters is invalid", eProfile, actual.getProfile());
+    Assert.assertEquals("The number of param of the parameters is invalid", eParams.length, actual.getParams().size());
+    Iterator<Param> actualParams = actual.getParams().iterator();
+    for (int i = 0; i < eParams.length; i++) {
+      assertParam(eParams[i].getName(), eParams[i].getValue(), eParams[i].getScope(), eParams[i].getIf(), eParams[i].getUnless(),
+              actualParams.next());
+    }
+  }
+
+  /**
+   * 
+   * @param ePattern
+   * @param actual
+   */
+  public static void assertInclude(String ePattern, Include actual) {
+    Assert.assertNotNull("The include passed in should not be null", actual);
+    Assert.assertEquals("The pattern of the include is invalid", ePattern, actual.getPattern());
+  }
+
+  /**
+   * 
+   * @param ePattern
+   * @param actual
+   */
+  public static void assertExclude(String ePattern, Exclude actual) {
+    Assert.assertNotNull("The exclude passed in should not be null", actual);
+    Assert.assertEquals("The pattern of the exclude is invalid", ePattern, actual.getPattern());
+  }
+  
+  /**
+   * 
+   * @param eProtocol
+   * @param eHost
+   * @param eDirectory
+   * @param eSorting
+   * @param eIncludes
+   * @param eExcludes
+   * @param actual
+   */
+  public static void assertPath(String eProtocol, String eHost, String eDirectory, String eSorting,
+          Include[] eIncludes, Exclude[] eExcludes, Path actual) {
+    Assert.assertNotNull("The path passed in should not be null", actual);
+    Assert.assertEquals("The protocol of the path is invalid", eProtocol, actual.getProtocol());
+    Assert.assertEquals("The host of the path is invalid", eHost, actual.getHost());
+    Assert.assertEquals("The directory of the path is invalid", eDirectory, actual.getDirectory());
+
+    Assert.assertEquals("The size of the include list is invalid", eIncludes.length, actual.getIncludes().size());
+    Iterator<Include> actualIncludes = actual.getIncludes().iterator();
+    for (int i=0; i < eIncludes.length; i++) {
+      assertInclude(eIncludes[i].getPattern(), actualIncludes.next());
+    }
+
+    Assert.assertEquals("The size of the exclude list is invalid", eExcludes.length, actual.getExcludes().size());
+    Iterator<Exclude> actualExcludes = actual.getExcludes().iterator();
+    for (int i=0; i < eExcludes.length; i++) {
+      assertExclude(eExcludes[i].getPattern(), actualExcludes.next());
+    }
+  }
+  
+  /**
+   * 
+   * @param eId
+   * @param eParent
+   * @param ePaths
+   * @param actual
+   */
+  public static void assertClasspath(String eId, String eParent, Path[] ePaths, Classpath actual) {
+    Assert.assertNotNull("The classpath passed in should not be null", actual);
+    Assert.assertEquals("The id of the classpath is invalid", eId, actual.getId());
+    Assert.assertEquals("The parent of the classpath is invalid", eParent, actual.getParent());
+
+    Assert.assertEquals("The path count of the classpath is invalid", ePaths.length, actual.getPaths().size());
+    Iterator<Path> actualPaths = actual.getPaths().iterator();
+    for (int i=0; i < ePaths.length; i++) {
+      assertPath(ePaths[i].getProtocol(), ePaths[i].getHost(), ePaths[i].getDirectory(), ePaths[i].getSorting(),
+              ePaths[i].getIncludes().toArray(new Include[ePaths[i].getIncludes().size()]),
+              ePaths[i].getExcludes().toArray(new Exclude[ePaths[i].getExcludes().size()]),
+              actualPaths.next());
+    }
+  }
+  
+  /**
+   * 
+   * @param eId
+   * @param eParent
+   * @param ePaths
+   * @param eProfile
+   * @param actual
+   */
+  public static void assertCodebase(String eId, String eParent, Path[] ePaths, String eProfile,
+          Codebase actual) {
+    Assert.assertNotNull("The codebase passed in should not be null", actual);
+    Assert.assertEquals("The id of the codebase is invalid", eId, actual.getId());
+    Assert.assertEquals("The parent of the codebase is invalid", eParent, actual.getParent());
+    Assert.assertEquals("The profile of the codebase is invalid", eProfile, actual.getProfile());
+
+    Assert.assertEquals("The path count of the codebase is invalid", ePaths.length, actual.getPaths().size());
+    Iterator<Path> actualPaths = actual.getPaths().iterator();
+    for (int i=0; i < ePaths.length; i++) {
+      assertPath(ePaths[i].getProtocol(), ePaths[i].getHost(), ePaths[i].getDirectory(), ePaths[i].getSorting(),
+              ePaths[i].getIncludes().toArray(new Include[ePaths[i].getIncludes().size()]),
+              ePaths[i].getExcludes().toArray(new Exclude[ePaths[i].getExcludes().size()]),
+              actualPaths.next());
+    }
+  }
   
   /**
    * 
@@ -116,5 +257,4 @@ public abstract class BaseMagnetTestCase {
     Assert.assertEquals("The number of parameters of this magnet is invalid", eParametersCount, actual.getParameters().size());
     Assert.assertEquals("The number of launchers of this magnet is invalid", eLauncherCount, actual.getLaunchers().size());
   }
-  
 }

@@ -1,8 +1,7 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
-import org.sapia.magnet.MagnetRunner;
+import org.junit.Before;
+import org.junit.Test;
 
 
 /**
@@ -16,35 +15,31 @@ import org.sapia.magnet.MagnetRunner;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class JavaMagnetTest extends TestCase {
+public class JavaMagnetTest extends BaseMagnetTestCase {
 
-  public static void main(String[] args) {
-    TestRunner.run(JavaMagnetTest.class);
+  @Before
+  public void setup() throws Exception {
+    super.baseSetUp();
   }
-
-  public JavaMagnetTest(String aName) {
-    super(aName);
-  }
-
+  
+  @Test
   public void testSystemMagnet() throws Exception {
     StringBuffer aName = new StringBuffer().
           append(System.getProperty("user.dir")).
           append(java.io.File.separator).append("etc").
           append(java.io.File.separator).append("helloMagnet.xml");
 
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 3; i++) {
       if (i % 3 == 0)
-        MagnetRunner.main(new String[]
-      { "-magnetfile", aName.toString(), "-info", "english" } );
+        MagnetRunner.main(new String[] { "-magnetfile", aName.toString(), "-info", "-p", "english" } );
       else if (i % 3 == 1)
-        MagnetRunner.main(new String[]
-              { "-magnetfile", aName.toString(), "-debug", "spanish" } );
+        MagnetRunner.main(new String[] { "-magnetfile", aName.toString(), "-debug", "-p", "spanish" } );
       else
-        MagnetRunner.main(new String[]
-              { "-magnetfile", aName.toString(), "-debug", "french" } );
+        MagnetRunner.main(new String[] { "-magnetfile", aName.toString(), "-debug", "-p", "french" } );
     }
   }
 
+  @Test
   public void testSystemMagnet_NoProfile() throws Exception {
     StringBuffer aName = new StringBuffer().
           append(System.getProperty("user.dir")).
@@ -55,4 +50,5 @@ public class JavaMagnetTest extends TestCase {
         { "-magnetfile", aName.toString() } );
 
   }
+  
 }

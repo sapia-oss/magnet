@@ -44,6 +44,16 @@ public class Path extends AbstractRenderable {
   /** Defines the DESCENDING sorting order. */
   public static final String SORTING_DESCENDING = "descending";
 
+  public static Path createNew(String aProtocol, String aHost, String aDirectory, String aSorting) {
+    Path created = new Path();
+    created.setProtocol(aProtocol);
+    created.setHost(aHost);
+    created.setDirectory(aDirectory);
+    created.setSorting(aSorting);
+    
+    return created;
+  }
+  
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////  INSTANCE ATTRIBUTES  /////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////

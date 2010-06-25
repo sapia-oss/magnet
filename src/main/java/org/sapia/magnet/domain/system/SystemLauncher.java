@@ -283,7 +283,7 @@ public class SystemLauncher extends DefaultLaunchHandler {
       }
       
       if(!isOsMatch()){
-        Log.warn("Skipping this system launcher --> expected OS " + getOs(), this);
+        Log.warn("Skipping this system launcher --> expected OS " + getOs() + " but is " + System.getProperty("os.name"), this);
         return;
       }
 

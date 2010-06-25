@@ -1,4 +1,4 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
 import org.sapia.corus.interop.Param;
 import org.sapia.corus.interop.Status;
@@ -24,6 +24,9 @@ public class DummyServer implements ShutdownListener, StatusRequestListener {
 
   private boolean _isShutdown = false;
   
+  /**
+   * Creates a new {@link DummyServer} instance.
+   */
   public DummyServer() {
     InteropClient.getInstance().addShutdownListener(this);
     InteropClient.getInstance().addStatusRequestListener(this);
@@ -33,16 +36,16 @@ public class DummyServer implements ShutdownListener, StatusRequestListener {
     return _isShutdown;
   }
   
-  /**
-   * @see org.sapia.corus.interop.client.ShutdownListener#onShutdown()
+  /* (non-Javadoc)
+   * @see org.sapia.corus.interop.api.ShutdownListener#onShutdown()
    */
   public void onShutdown() {
     _isShutdown = true;
     System.out.println("Shutting down the dummy server...");
   }
 
-  /**
-   * @see org.sapia.corus.interop.client.StatusRequestListener#onStatus(org.sapia.corus.interop.Status)
+  /* (non-Javadoc)
+   * @see org.sapia.corus.interop.api.StatusRequestListener#onStatus(org.sapia.corus.interop.Status)
    */
   public void onStatus(Status status) {
     Param anParam = new Param("isShutdown", (_isShutdown? "true": "false"));

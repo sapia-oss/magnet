@@ -1,8 +1,6 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
-import org.sapia.magnet.MagnetRunner;
+import org.junit.Test;
 
 
 /**
@@ -16,23 +14,16 @@ import org.sapia.magnet.MagnetRunner;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class AllInOneTimeServerMagnetTest extends TestCase {
+public class AllInOneTimeServerMagnetTest extends BaseMagnetTestCase {
 
-  public static void main(String[] args) {
-    TestRunner.run(AllInOneTimeServerMagnetTest.class);
-  }
-
-  public AllInOneTimeServerMagnetTest(String aName) {
-    super(aName);
-  }
-
+  @Test
   public void testSystemMagnet() throws Exception {
     StringBuffer aName = new StringBuffer().
           append(System.getProperty("user.dir")).
           append(java.io.File.separator).append("etc").
           append(java.io.File.separator).append("AllInOneTimeServerMagnet.xml");
 
-    MagnetRunner.main(new String[] { "-debug", "-magnetfile", aName.toString(), "colocated" } );
-//    MagnetRunner.main(new String[] { "-debug", "-magnetfile", aName.toString(), "remote" } );
+    MagnetRunner.main(new String[] { "-debug", "-magnetfile", aName.toString(), "-p", "colocated" } );
+    MagnetRunner.main(new String[] { "-debug", "-magnetfile", aName.toString(), "-p", "remote" } );
   }
 }

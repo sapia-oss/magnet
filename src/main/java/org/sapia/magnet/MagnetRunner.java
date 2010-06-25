@@ -298,14 +298,14 @@ public class MagnetRunner {
             append("      -help, -h\t\tprint this message\n").
             append("      -version\t\tprint the version information and exit\n").
             append("      -logfile    <file>\tuse the given file to log\n").
-            append("        -log      <file>\t           ''\n").
+            append("      -log        <file>\t           ''\n").
             append("      -debug\t\tprint debugging information\n").
             append("      -info\t\tprint information that can help to diagnose\n").
             append("      -warn\t\tprint warning and error information\n").
             append("      -magnetfile <file>\tuse the given magnet configuration file\n").
-            append("        -file     <file>\t              ''\n\n").
+            append("      -file       <file>\t              ''\n\n").
             append("      -profile <name>\tthe name of the profile to execute in the magnet. If\n").
-            append("        -p     <name>\tthe profile is not provided, only the launchers with a\n").
+            append("      -p       <name>\tthe profile is not provided, only the launchers with a\n").
             append("\t\t\t default profile are executed\n\n").
             append("Args:\n").
             append("    The application arguments that can be passed to magnet at every execution.\n").

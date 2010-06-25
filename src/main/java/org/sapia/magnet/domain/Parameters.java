@@ -36,13 +36,12 @@ public class Parameters extends AbstractRenderable {
 
   /** The map of params identified with the name of each param. */
   private Map<String, Param> _theParamsByName;
+  
+  private int order;
 
   /////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////  CONSTRUCTORS  /////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
-
-  
-  private int order;
   
   /**
    * Creates a new Parameters instance.
@@ -52,14 +51,6 @@ public class Parameters extends AbstractRenderable {
     _theParamsByName =  new HashMap<String, Param>();
   }
   
-  void setOrder(int order) {
-    this.order = order;
-  }
-  
-  public int getOrder() {
-    return order;
-  }
-
   /**
    * Creates a new Parameters instance with the argument passed in.
    *
@@ -171,6 +162,14 @@ public class Parameters extends AbstractRenderable {
     _theParamsByName.clear();
   }
 
+  public int getOrder() {
+    return order;
+  }
+
+  void setOrder(int order) {
+    this.order = order;
+  }
+
   /////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////  OVERRIDEN METHODS  //////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -186,13 +185,13 @@ public class Parameters extends AbstractRenderable {
         (aContext.getProfile() != null && _theProfile.equals(aContext.getProfile()))) {
 
       for (Param param: _theParams) {
-      
-        // Validate if we render the param or not
-        if ((param.getIfDefine() == null || aContext.getValue(param.getIfDefine()) != null) &&
-            (param.getUnlessDefine() == null || aContext.getValue(param.getUnlessDefine()) == null)) {
 
-          // Render the parameter
-          param.render(aContext);
+        // Render the parameter
+        param.render(aContext);
+      
+        // Validate if we use the param or not
+        if ((param.getIf() == null || aContext.getValue(param.getIf()) != null) &&
+            (param.getUnless() == null || aContext.getValue(param.getUnless()) == null)) {
           
           // Add the param in the right context
           if (param.getScope().equals(Param.SCOPE_MAGNET)) {

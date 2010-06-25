@@ -1,13 +1,7 @@
-package org.sapia.magnet.domain.test;
+package org.sapia.magnet.domain;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
-
-import org.sapia.magnet.domain.Exclude;
-import org.sapia.magnet.domain.Include;
-import org.sapia.magnet.domain.Path;
-import org.sapia.magnet.domain.FileProtocolHandler;
-import org.sapia.magnet.domain.HttpProtocolHandler;
+import org.junit.Test;
+import org.sapia.magnet.BaseMagnetTestCase;
 
 /**
  *
@@ -19,16 +13,9 @@ import org.sapia.magnet.domain.HttpProtocolHandler;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class ProtocolHandlerTest extends TestCase {
+public class ProtocolHandlerTest extends BaseMagnetTestCase {
 
-  public static void main(String[] args) {
-    TestRunner.run(ProtocolHandlerTest.class);
-  }
-
-  public ProtocolHandlerTest(String aName) {
-    super(aName);
-  }
-
+  @Test
   public void testBasicPath() throws Exception {
     FileProtocolHandler aHandler = new FileProtocolHandler();
     Path aPath = new Path();
@@ -39,6 +26,7 @@ public class ProtocolHandlerTest extends TestCase {
     System.out.println("INCLUDES: " + aHandler.resolveResources(aPath, Path.SORTING_ASCENDING));
   }
 
+  @Test
   public void testBasicHttpPath() throws Exception {
     HttpProtocolHandler aHandler = new HttpProtocolHandler();
     Path aPath = new Path();
@@ -51,4 +39,5 @@ public class ProtocolHandlerTest extends TestCase {
 
     System.out.println("INCLUDES: " + aHandler.resolveResources(aPath, Path.SORTING_DESCENDING));
   }
+  
 }

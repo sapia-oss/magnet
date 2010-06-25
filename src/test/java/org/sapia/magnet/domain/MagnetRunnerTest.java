@@ -1,7 +1,8 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet.domain;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
+import org.junit.Before;
+import org.junit.Test;
+import org.sapia.magnet.BaseMagnetTestCase;
 import org.sapia.magnet.MagnetRunner;
 
 /**
@@ -13,43 +14,31 @@ import org.sapia.magnet.MagnetRunner;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class MagnetRunnerTest extends TestCase {
+public class MagnetRunnerTest extends BaseMagnetTestCase {
 
+  @Before
+  public void setUp() throws Exception {
+    super.baseSetUp();
+  }
   
-  public static void main(String[] args) {
-    TestRunner.run(MagnetRunnerTest.class);
-  }
-
-  public MagnetRunnerTest(String aName) {
-    super(aName);
-  }
-
+  @Test
   public void testVersion() throws Exception {
     MagnetRunner.main(new String[] {"-version"});
   }
 
+  @Test
   public void testHelp() throws Exception {
     MagnetRunner.main(new String[] {"-help"});
   }
 
-  /*
-  public void testMagnetFile() throws Exception {
-    MagnetRunner.main(new String[] {"-magnetfile",  "Corus.xml",  "dev", "whatever"});
-  }
-
-  public void testDefaultMagnet() throws Exception {
-    MagnetRunner.main(new String[] {"dev"});
-  }
-
-  public void testDefaultProfile() throws Exception {
-    MagnetRunner.main(new String[] {"-file", "etc/myMagnet.xml"});
-  }*/
-
+  @Test
   public void testUnknownOption() throws Exception {
     MagnetRunner.main(new String[] {"-unknown"});
   }
 
+  @Test
   public void testSystemLauncher() throws Exception {
     MagnetRunner.runFile("etc/systemMagnet.xml","dev");
   }
+  
 }

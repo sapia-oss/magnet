@@ -1,8 +1,7 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
-import org.sapia.magnet.MagnetRunner;
+import org.junit.Before;
+import org.junit.Test;
 
 
 /**
@@ -16,17 +15,14 @@ import org.sapia.magnet.MagnetRunner;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class SystemMagnetTest extends TestCase {
+public class SystemMagnetTest extends BaseMagnetTestCase {
 
-  public static void main(String[] args) {
-    org.apache.log4j.BasicConfigurator.configure();
-    TestRunner.run(SystemMagnetTest.class);
+  @Before
+  public void setUp() throws Exception {
+    super.baseSetUp();
   }
 
-  public SystemMagnetTest(String aName) {
-    super(aName);
-  }
-
+  @Test
   public void testSystemMagnet() throws Exception {
     if(System.getProperty("os.name").toLowerCase().indexOf("windows") < 0){
       System.out.println("Not launching System magnet - needs to run on Windows platform");
@@ -38,19 +34,18 @@ public class SystemMagnetTest extends TestCase {
           append(java.io.File.separator).append("etc").
           append(java.io.File.separator).append("systemMagnet.xml");
 
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 3; i++) {
       if (i % 3 == 0)
-        MagnetRunner.main(new String[]
-//      { "-magnetfile", aName.toString(), "dev" } );
-      { "-magnetfile", aName.toString(), "-info", "dev" } );
+        MagnetRunner.main(new String[] { "-magnetfile", aName.toString(), "-info", "-p", "dev" } );
+
       else if (i % 3 == 1)
-        MagnetRunner.main(new String[]
-              { "-magnetfile", aName.toString(), "-debug", "test" } );
+        MagnetRunner.main(new String[] { "-magnetfile", aName.toString(), "-debug", "-p", "test" } );
+
       else
-        MagnetRunner.main(new String[]
-              { "-magnetfile", aName.toString(), "-debug", "prod" } );
+        MagnetRunner.main(new String[] { "-magnetfile", aName.toString(), "-debug", "-p", "prod" } );
         
-//      Thread.sleep(1000);
+      Thread.sleep(1000);
     }
   }
+  
 }

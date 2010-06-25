@@ -1,4 +1,4 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
 /**
  *

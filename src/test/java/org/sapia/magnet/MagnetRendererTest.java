@@ -1,19 +1,16 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
 import java.util.ArrayList;
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
 
-import org.apache.log4j.BasicConfigurator;
-
-import org.sapia.magnet.MagnetRenderer;
+import org.junit.Before;
+import org.junit.Test;
 import org.sapia.magnet.domain.Launcher;
 import org.sapia.magnet.domain.Magnet;
 import org.sapia.magnet.domain.Param;
 import org.sapia.magnet.domain.Parameters;
 import org.sapia.magnet.domain.Profile;
-import org.sapia.magnet.domain.system.SystemLauncher;
 import org.sapia.magnet.domain.system.Environment;
+import org.sapia.magnet.domain.system.SystemLauncher;
 import org.sapia.magnet.domain.system.Variable;
 
 
@@ -26,29 +23,29 @@ import org.sapia.magnet.domain.system.Variable;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class MagnetRendererTest extends TestCase {
+public class MagnetRendererTest extends BaseMagnetTestCase {
 
-  public static void main(String[] args) {
-    TestRunner.run(MagnetRendererTest.class);
+  @Before
+  public void setUp() throws Exception {
+    super.baseSetUp();
   }
 
-  public MagnetRendererTest(String aName) {
-    super(aName);
-  }
-
+  @Test
   public void testSimpleMagnet() throws Exception {
-    BasicConfigurator.configure();
     Magnet aMagnet = createSimpleMagnet();
-    ArrayList aList = new ArrayList(1);
+    ArrayList<Magnet> aList = new ArrayList<Magnet>(1);
     aList.add(aMagnet);
     new MagnetRenderer().render(aList, "dev");
     System.out.println(aMagnet);
 
-    ((Launcher) aMagnet.getLaunchers().iterator().next()).execute("dev");
+    for (Launcher l: aMagnet.getLaunchers()) {
+      l.execute("dev");
+    }
+    Thread.sleep(5000l);
   }
 
 
-  private Magnet createSimpleMagnet() {
+  private Magnet createSimpleMagnet() throws Exception {
     Magnet aMagnet = new Magnet();
     aMagnet.setName("simpleMagnet");
     aMagnet.setDescription("A test magnet");
@@ -65,17 +62,24 @@ public class MagnetRendererTest extends TestCase {
     aParameters.addParam(new Param("value", "${protocol}-value"));
     aParameters.addParam(new Param("base", "${host}/index.html"));
 
+    aMagnet.addLauncher(createWindowsLauncher());
+    aMagnet.addLauncher(createMacLauncher());
+
+    return aMagnet;
+  }
+  
+  private Launcher createWindowsLauncher() throws Exception {
     Launcher aLauncher = new Launcher();
     aLauncher.setType("system");
-    aMagnet.addLauncher(aLauncher);
     SystemLauncher aLauncherHandler = (SystemLauncher) aLauncher.getLaunchHandler();
+    aLauncherHandler.setOs("windows");
     aLauncherHandler.setName("SapiaHomePage");
     aLauncherHandler.setCommand("cmd /C call explorer.exe D:\\");
     aLauncherHandler.setWorkingDirectory("C:\\");
 
     Profile aProfile = new Profile();
     aProfile.setName("dev");
-    aParameters = new Parameters();
+    Parameters aParameters = new Parameters();
     aProfile.setParameters(aParameters);
     aParameters.addParam(new Param("url", "${protocol}://${host}"));
     Environment anEnv = new Environment();
@@ -92,7 +96,40 @@ public class MagnetRendererTest extends TestCase {
     aProfile.setParameters(aParameters);
     aParameters.addParam(new Param("url", "${protocol}://${base}?query=${value}"));
     aLauncherHandler.addProfile(aProfile);
-
-    return aMagnet;
+    
+    return aLauncher; 
   }
+  
+  private Launcher createMacLauncher() throws Exception {
+    Launcher aLauncher = new Launcher();
+    aLauncher.setType("system");
+    SystemLauncher aLauncherHandler = (SystemLauncher) aLauncher.getLaunchHandler();
+    aLauncherHandler.setOs("mac");
+    aLauncherHandler.setName("SapiaHomePage");
+    aLauncherHandler.setCommand("./Safari.app/Contents/MacOS/Safari");
+    aLauncherHandler.setWorkingDirectory("/Applications");
+
+    Profile aProfile = new Profile();
+    aProfile.setName("dev");
+    Parameters aParameters = new Parameters();
+    aProfile.setParameters(aParameters);
+    aParameters.addParam(new Param("url", "${protocol}://${host}"));
+    Environment anEnv = new Environment();
+    Variable aVar = new Variable();
+    aVar.setName("path");
+    aVar.setValue("/Applications");
+    anEnv.addVariable(aVar);
+    aProfile.handleObject("Environment", anEnv);
+    aLauncherHandler.addProfile(aProfile);
+
+    aProfile = new Profile();
+    aProfile.setName("test");
+    aParameters = new Parameters();
+    aProfile.setParameters(aParameters);
+    aParameters.addParam(new Param("url", "${protocol}://${base}?query=${value}"));
+    aLauncherHandler.addProfile(aProfile);
+    
+    return aLauncher; 
+  }
+  
 }

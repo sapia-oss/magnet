@@ -1,12 +1,12 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.sapia.corus.interop.Context;
 import org.sapia.corus.interop.Param;
 import org.sapia.corus.interop.Status;
-import org.sapia.corus.interop.Context;
 import org.sapia.corus.interop.client.InteropClient;
 import org.sapia.corus.interop.http.HttpProtocol;
-
-import junit.framework.TestCase;
 
 
 /**
@@ -21,46 +21,46 @@ import junit.framework.TestCase;
  *     at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class InteropClientTest extends TestCase {
+public class InteropClientTest extends BaseMagnetTestCase {
 
-  /**
-   * Creates a new InteropClientTest instance.
-   */
-  public InteropClientTest(String aName) {
-    super(aName);
-  }
-  
+  @Test
   public void testShutdown() throws Exception {
     DummyServer aServer = new DummyServer();
-    InteropClient.getInstance().setProtocol(new HttpProtocol());
-    assertTrue("The server is already shutdown", !aServer.isShutdown());
+    safellySetInteropProtocol();
+    Assert.assertTrue("The server is already shutdown", !aServer.isShutdown());
     
     InteropClient.getInstance().setExitSystemOnShutdown(false);
     InteropClient.getInstance().shutdown();
-    assertTrue("The server is not shutdown", aServer.isShutdown());
+    Assert.assertTrue("The server is not shutdown", aServer.isShutdown());
   }
   
+  @Test
   public void testStatusRequestAndShudown() throws Exception {
-    
     DummyServer aServer = new DummyServer();
-    InteropClient.getInstance().setProtocol(new HttpProtocol());
-    assertTrue("The server is already shudown", !aServer.isShutdown());
+    safellySetInteropProtocol();
+    Assert.assertTrue("The server is already shudown", !aServer.isShutdown());
     
     Status aStatus = new Status();
     InteropClient.getInstance().processStatus(aStatus);
-    assertEquals("", 1, aStatus.getContexts().size());
+    Assert.assertEquals("", 1, aStatus.getContexts().size());
 
     Context aContext = (Context) aStatus.getContexts().get(0);
-    assertEquals("", "DummyServer", aContext.getName());
-    assertEquals("", 1, aContext.getParams().size());
+    Assert.assertEquals("", "DummyServer", aContext.getName());
+    Assert.assertEquals("", 1, aContext.getParams().size());
     
     Param anParam = (Param) aContext.getParams().get(0);
-    assertEquals("", "isShutdown", anParam.getName());
-    assertEquals("", "false", anParam.getValue());
+    Assert.assertEquals("", "isShutdown", anParam.getName());
+    Assert.assertEquals("", "false", anParam.getValue());
     
     InteropClient.getInstance().setExitSystemOnShutdown(false);
     InteropClient.getInstance().shutdown();
-    assertTrue("The server is not shudown", aServer.isShutdown());
+    Assert.assertTrue("The server is not shudown", aServer.isShutdown());
   }
-  
+
+  private void safellySetInteropProtocol() {
+    try {
+      InteropClient.getInstance().setProtocol(new HttpProtocol());
+    } catch (Exception e) {
+    }
+  }
 }

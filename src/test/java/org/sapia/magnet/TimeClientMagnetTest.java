@@ -1,10 +1,8 @@
-package org.sapia.magnet.test;
+package org.sapia.magnet;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
-
-import org.sapia.magnet.MagnetRunner;
-import org.sapia.ubik.rmi.naming.remote.Consts;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.sapia.ubik.rmi.naming.remote.EmbeddableJNDIServer;
 
 
@@ -19,36 +17,31 @@ import org.sapia.ubik.rmi.naming.remote.EmbeddableJNDIServer;
  *        <a href="http://www.sapia-oss.org/license.html" target="sapia-license">license page</a> at the Sapia OSS web site</dd></dt>
  * </dl>
  */
-public class TimeClientMagnetTest extends TestCase {
+public class TimeClientMagnetTest extends BaseMagnetTestCase {
 
-  EmbeddableJNDIServer jndi;
+  // Test Fixtures
+  private EmbeddableJNDIServer _jndi;
   
-  public static void main(String[] args) {
-    TestRunner.run(TimeClientMagnetTest.class);
-  }
-
-  public TimeClientMagnetTest(String aName) {
-    super(aName);
-  }
-  
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    jndi = new EmbeddableJNDIServer();
-    jndi.start(true);
-  }
-  
-  @Override
-  protected void tearDown() throws Exception {
-    jndi.stop();
+  @Before
+  public void setUp() throws Exception {
+    super.baseSetUp();
+    _jndi = new EmbeddableJNDIServer();
+    _jndi.start(true);
   }
 
+  @After
+  public void tearDown() throws Exception {
+    _jndi.stop();
+  }
+
+  @Test
   public void testSystemMagnet() throws Exception {
     StringBuffer aName = new StringBuffer().
           append(System.getProperty("user.dir")).
           append(java.io.File.separator).append("etc").
           append(java.io.File.separator).append("TimeClientMagnet.xml");
 
-    MagnetRunner.main(new String[] { "-debug", "-magnetfile", aName.toString(), "sapia"} );
+    MagnetRunner.main(new String[] { "-debug", "-magnetfile", aName.toString(), "-p", "sapia"} );
   }
+  
 }
