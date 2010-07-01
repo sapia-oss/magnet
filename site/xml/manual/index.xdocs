@@ -5,7 +5,7 @@
 
 <FRAMESET ROWS="80,*" BORDER="0">
      <FRAME SRC="top.html" NAME="title" SCROLLING="NO"/>
-     <FRAMESET COLS="150,*" BORDER="0">
+     <FRAMESET COLS="180,*" BORDER="0">
          <FRAME SRC="leftmenu.html" NAME="sidebar"/>
           <FRAME SRC="home.html" NAME="main"/>
      </FRAMESET>

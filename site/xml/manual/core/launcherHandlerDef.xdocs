@@ -1,4 +1,4 @@
-<sapia:page title="core:launcherHandlerDef" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform">
+<sapia:page title="core:launcherHandlerDef" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
   <sapia:sect1 title="core:launcherHandlerDef">
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />

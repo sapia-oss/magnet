@@ -1,4 +1,4 @@
-<sapia:page title="Magnet" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform">
+<sapia:page title="Magnet" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="css/sapia.css">
   <sapia:refreshMenu page="leftmenu.html" />
   <sapia:sect1 title="Magnet">
     <sapia:section>
@@ -164,8 +164,8 @@
   </classpath>
         
   <launcher type="java" name="helloWorld" 
-    mainClass="org.sapia.magnet.examples.HelloWorldApp"
-    args="${msg}" default="english" isDaemon="false">
+            mainClass="org.sapia.magnet.examples.HelloWorldApp"
+            args="${msg}" default="english" isDaemon="false">
             
       <profile name="english">
           <parameters>
@@ -302,12 +302,15 @@
        <sapia:sect4 title="Starting the Magnet">
          <p>Invoke the magnet command line: cd to Magnet's /etc directory and type:</p>
 <sapia:code>
-magnet -magnetfile helloWorld.xml english
+magnet -magnetfile helloWorld.xml -profile english
+
+this alternate command line does the same:
+magnet -f helloWorld.xml -p english
 </sapia:code>
 
          <p>Note that the magnet executable provides command-line help:</p> 
 <sapia:code>
-magnet -h
+magnet -help or magnet -h
 </sapia:code>
          <p/>
          <sapia:note>Magnet allows you to pass in VM properties (-Dprop=name), -X options, etc.</sapia:note>

@@ -209,6 +209,60 @@
         </executions>
       </plugin>
 
+      <!--plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xml-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>transform</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <forceCreation>true</forceCreation>
+          <transformationSets>
+            <transformationSet>
+              <validating>false</validating>
+              <dir>${basedir}/site/xml</dir>
+              <stylesheet>${basedir}/site/xsl/sapia.xsl</stylesheet>
+              <includes>
+                <include>**/*.xdocs</include>
+              </includes>
+              <fileMappers>
+                <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
+                  <targetExtension>html</targetExtension>
+                </fileMapper>
+              </fileMappers>
+              <outputDir>${basedir}/target/html</outputDir>
+            </transformationSet>
+          </transformationSets>
+        </configuration>
+      </plugin-->
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <id>generate-main-site</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <property name="param.site.sourceDir" value="${basedir}/site/xml"/>
+                <property name="param.site.targetDir" value="${basedir}/target/site"/>
+                <property name="param.site.xsltFile"  value="${basedir}/site/xsl/sapia.xsl"/>
+                <ant antfile="build.xml" target="generate-main-site" inheritRefs="true"/>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+            
     </plugins>
 
     <extensions>
@@ -252,5 +306,42 @@
     </profile>
   </profiles>
   
+  <reporting>
+    <outputDirectory>${basedir}/target/site/project-info</outputDirectory>
+    <plugins>
+      <!-- project info report -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.0.1</version>
+      </plugin>
+      
+      <!-- javadoc -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>
+      
+      <!-- test report -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+      
+      <!--  xref -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <linkJavadoc>true</linkJavadoc>
+          <javadocDir>${basedir}/target/site/apidocs</javadocDir>
+        </configuration>
+      </plugin>
+      
+    </plugins>
+  </reporting>
 
 </project>

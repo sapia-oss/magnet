@@ -1,8 +1,37 @@
-.textTable {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px}
-.titleTable {  font-family: Verdana, Arial, Helvetica, sans-serif}
-.menuTable {  font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: x-small}
-a:active {  text-decoration: none; color: #000000}
-a:link {  text-decoration: none; color: #000000}
-a:visited {  text-decoration: none; color: #000000}
-a:hover {  text-decoration: underline; color: #000000}
-.sapiaTable {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px}
+/* Sapia style sheet */
+/* Define colors, fonts and other style attributes here to override the defaults  */
+
+.textTable {
+	font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px
+}
+
+.titleTable {
+	font-family: Verdana, Arial, Helvetica, sans-serif
+}
+
+.menuTable { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: x-small
+}
+
+.menuSubItem { 
+    font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: normal; font-size: x-small; text-indent: 20px;
+}
+
+a:active {
+    text-decoration: none; color: #000000
+}
+    
+a:link {
+	text-decoration: none; color: #000000
+}
+	
+a:visited {
+	text-decoration: none; color: #000000
+}
+	
+a:hover {
+	text-decoration: underline; color: #000000
+}
+.sapiaTable {
+	font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px
+}
