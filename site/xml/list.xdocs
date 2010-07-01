@@ -9,9 +9,8 @@
     </sapia:section>
 
     <sapia:sect2>
-      <p>The mailing list for this project is hosted on SourceForge; the email address is
-      <b>sapia-magnet_users@lists.sourceforge.net</b>. You must 
-      <a href="http://lists.sourceforge.net/lists/listinfo/sapia-magnet_users">subscribe</a>
+      <p>The mailing list for this project is hosted on Google groups. You must 
+      <a href="http://groups.google.com/group/sapia-support" target="googleGroups">subscribe</a>
       prior to post messages.</p>
     </sapia:sect2>
   </sapia:sect1>
