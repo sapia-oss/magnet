@@ -9,7 +9,7 @@
     <toc />
         
     <sapia:sect2 title="Overview">
-	    <p>The <sapia:command>&lt;launcherHandlerDef&gt;</sapia:command> element can be use to
+	    <p>The <sapia:command>&lt;launchHandlerDef&gt;</sapia:command> element can be use to
 	    extend the functionality of Magnet by adding a new launcher to start a different type
       of process. For example, if you want to add the functionnality of starting a python
       program from Magnet you would first need to implement the <sapia:class>LauncherHandlerIF</sapia:class>

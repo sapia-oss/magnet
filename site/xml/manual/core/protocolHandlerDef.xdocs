@@ -13,15 +13,16 @@
 	    extend the functionality of Magnet by adding a new protocol to the existing "file" and
 	    "http" protocols provided. For example, if you want to be able to retrieve resources
 	    from an FTP server using a <sapia:command>&lt;path&gt;</sapia:command> element you need
-	    to do two things. First, implement the <sapia:class>ProtocolHandlerIF</sapia:class>
-	    interface to provide all the mechanic necessary to handle the FTP protocol. Once this class
-	    is coded you need to tell magnet how to associate the new "ftp" protocol to the
+	    to do two things. First, implement the
+	    <a href="./../../project-info/apidocs/org/sapia/magnet/domain/ProtocolHandlerIF.html"><sapia:class>ProtocolHandlerIF</sapia:class></a>
+	    interface to provide all the mechanics necessary to handle the protocol in question. Once this class
+	    is coded you need to tell magnet how to associate the new protocol uri scheme to the
 	    class you just wrote. To perform the association between the protocol name and the
 	    class that provides the handling of the protocol you create a protocol handler definition.
 	    </p>
     </sapia:sect2>
 
-    <sapia:sect2 title="Arguments">
+    <sapia:sect2 title="Attributes">
       <sapia:table>
         <sapia:th>Name</sapia:th>
         <sapia:th>Description</sapia:th>
@@ -56,19 +57,19 @@
     <sapia:sect2 title="Examples">
       <p>This example creates a new protocol handler for the FTP protocol. The association defines
       that the class <sapia:class>com.mycorp.magnet.FtpProtocolHandler</sapia:class> will be use
-      everytime the protocol named "ftp" is used in Magnet.
+      everytime the protocol named "ftp" is used in magnet (as the scheme of a uri).
       </p>
       <sapia:code><![CDATA[
-<core:magnet
-        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
         name="ProtocolHandlerDefExample1"
         description="This is a first example.">
 ...
-    <core:protocolHandlerDef
+    <protocolHandlerDef
             type="ftp"
             classname="com.mycorp.magnet.FtpProtocolHandler" />
 ...
-</core:magnet>]]></sapia:code>
+</magnet>]]></sapia:code>
     </sapia:sect2>
+    
   </sapia:sect1>
 </sapia:page>

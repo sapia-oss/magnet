@@ -23,7 +23,7 @@ public class ProtocolHandlerTest extends BaseMagnetTestCase {
     aPath.addInclude(new Include("**/*"));
     aPath.addExclude(new Exclude("**/bin/*"));
 
-    System.out.println("INCLUDES: " + aHandler.resolveResources(aPath, Path.SORTING_ASCENDING));
+    System.out.println("INCLUDES: " + aHandler.resolveResources(aPath, SortingOrder.ASCENDING));
   }
 
   @Test
@@ -37,7 +37,7 @@ public class ProtocolHandlerTest extends BaseMagnetTestCase {
     aPath.addInclude(new Include("implAplha.jar"));
     aPath.addExclude(new Exclude("*.jar"));
 
-    System.out.println("INCLUDES: " + aHandler.resolveResources(aPath, Path.SORTING_DESCENDING));
+    System.out.println("INCLUDES: " + aHandler.resolveResources(aPath, SortingOrder.DESCENDING));
   }
   
 }

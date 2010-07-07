@@ -28,7 +28,7 @@ public class HttpProtocolHandler implements ProtocolHandlerIF {
    * @return The collection of <CODE>Resource</CODE> objects.
    * @exception RenderingException If an error occurs while resolving the path.
    */
-  public Collection<Resource> resolveResources(Path aPath, String aSortingOrder) throws RenderingException {
+  public Collection<Resource> resolveResources(Path aPath, SortingOrder aSortingOrder) throws RenderingException {
     // Validate the arguments
     if (aPath == null) {
       throw new IllegalArgumentException("The path object passed in null");
@@ -40,9 +40,9 @@ public class HttpProtocolHandler implements ProtocolHandlerIF {
 
     // Create the resources for the included files
     TreeSet<Resource> someResources;
-    if (aSortingOrder != null && aSortingOrder.equals(Path.SORTING_ASCENDING)) {
+    if (SortingOrder.ASCENDING == aSortingOrder) {
       someResources = new TreeSet<Resource>(new Resource.AscendingComparator());
-    } else if (aSortingOrder != null && aSortingOrder.equals(Path.SORTING_DESCENDING)) {
+    } else if (SortingOrder.DESCENDING == aSortingOrder) {
       someResources = new TreeSet<Resource>(new Resource.DescendingComparator());
     } else {
       someResources = new TreeSet<Resource>();

@@ -69,6 +69,7 @@ public class Path extends AbstractRenderable {
 
   /** The sorting order of this path element. */
   private String _theSorting;
+  private SortingOrder _sortingOrder;
 
   /** The list of the includes patterns of this path element. */
   private List<Include> _theIncludePatterns;
@@ -131,6 +132,15 @@ public class Path extends AbstractRenderable {
    */
   public String getSorting() {
     return _theSorting;
+  }
+
+  /**
+   * Returns the sortingOrder attribute.
+   *
+   * @return The sortingOrder value.
+   */
+  public SortingOrder getSortingOrder() {
+    return _sortingOrder;
   }
 
   /**
@@ -198,6 +208,15 @@ public class Path extends AbstractRenderable {
    */
   public void setSorting(String aSorting) {
     _theSorting = aSorting;
+  }
+
+  /**
+   * Changes the value of the attributes sortingOrder.
+   *
+   * @param aSortingOrder The new value of the sortingOrder attribute.
+   */
+  public void setSortingOrder(SortingOrder aSortingOrder) {
+    _sortingOrder = aSortingOrder;
   }
 
   /**
@@ -297,6 +316,15 @@ public class Path extends AbstractRenderable {
     }
 
     try {
+      if (_theSorting != null && SORTING_ASCENDING.equals(_theSorting)) {
+        _sortingOrder = SortingOrder.ASCENDING;
+      } else if (_theSorting != null && SORTING_DESCENDING.equals(_theSorting)) {
+        _sortingOrder = SortingOrder.DESCENDING;
+      } else if (_theSorting != null) {
+        throw new RenderingException("The sorting attribute of the path element is invalid: expected value '" +
+                SORTING_ASCENDING + "' or '" + SORTING_DESCENDING + "' but was " + _theSorting);
+      }
+    
       // Rendering the include patterns
       for (Include incl: _theIncludePatterns) {
         incl.render(aContext);
@@ -309,7 +337,7 @@ public class Path extends AbstractRenderable {
 
       // Delegate the resolution of the resource to the protocol handler
       ProtocolHandlerIF aHandler = HandlerFactory.getInstance().createProtocolHandler(_theProtocol);
-      _theSelectedResources = aHandler.resolveResources(this, _theSorting);
+      _theSelectedResources = aHandler.resolveResources(this, _sortingOrder);
 
     } catch (RenderingException re) { 
       StringBuffer aBuffer = new StringBuffer();

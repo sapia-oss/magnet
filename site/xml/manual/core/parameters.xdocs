@@ -9,9 +9,9 @@
     <toc />
         
     <sapia:sect2 title="Overview">
-	    <p>The <sapia:command>&lt;Parameters&gt;</sapia:command> element defines a group
+	    <p>The <sapia:command>&lt;parameters&gt;</sapia:command> element defines a group
 	    of variables in a magnet configuration file. By itself this element does not define
-	    any variable but rather contains a list of <sapia:command>&lt;Param&gt;</sapia:command>
+	    any variable but rather contains a list of <sapia:command>&lt;param&gt;</sapia:command>
 	    elements. The main functionnality of this element is to associate all the variables
 	    it contains to a given profile; so this element is <b>profile-aware</b>.
 	    </p>
@@ -26,27 +26,45 @@
 	    </p>
     </sapia:sect2>
 
-    <sapia:sect2 title="Arguments">
-		  <sapia:table>
-		    <sapia:th>Name</sapia:th>
-		    <sapia:th>Description</sapia:th>
-		    <sapia:th>Required</sapia:th>
-		    <sapia:th>Interpolation</sapia:th>
-		    <tr>
-		      <td>profile</td>
-		      <td>The name of the profile to which this group of parameters will be associated.</td>
-		      <td>no</td>
-		      <td>no</td>
-		    </tr>
-		  </sapia:table>
+    <sapia:sect2 title="Attributes">
+      <p>The following list the xml attributes of the <sapia:command>&lt;parameters&gt;</sapia:command> element:
+      </p>
+	  <sapia:table>
+	    <sapia:th>Name</sapia:th>
+	    <sapia:th>Description</sapia:th>
+	    <sapia:th>Required</sapia:th>
+	    <sapia:th>Interpolation</sapia:th>
+	    <tr>
+	      <td>profile</td>
+	      <td>The name of the profile to which this group of parameters will be associated.</td>
+	      <td>no</td>
+	      <td>no</td>
+	    </tr>
+	  </sapia:table>
     </sapia:sect2>
 
+    <sapia:sect2 title="Child Elements">
+      <p>The following list the possible child xml elements that can hold the <sapia:command>&lt;parameters&gt;</sapia:command> element:
+      </p>
+      <sapia:table>
+        <sapia:th>Name</sapia:th>
+        <sapia:th>Cardinality</sapia:th>
+        <sapia:th>Description</sapia:th>
+        <tr>
+          <td><a href="#Param" target="main">param</a></td>
+          <td>0 or *</td>
+          <td>Each param child element defines a given variable.</td>
+        </tr>
+      </sapia:table>
+    </sapia:sect2>
+
+
     <sapia:sect2 title="Rendering Operations">
-		  <p>When a <sapia:command>&lt;Parameters&gt;</sapia:command> element is rendered, it performs the following
+		  <p>When a <sapia:command>&lt;parameters&gt;</sapia:command> element is rendered, it performs the following
 		  operations in order:
 		    <ol>
 		      <li>Renders each param definition it contains. A param will be rendered only if the evaluation of
-            the conditionnal attributes "ifDefine" <b>and</b> "unlessDefine" is true; otherwise the param
+            the conditionnal attributes "if" <b>and</b> "unless" is true; otherwise the param
             is skipped and the rendering process goes on to the next param.</li>
 		      <li>Add each param to the magnet context or to the system properties (depending on the scope).</li>
 		    </ol>
@@ -56,45 +74,43 @@
     <sapia:sect2 title="Examples">
 		  <p>This first example defines a parameters element that would contains global variables.</p>
 		  <sapia:code><![CDATA[
-<core:magnet
-        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
         name="ParametersExample1"
         description="This is a simple example.">
 ...
-    <core:parameters>
+    <parameters>
         ...
-    </core:parameters>
+    </parameters>
 ...
-</core:magnet>]]></sapia:code>
+</magnet>]]></sapia:code>
 
 		  <p>This second example defines a parameters element that would contains variables associated
 		  to a "dev" profile.</p>
 		  <sapia:code><![CDATA[
-<core:magnet
-        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
         name="ParametersExample2"
         description="This is a second example.">
 ...
-    <core:parameters profile="dev">
+    <parameters profile="dev">
         ...
-    </core:parameters>
+    </parameters>
 ...
 </core:magnet>]]></sapia:code>
 
     </sapia:sect2>
 
-	  <sapia:sect2 title="Nested Element">
+	  <sapia:sect2 title="Nested Element Definition">
       <sapia:sect3 title="Param">
-        <p>The <sapia:command>&lt;Param&gt;</sapia:command> element defines a parameter or a variable
+        <p>The <sapia:command>&lt;param&gt;</sapia:command> element defines a parameter or a variable
         that contains a value that can be referenced in a magnet configuration file. This element is
-        always nested within a <sapia:command>&lt;Parameters&gt;</sapia:command> and basically consist
-        of name-value pair. Because it is alway within a <sapia:command>&lt;Parameters&gt;</sapia:command>
+        always nested within a <sapia:command>&lt;parameters&gt;</sapia:command> and basically consist
+        of a name-value pair. Because it is alway within a <sapia:command>&lt;parameters&gt;</sapia:command>
         element, the value of a variable will be defined according to the profile of this paramaters ;
-        variables of "global" parameters will always be rendeder and variables of a specific profile will
+        variables of "default" parameters will always be rendeder and variables of a specific profile will
         only be rendered if that profile is executed.
         </p>
 
-        <p>If a variable is defined more than once for different <sapia:command>&lt;Parameters&gt;</sapia:command>,
+        <p>If a variable is defined more than once for different <sapia:command>&lt;parameters&gt;</sapia:command>,
         the value of that variable can be overloaded, meaning the value of the variable will change
         according to the profile in which the magnet is run. If a variable is define globally
         (not associated to a profile) and the same variable is define for a specific profile, the
@@ -102,21 +118,21 @@
         profile.
         </p>
 
-        <p>The value of a variable can contain another variable using the notation
+        <p>The value of a variable can contain another variable name using the notation
         <sapia:command>${variable_name}</sapia:command>. The only care to take in that situation is to
         make sure that the variable it refers to is already define. Since the variables are processed
-        sequentially in magnet, you would need to define your <sapia:command>&lt;Param&gt;</sapia:command>
+        sequentially in magnet, you would need to define your <sapia:command>&lt;param&gt;</sapia:command>
         element before you use the variable in the value of another.
         </p>
 
         <p>Each variable that is define in a magnet configuration file can reside in virtually two
-        places. The scope attribute of the <sapia:command>&lt;Param&gt;</sapia:command> element gives
+        places. The scope attribute of the <sapia:command>&lt;param&gt;</sapia:command> element gives
         us a way to define where we want a variable to reside. Two value are possible for that attribute:
         <ul>
             <li><b>magnet</b> - The variable will be added to the magnet context and the value will
             only be accessible from within magnet.</li>
             <li><b>system</b> - The variable will be added to the java system properties and the
-            value will be accessible accros the VM.</li>
+            value will be accessible accross the VM.</li>
         </ul>
         </p>
 
@@ -125,7 +141,9 @@
           magnet context first. If it's not present it will then look in the system properties.
         </sapia:note>
 
-        <sapia:sect4 title="Arguments">
+        <sapia:sect4 title="Attributes">
+          <p>The following list the xml attributes of the <sapia:command>&lt;param&gt;</sapia:command> element:
+          </p>
           <sapia:table>
             <sapia:th>Name</sapia:th>
             <sapia:th>Description</sapia:th>
@@ -152,130 +170,113 @@
               <td>yes</td>
             </tr>
             <tr>
-              <td>ifDefine</td>
+              <td>if</td>
               <td><p>Condition that makes this variable effective only if the value represents a
               variable name that have a value in the magnet context or in the system properties.</p>
               </td>
               <td>no</td>
-              <td>no</td>
+              <td>yes</td>
             </tr>
             <tr>
-              <td>unlessDefine</td>
+              <td>unless</td>
               <td><p>Condition that makes this variable effective only if the value represents a
               variable name that does not have a value in the magnet context or in the system properties.</p>
               </td>
               <td>no</td>
-              <td>no</td>
+              <td>yes</td>
             </tr>
           </sapia:table>
         </sapia:sect4>
 
         <sapia:sect4 title="Rendering Operations">
-          <p>When a <sapia:command>&lt;Param&gt;</sapia:command> element is rendered, it performs the following
+          <p>When a <sapia:command>&lt;param&gt;</sapia:command> element is rendered, it performs the following
           operations in order:
             <ol>
-              <li>Resolve the value and the scope attributes (using variable interpolation).</li>
+              <li>Resolve the value, scope , if and unless attributes (using variable interpolation).</li>
             </ol>
           </p>
         </sapia:sect4>
 
-        <sapia:sect4 title="Examples">
+        <sapia:sect4 title="Param Examples">
           <p>This first example defines two sets of the same variables: foo and username. The example shows
           how to use the variable value overload feature of magnet. If that magnet would be run for a "dev"
           profile, the value of the foo variable would be bar2, otherwise the value of the variable would be
           bar.</p>
           <sapia:code><![CDATA[
-<core:magnet
-        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
         name="ParamExample1"
         description="This is a simple example.">
 ...
-    <core:parameters>
-        <core:param name="foo" value="bar" />
-        <core:param name="username" value="scott" />
-    </core:parameters>
+    <parameters>
+        <param name="foo"      value="bar" />
+        <param name="username" value="scott" />
+    </parameters>
 
-    <core:parameters profile="dev">
-        <core:param name="foo" value="bar2" />
-        <core:param name="username" value="developer" />
-    </core:parameters>
+    <parameters profile="dev">
+        <param name="foo"      value="bar2" />
+        <param name="username" value="developer" />
+    </parameters>
 ...
-</core:magnet>]]></sapia:code>
+</magnet>]]></sapia:code>
 
           <p>This second example shows how to export variable to the java system properties using
           the scope attribute. In that example the hostname variable would be added the the system
-          properties. The result is the same as adding the argument <sapia:command>-Dhostname=myhost</sapia:command>
+          properties. The result is the same as adding the argument <sapia:command>-Dhostname=myhost.mydomain.com</sapia:command>
           to the command line when invoking a java VM.</p>
           <sapia:code><![CDATA[
-<core:magnet
-        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
         name="ParamExample2"
         description="This is a second example.">
 ...
-    <core:parameters>
-        <core:param name="hostname"
-                    value="myhost"
-                    scope="system" />
-        <core:param name="port"
-                    value="80" />
-    </core:parameters>
+    <parameters>
+        <param name="hostname" value="myhost.mydomain.com" scope="system" />
+        <param name="port"     value="80" />
+    </parameters>
 ...
-</core:magnet>]]></sapia:code>
+</magnet>]]></sapia:code>
 
           <p>In this third example we see that the <sapia:command>server.url</sapia:command> variable
-          use other variables to define it's value. In we run that magnet for the dev profile, the
+          use other variables to define it's value. When we run that magnet for the dev profile, the
           <sapia:command>server.url</sapia:command> variable would have the value
           <sapia:command>http://192.168.57.100:80</sapia:command>.
           </p>
           <sapia:code><![CDATA[
-<core:magnet
-        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
         name="ParamExample3"
         description="This is a third example.">
 ...
-    <core:parameters>
-        <core:param name="server.port" value="80" />
-    </core:parameters>
+    <parameters>
+        <param name="server.port" value="80" />
+    </parameters>
 
-    <core:parameters profile="dev">
-      <core:param
-              name="server.ip"
-              value="192.168.57.100" />
-      <core:param
-              name="server.url"
-              value="http://${server.ip}:${server.port}" />
-    </core:parameters>
+    <parameters profile="dev">
+      <param name="server.ip"  value="192.168.57.100" />
+      <param name="server.url" value="http://${server.ip}:${server.port}" />
+    </parameters>
 ...
-</core:magnet>]]></sapia:code>
+</magnet>]]></sapia:code>
 
-          <p>In this fourth example we are using the <sapia:command>ifdefine</sapia:command> and
-            <sapia:command>unlessDefine</sapia:command> attribute to perform some conditionnal
-            assignation of variables. The first variable <sapia:command>magnet.home</sapia:command> will
+          <p>In this fourth example we are using the <sapia:command>if</sapia:command> and
+            <sapia:command>unless</sapia:command> attribute to perform some conditionnal variables
+            assignations. The first variable <sapia:command>magnet.home</sapia:command> will
             be assign the value of user.dir <b>only if</b> it is was not previously assigned and a
             <sapia:command>msg</sapia:command> variable will be assigned the value
-            "<sapia:command>sing the magnet.home provided</sapia:command>" if the variable
-            <sapia:command>magnet.home</sapia:command> is not assigned.
+            "<sapia:command>Using the magnet.home provided</sapia:command>" if the variable
+            <sapia:command>magnet.home</sapia:command> is assigned.
           </p>
           <sapia:code><![CDATA[
-<core:magnet
-        xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
         name="ParamExample3"
         description="This is a third example.">
 ...
-    <core:parameters>
-        <core:param name="magnet.home" value="${user.dir}"
-                    unlessDefine="magnet.home" scope="system"/>
-        <core:param name="msg" value="Using the magnet.home provided"
-                    ifDefine="magnet.home" scope="system"/>
-    </core:parameters>
+    <parameters>
+        <param name="magnet.home" value="${user.dir}"
+               unless="magnet.home" scope="system"/>
+        <param name="msg" value="Using the magnet.home provided"
+               if="magnet.home" scope="system"/>
+    </parameters>
 ...
-</core:magnet>]]></sapia:code>
-  <parameters>
-    <param name="msg" value="foo-bar" scope="system"/>
-    <param name="magnet.home" value="${user.dir}" unlessDefine="magnet.home" scope="system"/>
-    <param name="msg2" value="${magnet.home}" ifDefine="magnet.home" scope="system"/>
-  </parameters>
-
+</magnet>]]></sapia:code>
         </sapia:sect4>
 
       </sapia:sect3>

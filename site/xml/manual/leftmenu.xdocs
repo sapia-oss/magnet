@@ -7,12 +7,12 @@
       <sapia:vsubitem name="magnet" href="core/magnet.html" />
       <sapia:vsubitem name="parameters" href="core/parameters.html" />
       <sapia:vsubitem name="param" href="core/parameters.html#Param" />
-      <sapia:vsubitem name="path" href="core/path.html" />
-      <sapia:vsubitem name="protocolHandlerDef" href="core/protocolHandlerDef.html" />
-      <sapia:vsubitem name="script" href="core/script.html" />
       <sapia:vsubitem name="scriptHandlerDef" href="core/scriptHandlerDef.html" />
+      <sapia:vsubitem name="script" href="core/script.html" />
+      <sapia:vsubitem name="protocolHandlerDef" href="core/protocolHandlerDef.html" />
+      <sapia:vsubitem name="path" href="core/path.html" />
+      <sapia:vsubitem name="launchHandlerDef" href="core/launchHandlerDef.html" />
       <sapia:vsubitem name="launcher" href="core/launcher.html" />
-      <sapia:vsubitem name="launcherHandlerDef" href="core/launcherHandlerDef.html" />
     </sapia:vitem>
 
     <sapia:vitem name="system elements" href="home.html#System%20Extension">
