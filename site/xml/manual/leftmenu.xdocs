@@ -12,7 +12,6 @@
       <sapia:vsubitem name="protocolHandlerDef" href="core/protocolHandlerDef.html" />
       <sapia:vsubitem name="path" href="core/path.html" />
       <sapia:vsubitem name="launchHandlerDef" href="core/launchHandlerDef.html" />
-      <sapia:vsubitem name="launcher" href="core/launcher.html" />
     </sapia:vitem>
 
     <sapia:vitem name="system elements" href="home.html#System%20Extension">

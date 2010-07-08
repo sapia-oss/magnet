@@ -40,7 +40,7 @@
       </ul>
     </sapia:sect2>
       
-    <sapia:sect2 title="System Extension">
+    <sapia:sect2 title="System Elements">
       <ul>
         <li><a href="system/environment.html">environment</a></li>
         <li><a href="system/launcher.html">launcher</a></li>
@@ -48,7 +48,7 @@
     </sapia:sect2>
 
 
-    <sapia:sect2 title="Java Extension">
+    <sapia:sect2 title="Java Elements">
       <ul>
         <li><a href="java/codebase.html">codebase</a></li>
         <li><a href="java/classpath.html">classpath</a></li>
