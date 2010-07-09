@@ -4,7 +4,7 @@
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
       <sapia:path name="magnet" href="../../home.html" />
-      <sapia:path name="manual" href="../home.html#Java%20Element" />
+      <sapia:path name="manual" href="../home.html#Java%20Elements" />
     </sapia:section>
     <toc />
         
@@ -118,7 +118,7 @@
       <p>It is important to mention that Magnet will keep a one to one relationship between a classpath
       element and a Java classloader. When an hierarchy of classpath element is created in your Magnet
       configuration file, the same classloader hierarchy will be created in memory of the Java virtual
-      machine.
+      machine. Magnet will use the system classloader of the VM as the root of the classloader hierarchy.
       </p>
       
       <p>This gives the flexibility to the programmer to decide what is the scope of the classes used

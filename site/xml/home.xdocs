@@ -1,11 +1,14 @@
 <sapia:page title="Magnet" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="css/sapia.css">
   <sapia:refreshMenu page="leftmenu.html" />
   <sapia:sect1 title="Magnet">
+
     <sapia:section>
       <sapia:path name="home" href="../../home.html" />
       <sapia:path name="projects" />
     </sapia:section>
+
     <toc/>
+
     <sapia:sect2 title="Overview">
       <p>Do you hate writing start-up scripts for multiple platforms (.bat, .sh, etc)?
       Are you tired of writing a different script for all possible environments and all possible
@@ -15,7 +18,6 @@
     </sapia:sect2>
     
     <sapia:sect2 title="Features">
-    
       <p>Here are Magnet's features:</p>
       
       <ul>
@@ -25,11 +27,9 @@
         <li>shell scripts no more required;</li>
         <li>the flexibility of the design gives the ability to launch any type of process</li>
       </ul>
-        
     </sapia:sect2>
     
     <sapia:sect2 title="Need">
-    
       <p>The need for Magnet arises from exasperation: we were tired of writing shell scripts. And
       we were tired of writing variations of the same script for every environment our applications were running
       on. You have probably experienced this: you develop an application, and test it locally as you go along; then
@@ -48,14 +48,12 @@
       or to maintain multiple bootstrap config files, or both; at least, this WAS our solution.</p>
       
       <p>And so Magnet was born.</p>
-
     </sapia:sect2>    
 
     <sapia:sect2 title="Concepts">
       <p>First, let's define a couple of concepts that we will refer to as we go along...</p>
       
       <sapia:sect3 title="Profile">
-      
         <p>By profile, we mean runtime or startup profile: a given application might be started with different startup
         parameters, depending on its usage (see previous section for what we mean). For a given type of usage (or profile, from
         now on), these parameters may vary or remain the same. Let's take JBoss as an example: referring to what we mentioned
@@ -73,7 +71,6 @@
         profile under which the application should run, and then the startup parameters are "internally" chosen according to the 
         passed in profile. Startup parameters thus become "profile-sensitive".</p>
       </sapia:sect3>
-      
     </sapia:sect2>    
     
     <sapia:sect2 title="Architecture">
@@ -103,7 +100,6 @@
        From now on, we will use "start a magnet" instead of "start a magnet-configured application". It's way cooler. Plus the
        more conventional approach does not help suggest the notion of "multiple applications per VM" that Magnet supports.
      </sapia:note>
-         
     </sapia:sect2>
     
     <sapia:sect2 title="Usage">
@@ -114,10 +110,9 @@
           <li>Make that directory the MAGNET_HOME (define the MAGNET_HOME environment variable as the path to that directory).</li>
           <li>Add the MAGNET_HOME/bin directory to your PATH environment variable.</li>
         </ul>
-
       </sapia:sect3>    
+
       <sapia:sect3 title="Learning By Example">
-      
         <sapia:sect4 title="Coding the App">
           <p>Enough talk, let's get to the meat. Let's start with the most basic and universal application one can think
           of: the "Hello World" application. In fact, let's say that it's the "Hello XXXXXX" application; the "XXXXXX" will
@@ -297,8 +292,8 @@
         of an existing profile has a value. Imagine that we start our magnet with the "german" profile; nothing matches that in 
         our configuration. In this case, Magnet will use the profile that is specified by the attribute - in this case, the "english"
         profile.</p>
-
        </sapia:sect4>
+
        <sapia:sect4 title="Starting the Magnet">
          <p>Invoke the magnet command line: cd to Magnet's /etc directory and type:</p>
 <sapia:code>
@@ -316,9 +311,9 @@ magnet -help or magnet -h
          <sapia:note>Magnet allows you to pass in VM properties (-Dprop=name), -X options, etc.</sapia:note>
         
        </sapia:sect4>
-       
       </sapia:sect3>
     </sapia:sect2>
+    
     <sapia:sect2 title="Advanced Issues">
       <sapia:sect3 title="Rendering and Startup">
         <p>Magnet uses the <a href="http://www.sapia-oss.org/projects/utils/confix/index.html" target="sapia_confix">Confix</a> API
@@ -332,7 +327,8 @@ magnet -help or magnet -h
         <p>Once a magnet has been properly rendered and initialized, it is "started": each launcher is started in its own thread, in
         the order in which it appears.</p>
       </sapia:sect3>
-      <sapia:sect3 title="More on Parameters and Variable Interpolation"/>
+      
+      <sapia:sect3 title="More on Parameters and Variable Interpolation">
         <p>Magnet parameters can be declared at the "global" level, or (in the case of the "java" launcher), at the "profile"
         level. When declaring parameters at the global level, one can opt to "export" parameters to the VM's system properties.
         In such a case, the name/value pair of an exported parameter becomes the name/value pair of a system property, and is
@@ -385,6 +381,37 @@ magnet -help or magnet -h
         parameters defined within the current launcher); if no value is found, then the global parameters are searched; if the
         search remains unsuccessful, the system properties are searched. Indeed, <sapia:command>user.dir</sapia:command>
         maps to a system property...</p>
+      </sapia:sect3>
+        
+      <sapia:sect3 title="Using Application Arguments">
+        <p>Application arguments are parameters that can be passed to a main() method of a Java class when invoking
+        the Java virtual machine (list of arguments after the main class name when calling the java command). Magnet
+        provides a way to access those arguments that can be passed to the main class when calling Magnet. Through the
+        usage of variable interpolation, these arguments could be used within your magnet file to benefit the extra
+        flexibility it can provide. See the <a href="./running-magnet.html">running magnet</a> page for more details
+        on how to pass application arguments when running a magnet. 
+        </p>
+        
+        <p>For each application argument received Magnet will create a system property in the Java virtual machine. The
+        property name uses the pattern <sapia:command>magnet.args.n</sapia:command> where 'n' is the number of the argument,
+        starting with 1.
+        </p>
+        
+        <p>Magnet will also define the system property <sapia:command>magnet.args.*</sapia:command> which will contain a
+        concatenated string of all the application arguments received. This can be handy if you need all the arguments
+        at once and not a list of each individual argument.
+        </p>
+        
+        <p>For example, here's the list of system property that Magnet would create if you would run the following
+        command: <sapia:command>magnet -f MetricConversion.xml -p weight 10 50 125</sapia:command>
+        </p>
+        <ul>
+        <li>magnet.args.1 = 10</li>
+        <li>magnet.args.2 = 50</li>
+        <li>magnet.args.3 = 125</li>
+        <li>magnet.args.* = 10 50 125</li>
+        </ul>
+      </sapia:sect3>
       
       <sapia:sect3 title="Scripting">
         <p>Sometimes, it is necessary to perform some operations prior to the application(s) being started: create some
@@ -481,11 +508,13 @@ magnet -help or magnet -h
         <sapia:note>See the /etc directory of the distribution for more examples.</sapia:note>
         <!--sapia:note>For the complete details on how to use the system extension see the Magnet reference manual.</sapia:note-->
       </sapia:sect3>      
-    </sapia:sect2>      
+    </sapia:sect2>
+    
     <sapia:sect2 title="Conclusion">
       <p>As you can see, Magnet can free you from the start-up script nightmare. It also allows you to start multiple applications
       per VM, and supports the "profile" concept in order to greatly simplify bootstrap configuration. To learn more, well, download
       and try! You will find examples in the /etc directory of Magnet's distribution. Have fun!</p>
     </sapia:sect2>
+    
   </sapia:sect1>
 </sapia:page>

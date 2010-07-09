@@ -286,36 +286,67 @@ public class MagnetRunner {
             append("VM Options:\n").
             append("    Options that affect the Java VM that will be started. The Vm options\n").
             append("    can be one or many of the following:\n").
-            append("      -javahome <path> \tto define the home of the java runtime\n").
-            append("\t\t\tthis option overrides the JAVA_HOME environement variable\n").
-            append("      -client \t\tto start java with the \"client\" VM\n").
-            append("      -server \t\tto start java with the \"server\" VM\n").
-            append("      -X<option> \t\tto start java with non-standard options\n").
-            append("      -D<name>=<value> \tto set a system property\n\n").
+            append("    \n").
+            append("    -javahome <path>\n").
+            append("            to define the home of the java runtime this option overrides\n").
+            append("            the JAVA_HOME environement variable\n").
+            append("    \n").
+            append("    -client to start java with the 'client' VM\n").
+            append("    \n").
+            append("    -server to start java with the 'server' VM\n").
+            append("    \n").
+            append("    -X<option>\n").
+            append("            to start java with non-standard options\n").
+            append("    \n").
+            append("    -D<name>=<value>\n").
+            append("            to set a system property\n").
+            append("\n").
             append("Options:\n").
             append("    Options that will define the behavior of the magnet runtime on the Java\n").
             append("    VM is started. The magnet options can be one or more of the following:\n").
-            append("      -help, -h\t\tprint this message\n").
-            append("      -version\t\tprint the version information and exit\n").
-            append("      -logfile    <file>\tuse the given file to log\n").
-            append("      -log        <file>\t           ''\n").
-            append("      -debug\t\tprint debugging information\n").
-            append("      -info\t\tprint information that can help to diagnose\n").
-            append("      -warn\t\tprint warning and error information\n").
-            append("      -magnetfile <file>\tuse the given magnet configuration file\n").
-            append("      -file       <file>\t              ''\n\n").
-            append("      -profile <name>\tthe name of the profile to execute in the magnet. If\n").
-            append("      -p       <name>\tthe profile is not provided, only the launchers with a\n").
-            append("\t\t\t default profile are executed\n\n").
+            append("    \n").
+            append("    -help | -h\n").
+            append("            print this message\n").
+            append("    \n").
+            append("    -version\n").
+            append("            print the version information and exit\n").
+            append("    \n").
+            append("    -logfile | -log <file>\n").
+            append("            use the given file to log\n").
+            append("    \n").
+            append("    -debug  print debugging information\n").
+            append("    -info   print information that can help to diagnose\n").
+            append("    -warn   print warning and error information\n").
+            append("    \n").
+            append("    -file | -f <file>\n").
+            append("            use the given magnet configuration file\n").
+            append("    \n").
+            append("    -profile | -p <name>\n").
+            append("            the name of the profile to execute in the magnet. If the profile\n").
+            append("            is not provided, only the launchers with a default profile are\n").
+            append("            executed.\n").
+            append("\n").
             append("Args:\n").
             append("    The application arguments that can be passed to magnet at every execution.\n").
             append("    Each argument will be assigned to a system property of the name magnet.args.n\n").
-            append("    where the 'n' is replaced by the number of the argument in the list. The additionnal\n").
-            append("    system property magnet.args.* contains the entire list of arguments as a whole String\n\n").
-            append("Example: magnet -server -magnetfile TimeServer.xml test\n").
-            append("Example: magnet -javahome /opt/jdk1.4 -magnetfile TimeServer.xml test\n").
-            append("Example: magnet -Xms8m -Xmx256m -Dfoo=bar -magnetfile TransactionServer.xml prod\n").
-            append("Example: magnet -magnetfile MetricConversion.xml weight 10 50 125\n");
+            append("    where the 'n' is replaced by the number of the argument in the list. The\n").
+            append("    additionnal system property magnet.args.* contains the entire list of arguments\n").
+            append("    as a whole String.\n").
+            append("\n").
+            append("Examples:\n").
+            append("\n").
+            append("    To start a server VM that will run the magnet TimeServer.xml using the test profile: \n").
+            append("            magnet -server -file TimeServer.xml -profile test\n").
+            append("    \n").
+            append("    To start a VM using an alternate java home:\n").
+            append("            magnet -javahome /opt/jdk1.4 -file TimeServer.xml -profile test\n").
+            append("    \n").
+            append("    To start a VM with specific memory setting and a VM argument:\n").
+            append("            magnet -Xms8m -Xmx256m -Dfoo=bar -f TransactionServer.xml -p prod\n").
+            append("    \n").
+            append("    To run a magnet file to which application arguments '10', '50' and '125' are passed:\n").
+            append("            magnet -f MetricConversion.xml -p weight 10 50 125\n").
+            append("\n\n");    
 
     Log.info(aBuffer.toString());
   }
