@@ -22,38 +22,70 @@
       <sapia:command>http://schemas.sapia-oss.org/magnet/core/</sapia:command>. The usage
       of namespace prefix is up to the user, as long as it follows the rules defined by
       the XML namespace definition.</p>
-
-      <sapia:note>This reference manual is under construction so you might end up on empty pages.
-      We provide this manual as a sneak preview. Please, do not be to severe on the grammar...;-)</sapia:note>
     </sapia:sect2>
 
     <sapia:sect2 title="Core Elements">
       <ul>
-        <li><a href="core/magnet.html">magnet</a></li>
-        <li><a href="core/parameters.html">parameters</a></li>
-        <li><a href="core/path.html">path</a></li>
-        <li><a href="core/protocolHandlerDef.html">protocolHandlerDef</a></li>
-        <li><a href="core/script.html">script</a></li>
-        <li><a href="core/scriptHandlerDef.html">scriptHandlerDef</a></li>
-        <li><a href="core/launcher.html">launcher</a></li>
-        <li><a href="core/launcherHandlerDef.html">launcherHandlerDef</a></li>
+        <li><a href="core/magnet.html">magnet</a>
+            <p>Main element of a magnet configuration file.</p>
+        </li>
+        <li><a href="core/parameters.html">parameters</a>
+            <p>Define a group of parameters that can be used for variable interpolation.</p>
+        </li>
+        <li><a href="core/parameters.html#Param">param</a>
+            <p>Define a sigle name-value pair parameter.</p>
+        </li>
+        <li><a href="core/scriptHandlerDef.html">scriptHandlerDef</a>
+            <p>Define your own scripting engine to use within Magnet.</p>
+        </li>
+        <li><a href="core/script.html">script</a>
+            <p>Execute a script when running a magnet file.</p>
+        </li>
+        <li><a href="core/protocolHandlerDef.html">protocolHandlerDef</a>
+            <p>Define your custom protocol URI to load resources in Magnet.</p>
+        </li>
+        <li><a href="core/path.html">path</a>
+            <p>Define a group of resources using path elements.</p>
+        </li>
+        <li><a href="core/launcherHandlerDef.html">launcherHandlerDef</a>
+            <p>Define your own launcher type in Magnet.</p>
+        </li>
+      </ul>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Java Elements">
+      <ul>
+        <li><a href="java/codebase.html">codebase</a>
+            <p>Provides an easy way to define the java.rmi.server.codebase system property using path elements.</p>
+        </li>
+        <li><a href="java/classpath.html">classpath</a>
+            <p>Define the complete classpath of a Java application to start.</p>
+        </li>
+        <li><a href="java/launcher.html">launcher</a>
+            <p>Define how to start a Java application by calling a main () method on a class.</p>
+        </li>
+        <li><a href="java/launcher.html#Profile">profile</a>
+            <p>Define the configuration set of a java launcher for a specific profile name.</p>
+        </li>
       </ul>
     </sapia:sect2>
       
     <sapia:sect2 title="System Elements">
       <ul>
-        <li><a href="system/environment.html">environment</a></li>
-        <li><a href="system/launcher.html">launcher</a></li>
+        <li><a href="system/environment.html">environment</a>
+            <p>Define a group of environment variables to be exported into a system process.</p>
+        </li>
+        <li><a href="system/environment.html#Variable">variable</a>
+            <p>Define a single name-value pair environment variable.</p>
+        </li>
+        <li><a href="system/launcher.html">launcher</a>
+            <p>Define how to execute a system process by calling a command.</p>
+        </li>
+        <li><a href="system/launcher.html#Profile">profile</a>
+            <p>Define the configuration set of a system launcher for a specific profile name.</p>
+        </li>
       </ul>
     </sapia:sect2>
 
-
-    <sapia:sect2 title="Java Elements">
-      <ul>
-        <li><a href="java/codebase.html">codebase</a></li>
-        <li><a href="java/classpath.html">classpath</a></li>
-        <li><a href="java/launcher.html">launcher</a></li>
-      </ul>
-    </sapia:sect2>
   </sapia:sect1>
 </sapia:page>

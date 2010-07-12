@@ -14,15 +14,18 @@
       <sapia:vsubitem name="launchHandlerDef" href="core/launchHandlerDef.html" />
     </sapia:vitem>
 
-    <sapia:vitem name="system elements" href="home.html#System%20Extension">
-      <sapia:vsubitem name="environment" href="system/environment.html" />
-      <sapia:vsubitem name="launcher" href="system/launcher.html" />
-    </sapia:vitem>
-
     <sapia:vitem name="java elements" href="home.html#Java%20Extension">
       <sapia:vsubitem name="codebase" href="java/codebase.html" />
       <sapia:vsubitem name="classpath" href="java/classpath.html" />
       <sapia:vsubitem name="launcher" href="java/launcher.html" />
+      <sapia:vsubitem name="profile" href="java/launcher.html#Profile" />
+    </sapia:vitem>
+
+    <sapia:vitem name="system elements" href="home.html#System%20Extension">
+      <sapia:vsubitem name="environment" href="system/environment.html" />
+      <sapia:vsubitem name="variable" href="system/environment.html#Variable" />
+      <sapia:vsubitem name="launcher" href="system/launcher.html" />
+      <sapia:vsubitem name="profile" href="system/launcher.html#Profile" />
     </sapia:vitem>
   </sapia:vsection>
 

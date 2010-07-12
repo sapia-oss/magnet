@@ -189,7 +189,7 @@
         
         <p>The script deserves some explanations. The following describes the above magnet, element by element - <b>look at the
         /etc directory of the distribution for more information</b>. More exhaustive documentation about Magnet's XML markup
-        can be found in the <a href="manual/index.html">Magnet Reference Manual</a></p>
+        can be found in the <a href="manual/home.html">Magnet Reference Manual</a></p>
         
         <p><b><sapia:command>magnet</sapia:command></b></p>
         <p>The root element in any magnet file is <sapia:command>magnet</sapia:command>. This element takes the
@@ -295,7 +295,7 @@
        </sapia:sect4>
 
        <sapia:sect4 title="Starting the Magnet">
-         <p>Invoke the magnet command line: cd to Magnet's /etc directory and type:</p>
+         <p>Invoke the magnet command line: cd to Magnet's /bin directory and type:</p>
 <sapia:code>
 magnet -magnetfile helloWorld.xml -profile english
 
