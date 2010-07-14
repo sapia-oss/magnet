@@ -13,6 +13,7 @@ import org.sapia.magnet.domain.Param;
 import org.sapia.magnet.domain.Parameters;
 import org.sapia.magnet.domain.Path;
 import org.sapia.magnet.domain.Script;
+import org.sapia.magnet.domain.SortingOrder;
 import org.sapia.magnet.domain.java.Classpath;
 import org.sapia.magnet.domain.java.Codebase;
 
@@ -162,12 +163,13 @@ public abstract class BaseMagnetTestCase {
    * @param eExcludes
    * @param actual
    */
-  public static void assertPath(String eProtocol, String eHost, String eDirectory, String eSorting,
+  public static void assertPath(String eProtocol, String eHost, String eDirectory, SortingOrder eSorting,
           Include[] eIncludes, Exclude[] eExcludes, Path actual) {
     Assert.assertNotNull("The path passed in should not be null", actual);
     Assert.assertEquals("The protocol of the path is invalid", eProtocol, actual.getProtocol());
     Assert.assertEquals("The host of the path is invalid", eHost, actual.getHost());
     Assert.assertEquals("The directory of the path is invalid", eDirectory, actual.getDirectory());
+    Assert.assertEquals("The sorting of the path is invalid", eSorting, actual.getSorting());
 
     Assert.assertEquals("The size of the include list is invalid", eIncludes.length, actual.getIncludes().size());
     Iterator<Include> actualIncludes = actual.getIncludes().iterator();

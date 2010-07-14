@@ -38,13 +38,7 @@ public class Path extends AbstractRenderable {
   /** Defines the default host. */
   public static final String DEFAULT_HOST = "localhost";
 
-  /** Defines the ASCENDING sorting order. */
-  public static final String SORTING_ASCENDING = "ascending";
-
-  /** Defines the DESCENDING sorting order. */
-  public static final String SORTING_DESCENDING = "descending";
-
-  public static Path createNew(String aProtocol, String aHost, String aDirectory, String aSorting) {
+  public static Path createNew(String aProtocol, String aHost, String aDirectory, SortingOrder aSorting) {
     Path created = new Path();
     created.setProtocol(aProtocol);
     created.setHost(aHost);
@@ -68,8 +62,7 @@ public class Path extends AbstractRenderable {
   private String _theProtocol;
 
   /** The sorting order of this path element. */
-  private String _theSorting;
-  private SortingOrder _sortingOrder;
+  private SortingOrder _sorting;
 
   /** The list of the includes patterns of this path element. */
   private List<Include> _theIncludePatterns;
@@ -126,21 +119,12 @@ public class Path extends AbstractRenderable {
   }
 
   /**
-   * Returns the sorting order of this path element.
-   *
-   * @return The sorting order of this path element.
-   */
-  public String getSorting() {
-    return _theSorting;
-  }
-
-  /**
    * Returns the sortingOrder attribute.
    *
    * @return The sortingOrder value.
    */
-  public SortingOrder getSortingOrder() {
-    return _sortingOrder;
+  public SortingOrder getSorting() {
+    return _sorting;
   }
 
   /**
@@ -202,21 +186,12 @@ public class Path extends AbstractRenderable {
   }
 
   /**
-   * Changes the sorting order of this path element.
-   *
-   * @param aSorting The new sorting order.
-   */
-  public void setSorting(String aSorting) {
-    _theSorting = aSorting;
-  }
-
-  /**
    * Changes the value of the attributes sortingOrder.
    *
    * @param aSortingOrder The new value of the sortingOrder attribute.
    */
-  public void setSortingOrder(SortingOrder aSortingOrder) {
-    _sortingOrder = aSortingOrder;
+  public void setSorting(SortingOrder aSorting) {
+    _sorting = aSorting;
   }
 
   /**
@@ -316,15 +291,6 @@ public class Path extends AbstractRenderable {
     }
 
     try {
-      if (_theSorting != null && SORTING_ASCENDING.equals(_theSorting)) {
-        _sortingOrder = SortingOrder.ASCENDING;
-      } else if (_theSorting != null && SORTING_DESCENDING.equals(_theSorting)) {
-        _sortingOrder = SortingOrder.DESCENDING;
-      } else if (_theSorting != null) {
-        throw new RenderingException("The sorting attribute of the path element is invalid: expected value '" +
-                SORTING_ASCENDING + "' or '" + SORTING_DESCENDING + "' but was " + _theSorting);
-      }
-    
       // Rendering the include patterns
       for (Include incl: _theIncludePatterns) {
         incl.render(aContext);
@@ -337,7 +303,7 @@ public class Path extends AbstractRenderable {
 
       // Delegate the resolution of the resource to the protocol handler
       ProtocolHandlerIF aHandler = HandlerFactory.getInstance().createProtocolHandler(_theProtocol);
-      _theSelectedResources = aHandler.resolveResources(this, _sortingOrder);
+      _theSelectedResources = aHandler.resolveResources(this, _sorting);
 
     } catch (RenderingException re) { 
       StringBuffer aBuffer = new StringBuffer();

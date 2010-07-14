@@ -22,10 +22,10 @@
   <classpath id="hello_cp">
     
     <!-- The path will contain the files that matche the provided pattern. -->
-    <path directory="${magnet.home}">
+    <path directory="${magnet.home}" sorting="ascending">
       <include pattern="**/sapia_magnet_examples*.jar" />
     </path>
-    <path directory="lib">
+    <path directory="lib" sorting="ascending">
       <include pattern="**/*.jar" />
     </path>
     
