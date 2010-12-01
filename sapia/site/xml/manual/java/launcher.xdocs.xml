@@ -1,0 +1,259 @@
+<sapia:page title="java:launcher" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
+  <sapia:sect1 title="java:launcher">
+
+    <sapia:section>
+      <sapia:path name="home" href="../../../../home.html" />
+      <sapia:path name="projects" />
+      <sapia:path name="magnet" href="../../home.html" />
+      <sapia:path name="manual" href="../home.html#Java%20Elements" />
+    </sapia:section>
+
+    <toc />
+        
+    <sapia:sect2 title="Overview">
+      <p>The java <sapia:command>&lt;launcher&gt;</sapia:command> element defines a Java application
+      that will be executed by Magnet. Based on the provided configuration, Magnet will use the Java
+      reflexion API to dynamically call the <sapia:command>main(String[] args)</sapia:command> method
+      of a class.
+      </p>
+      
+      <p>Magnet provides the functionnality of starting more than one Java application per Magnet. Indeed,
+      the classloader strategy in place provides a baseground for many applications to live within the
+      same Java virtual machine without any conflicts. As discussed in the <a href="./classpath.html">classpath</a>
+      element, you can design your classloader hierarchies to suit your needs.
+      </p>
+    </sapia:sect2>
+        
+    <sapia:sect2 title="Attributes">
+      <p>The following list the xml attributes of the java launcher element:
+      </p>
+      <sapia:table>
+        <sapia:th>Name</sapia:th>
+        <sapia:th>Description</sapia:th>
+        <sapia:th>Required</sapia:th>
+        <sapia:th>Interpolation</sapia:th>
+        <tr>
+          <td>type</td>
+          <td>Defines the type of launcher. This attribute must have the value 'java'.</td>
+          <td>yes</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>name</td>
+          <td>The name of this java launcher.</td>
+          <td>yes</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>mainClass</td>
+          <td>The fully qualified name of the class that contains the main() method to invoke.</td>
+          <td>yes</td>
+          <td>yes</td>
+        </tr>
+        <tr>
+          <td>arguments</td>
+          <td>Defines the application arguments that will be passed to the main() method of the main class.</td>
+          <td>no</td>
+          <td>yes</td>
+        </tr>
+        <tr>
+          <td>isDaemon</td>
+          <td>Tell Magnet how it should setup the thread that will call the main() method of the
+          main class. The default value is 'false'.</td>
+          <td>no</td>
+          <td>yes</td>
+        </tr>
+        <tr>
+          <td>default</td>
+          <td>The name of the default profile of this luncher. This is optionnal and allow to define
+          which profile of the launcher will be executed in the case that the profile specifiec at
+          runtime is not found in the launcher.</td>
+          <td>no</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>waitTime</td>
+          <td>If specified tells Magnet how many milliseconds it needs to wait after launching this java
+          application before resuming the Magnet's execution. This can be used to insert some delays between
+          launches when you magnet file contains many launchers.</td>
+          <td>no</td>
+          <td>no</td>
+        </tr>
+      </sapia:table>
+    </sapia:sect2>
+        
+    <sapia:sect2 title="Child Elements">
+      <p>The following list the possible child xml elements that can hold the java launcher element:
+      </p>
+      <sapia:table>
+        <sapia:th>Name</sapia:th>
+        <sapia:th>Cardinality</sapia:th>
+        <sapia:th>Description</sapia:th>
+        <tr>
+          <td><a href="#Profile" target="main">profile</a></td>
+          <td>1 or *</td>
+          <td>Defines how the launcher is configured by profile.</td>
+        </tr>
+      </sapia:table>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Rendering Operations">
+      <p>When a java <sapia:command>&lt;launcher&gt;</sapia:command> element is rendered, it performs the following
+      operations in order:
+        <ol>
+          <li>Renders the appropriate <sapia:command>&lt;profile&gt;</sapia:command> child element.</li>
+          <li>Adds all the rendered parameters by the profile in the current magnet context (for variable interpolation).</li>
+          <li>Resolve the mainClass, arguments and isDaemon attributes (using variable interpolation).</li>
+        </ol>
+      </p>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Execution Operations">
+      <p>Once a java <sapia:command>&lt;launcher&gt;</sapia:command> element is rendered with success, it is executed with
+      the following operations in order:
+        <ol>
+          <li>Creates the required classloaders to reflect the classpath elements hierarchy (see
+              <a href="./classpath.html#Classloader%20Hierarchy">classpath</a> element for more details).</li>
+          <li>Load the main class using the leaf classloader of the previous step (using reflexion).</li>
+          <li>Create a new thread settings its name (with launcher's name), isDaemon and context classloader attributes.</li>
+          <li>Start the created thread to asynchronously call the main() method of the main class.</li>
+        </ol>
+      </p>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Nested Element Definitions">
+      <sapia:sect3 title="Profile">
+        <p>The java <sapia:command>&lt;profile&gt;</sapia:command> element defines the configuration of the
+        launcher for a given profile. It provides a way to define parameters specific to this launcher
+        and the classpath to use to call the main class. This can vary by profile, which gives the flexibility
+        to the programmer to fully customize various profiles based on your needs.
+        </p>
+
+        <sapia:sect4 title="Attributes">
+          <sapia:table>
+            <sapia:th>Name</sapia:th>
+            <sapia:th>Description</sapia:th>
+            <sapia:th>Required</sapia:th>
+            <sapia:th>Interpolation</sapia:th>
+            <tr>
+              <td>name</td>
+              <td>The name of this profile.</td>
+              <td>yes</td>
+              <td>no</td>
+            </tr>
+          </sapia:table>
+        </sapia:sect4>
+        
+        <sapia:sect4 title="Child Elements">
+          <p>The following list the possible child xml elements that can hold the java profile element:
+          </p>
+          <sapia:table>
+            <sapia:th>Name</sapia:th>
+            <sapia:th>Cardinality</sapia:th>
+            <sapia:th>Description</sapia:th>
+            <tr>
+              <td><a href="./../core/parameters.html" target="main">parameters</a></td>
+              <td>0 or 1</td>
+              <td>Defines specific parameters that must be used (or overwritten) for the java main() method execution.</td>
+            </tr>
+            <tr>
+              <td><a href="./classpath.html" target="main">classpath</a></td>
+              <td>1</td>
+              <td>Defines the classpath for the java main() method execution.</td>
+            </tr>
+          </sapia:table>
+        </sapia:sect4>
+
+        <sapia:sect4 title="Rendering Operations">
+          <p>When an java <sapia:command>&lt;profile&gt;</sapia:command> element is rendered, it performs the following
+          operations in order:
+            <ol>
+              <li>Renders the <sapia:command>&lt;parameters&gt;</sapia:command> child element if provided.</li>
+              <li>Renders the <sapia:command>&lt;classpath&gt;</sapia:command> child element.</li>
+            </ol>
+          </p>
+        </sapia:sect4>
+      </sapia:sect3>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Examples">
+      <p>This first example shows a basic java launcher that run an HelloWorldApp class:
+      </p>
+      <sapia:code><![CDATA[
+<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+        name="JavaLauncherExample1"
+        description="This is a first java launcher example.">
+...
+    <launcher type="java" name="helloWorld"
+              mainClass="org.sapia.magnet.examples.HelloWorldApp"
+              args="only an english message">
+
+      <profile name="english">
+          <classpath parent="hello_cp">
+              <path directory="${user.dir}/lib">
+                  <include pattern="**/*.jar" />
+              </path>
+          </classpath>
+      </profile>
+    </launcher>
+...
+</magnet>]]></sapia:code>
+
+      <p>This second example shows a more complex example that start two Java applications with
+      a common classpath element that contains common jar files: 
+      </p>
+      <sapia:code><![CDATA[
+<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+        name="JavaLauncherExample2"
+        description="This is a second java launcher example.">
+
+    <parameters>
+       <param name="jndi.portNumber" value="1099" />
+    </parameters>
+
+    <classpath id="common_cp">
+        <path directory="${user.home}/libs/common">
+            <include pattern="*.jar" />
+        </path>
+    </classpath>
+
+    <!-- Define a java launcher that will start the stateless time server. -->
+    <launcher type="java" name="timeServer" isDaemon="true" waitTime="5000"
+              mainClass="org.sapia.ubik.rmi.examples.time.StatelessTimeServer"
+              args="${timeServer.jndiUrlProvider} ${timeServer.jndiInitialFactory}"
+              default="local">
+
+        <profile name="local">
+              <parameters>
+                <param name="timeServer.jndiUrlProvider"
+                       value="ubik://localhost:${jndi.portNumber}" />
+                <param name="timeServer.jndiInitialFactory"
+                       value="org.sapia.ubik.naming.InitialContextFactory" />
+              </parameters>
+              <classpath parent="common_cp">
+                  <path directory="${user.home}/libs/server">
+                      <include pattern="*.jar" />
+                  </path>
+              </classpath>
+        </profile>
+    </launcher>
+
+    <!-- Define a java launcher that will start the time client application. -->
+    <launcher type="java" name="timeClient"
+              mainClass="org.sapia.ubik.rmi.examples.time.EndlessTimeClient"
+              default="local" waitTime="5000">
+
+        <profile name="local">
+            <classpath parent="common_cp">
+                <path directory="${user.home}/libs/client">
+                    <include pattern="*.jar" />
+                </path>
+            </classpath>
+        </profile>
+    </launcher>
+...
+</magnet>]]></sapia:code>
+    </sapia:sect2>
+    
+  </sapia:sect1>
+</sapia:page>

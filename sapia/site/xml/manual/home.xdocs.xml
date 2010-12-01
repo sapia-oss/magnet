@@ -1,0 +1,100 @@
+<sapia:page title="Magnet Reference Manual" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../css/sapia.css">
+  <sapia:vmenu>
+    <sapia:vsection name="Project Home" href="home.html"/>
+    <sapia:vsection name="Magnet in 5 Steps" href="quick-overview.html"/>
+    <sapia:vsection name="Running Magnet" href="running-magnet.html"/>
+    <sapia:vsection name="Reference" href="manual/home.html"/>
+    <sapia:vsection name="Project Info" href="project-info/index.html"/>
+    <sapia:vsection name="Download" href="download.html"/>
+    <sapia:vsection name="Mailing List" href="list.html"/>
+  </sapia:vmenu>
+  <sapia:sect1 title="Magnet Reference">
+    <sapia:section>
+      <sapia:path name="home" href="../../../home.html" />
+      <sapia:path name="projects" />
+      <sapia:path name="magnet" href="../home.html" />
+      <sapia:path name="reference"  />
+    </sapia:section>
+
+    <toc/>
+
+    <sapia:sect2 title="Overview">
+      <p>
+      This reference provides technical information about the different elements of Magnet. Each
+      element is described in detail, with examples. This reference first describes the core elements of Magnet. 
+      The sections that follow discuss the two extensions that are provided with the Magnet distribution:
+      the Java extension, that allows starting Java applications; and the system extension, that allows 
+      to starting native processes.
+      </p>
+
+      <p>All the Magnet elements must be associated to the following XML namespace:
+      <sapia:command>http://schemas.sapia-oss.org/magnet/core/</sapia:command>. The usage
+      of a namespace prefix is up to the user, as long as it follows the rules defined by
+      the XML namespace definition.</p>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Core Elements">
+      <ul>
+        <li><a href="core/magnet.html">magnet</a>
+            <p>Main element of a magnet configuration file.</p>
+        </li>
+        <li><a href="core/parameters.html">parameters</a>
+            <p>Defines a group of parameters that can be used for variable interpolation.</p>
+        </li>
+        <li><a href="core/parameters.html#Param">param</a>
+            <p>Defines a sigle name-value pair parameter.</p>
+        </li>
+        <li><a href="core/scriptHandlerDef.html">scriptHandlerDef</a>
+            <p>Defines your own scripting engine to use within Magnet.</p>
+        </li>
+        <li><a href="core/script.html">script</a>
+            <p>Executes a script when running a magnet file.</p>
+        </li>
+        <li><a href="core/protocolHandlerDef.html">protocolHandlerDef</a>
+            <p>Allows specifying a custom protocol to load resources into Magnet.</p>
+        </li>
+        <li><a href="core/path.html">path</a>
+            <p>Defines a group of resources using path elements.</p>
+        </li>
+        <li><a href="core/launchHandlerDef.html">launcherHandlerDef</a>
+            <p>Allows specifying a custom launcher type in Magnet.</p>
+        </li>
+      </ul>
+    </sapia:sect2>
+
+    <sapia:sect2 title="Java Elements">
+      <ul>
+        <li><a href="java/codebase.html">codebase</a>
+            <p>Provides an easy way to define the <sapia:command>java.rmi.server.codebase</sapia:command> system property using path elements.</p>
+        </li>
+        <li><a href="java/classpath.html">classpath</a>
+            <p>Defines the complete classpath of a Java application to start.</p>
+        </li>
+        <li><a href="java/launcher.html">launcher</a>
+            <p>Defines how to start a Java application by calling a <sapia:command>main</sapia:command> method on a class.</p>
+        </li>
+        <li><a href="java/launcher.html#Profile">profile</a>
+            <p>Define the configuration set of a java launcher for a specific profile name.</p>
+        </li>
+      </ul>
+    </sapia:sect2>
+      
+    <sapia:sect2 title="System Elements">
+      <ul>
+        <li><a href="system/environment.html">environment</a>
+            <p>Define a group of environment variables to be exported into a system process.</p>
+        </li>
+        <li><a href="system/environment.html#Variable">variable</a>
+            <p>Define a single name-value pair environment variable.</p>
+        </li>
+        <li><a href="system/launcher.html">launcher</a>
+            <p>Define how to execute a system process by calling a command.</p>
+        </li>
+        <li><a href="system/launcher.html#Profile">profile</a>
+            <p>Define the configuration set of a system launcher for a specific profile name.</p>
+        </li>
+      </ul>
+    </sapia:sect2>
+
+  </sapia:sect1>
+</sapia:page>

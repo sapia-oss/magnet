@@ -1,0 +1,231 @@
+<sapia:page title="Magnet" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="css/sapia.css">
+  <sapia:vmenu>
+    <sapia:vsection name="Project Home" href="home.html"/>
+    <sapia:vsection name="Magnet in 5 Steps" href="quick-overview.html"/>
+    <sapia:vsection name="Running Magnet" href="running-magnet.html"/>
+    <sapia:vsection name="Reference" href="manual/home.html"/>
+    <sapia:vsection name="Project Info" href="project-info/index.html"/>
+    <sapia:vsection name="Download" href="download.html"/>
+    <sapia:vsection name="Mailing List" href="list.html"/>
+  </sapia:vmenu>
+  
+  <sapia:sect1 title="Magnet in 5 Steps">
+    <sapia:section>
+      <sapia:path name="home" href="../../home.html" />
+      <sapia:path name="projects" />
+      <sapia:path name="magnet" href="home.html" />
+      <sapia:path name="magnet in 5 steps" />
+
+    </sapia:section>
+    <toc/>
+    
+    <sapia:sect2 title="Overview">
+      <p>This section provides a basic example on how to create a magnet xml file to run a Java standalone app.
+      It uses the same basic example as the <a href="./home.html#Usage">usage section</a> of the Magnet
+      project page. In five little steps you will have a quick understanding of the basics
+      (it should not take more than 2 minutes).
+      </p>
+      
+      <p>For more details on how Magnet works or how you can adapt Magnet to you specific needs you
+      can read the <a href="home.html">project home page</a> or you can look at the
+      <a href="./manual/home.html">Magnet Reference</a> for complete documentation on
+      the xml configuration. 
+      </p>
+    </sapia:sect2>
+    
+    <sapia:sect2 title="Step 1: Java Class">
+    
+      <p>The first step: determining a main Java class that you whish to run. For the current purpose
+      we suggest the following <sapia:class>HelloWorldApp</sapia:class> class. It consists of a
+      <sapia:class>main()</sapia:class> method that displays a simple "Hello" message to standard output. 
+      The exact message varies based on the first argument passed in. Have a look at the following code:
+      </p>
+      
+      <sapia:code>
+  package org.sapia.magnet.example;
+  
+  public class HelloWorldApp{
+  
+    static final String DEFAULT_MSG = "Everyone";
+    
+    public static void main(String[] args){
+      String msg;
+      if(args.length == 0){
+        msg = DEFAULT_MSG;
+      }
+      else{
+        msg = args[0];
+      }
+      
+      System.out.println("Hello " + msg);
+    }
+  }</sapia:code>
+        
+    </sapia:sect2>
+    
+    <sapia:sect2 title="Step 2: Base XML configuration">
+    
+      <p>Now that you have determined which Java class you'll run, you can write Magnet xml configuration file. As
+      a second step, we're creating the skeleton for that xml file. So let's start with the main <sapia:class>magnet</sapia:class>
+      element along with the namespace declaration and some basic attributes that describes the
+      purpose of the magnet.
+      </p>
+      
+<sapia:code>        
+<![CDATA[<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+        name="HelloMagnet" 
+        description="A very simple HelloWorld application">
+        
+</magnet> 
+]]></sapia:code>
+
+    </sapia:sect2>    
+
+    <sapia:sect2 title="Step 3: Java Launcher">
+      <p>Now lets add the Java specific xml configuration to call the <sapia:class>HelloWorldApp</sapia:class>.
+      We first add a <sapia:class>launcher</sapia:class> element of type<sapia:command>java</sapia:command>. 
+      We pass the name of the main class we wish to run (<sapia:class>mainClass</sapia:class> attribute) along 
+      with the arguments we want to pass to the <sapia:command>main</sapia:command> method (<sapia:class>args</sapia:class> attribute).
+      </p>
+      
+      <p>Because Magnet is based around the concept of profiles, which is a way to capture different behaviors
+      at runtime, we are not hardcoding the value passed to the main method but simply use a variable that
+      called here <sapia:class>${msg}</sapia:class>. In the <sapia:class>parameters</sapia:class> child element
+      we define the value of the msg variable, which will be passed to the <sapia:command>main</sapia:command> method at runtime.
+      </p>
+      
+      <p>Finally we need to define the classpath that will contain our class that we wish to run. The
+      <sapia:class>classpath</sapia:class> child element defines a simple path element that includes all
+      the jar files of a given directory. The classpath definition being within the profile definition gives
+      the flexibility of having different classpath based on the profile executed.
+      </p>
+
+<sapia:code>        
+<![CDATA[<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+        name="HelloMagnet" 
+        description="A very simple HelloWorld application">
+        
+  <launcher type="java"
+            name="helloWorld" 
+            mainClass="org.sapia.magnet.examples.HelloWorldApp"
+            args="${msg}">
+            
+      <profile name="english">
+          <parameters>
+              <param name="msg" value="world" />
+          </parameters>
+          <classpath>
+              <path directory="${magnet.home}/examplelib">
+                  <include pattern="*.jar" />
+              </path>
+          </classpath>
+      </profile>
+  </launcher>
+  
+</magnet> 
+]]></sapia:code>
+     
+    </sapia:sect2>    
+    
+    <sapia:sect2 title="Step 4: Execute our Magnet">
+      <p>We now have a first complete xml configuration file. We can now run the magnet with the following
+      command and see what happens (assuming the xml file is named helloWorld.magnet.xml). For this first
+      execution we use the english profile we have defined in our magnet file (denoted with the -p parameter
+      in the magnet call).
+      </p>
+
+     <sapia:note>
+       magnet -f helloWorld.magnet.xml -p english
+     </sapia:note>
+
+      <p>As you might expect magnet will parse the xml file and call our main method with the 'world' argument.
+      Our main method will use the passed in string to diplay the message 'Hello world' on the system output.
+      </p>       
+         
+    </sapia:sect2>
+    
+    <sapia:sect2 title="Step 5: Adding Other Profiles">
+      <p>Now that we have something running, why not adding new profiles to change
+      the runtime behavior of our <sapia:command>main</sapia:command> method. We will add new profile
+      in our launcher to display a greetings in different languages (Spanish and French). 
+      Each new profile simply changes the value of the <sapia:class>msg</sapia:class> parameter.
+      </p>
+      
+      <p>Another thing we changed in this step is the classpath definition. We can copy the same path element in
+      each profile with the include pattern: it works just fine. For the sake of clarity, Magnet give us a way
+      of "designing" our classpaths and reuse them in various launchers. We do that with a <sapia:class>classpath</sapia:class>
+      element that lives in the main magnet element: it defines a classpath (with some jar files) and we give it
+      a name for future reference. We can now go back in our profiles and remove the duplicated path elements with
+      the identifier or our main classpath. For this purpose we use the <sapia:command>parent</sapia:command> attribute.
+      </p>
+
+<sapia:code>        
+<![CDATA[<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+        name="HelloMagnet" 
+        description="A very simple HelloWorld application">
+        
+  <classpath id="hello_cp">
+      <path directory="${magnet.home}/examplelib">
+          <include pattern="*.jar" />
+      </path>
+  </classpath>
+
+  <launcher type="java"
+            name="helloWorld" 
+            mainClass="org.sapia.magnet.examples.HelloWorldApp"
+            args="${msg}"
+            default="english">
+            
+      <profile name="english">
+          <parameters>
+              <param name="msg" value="world" />
+          </parameters>
+          <classpath parent="hello_cp" />
+      </profile>
+      
+      <profile name="spanish">
+          <parameters>
+              <param name="msg" value="el mundo" />
+          </parameters>
+          <classpath parent="hello_cp" />      
+      </profile>
+      
+      <profile name="french">
+          <parameters>
+              <param name="msg" value="le monde" />
+          </parameters>
+          <classpath parent="hello_cp" />
+      </profile>
+  </launcher>
+
+</magnet> 
+]]></sapia:code>
+      
+      <p>Now that we've centralized the classpath definition and created new profiles for the Spanish
+      and French languages we can have some fun and run our magnet with the various profiles:
+      <ul>
+        <li><sapia:command>magnet -f helloWorld.magnet.xml -p english</sapia:command> will output "Hello world"</li>
+        <li><sapia:command>magnet -f helloWorld.magnet.xml -p spanish</sapia:command> will output "Hello el mundo"</li>
+        <li><sapia:command>magnet -f helloWorld.magnet.xml -p french</sapia:command> will output "Hello le monde"</li>
+      </ul>
+      </p>
+    </sapia:sect2>
+    
+    
+    <sapia:sect2 title="Further Reading">
+      <p>This section showed an oversimplified example, but the purpose was to show the base xml
+      configuration and to give a first introduction to the concept of profiles in magnet. For more
+      details we suggest to read:
+      <ul>
+      <li>the <a href="home.html">magnet project home page</a> to learn more about the concepts, the architecture and some other advanced issues</li>
+      <li>the <a href="manual/home.html">magnet reference manual</a> for the complete xml configuration documentation</li>
+      <li>the <a href="project-info/index.html">magnet project information</a> for technical documentation like javadoc, code xref and test reports</li>
+      </ul>
+      </p>
+
+      <p>
+      </p>      
+    </sapia:sect2>
+
+  </sapia:sect1>
+</sapia:page>
