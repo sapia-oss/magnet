@@ -42,13 +42,13 @@
             <p>Defines a group of parameters that can be used for variable interpolation.</p>
         </li>
         <li><a href="core/parameters.html#Param">param</a>
-            <p>Defines a sigle name-value pair parameter.</p>
+            <p>Defines a parameter (name-value pair) that can be used in variable interpolation.</p>
         </li>
         <li><a href="core/scriptHandlerDef.html">scriptHandlerDef</a>
-            <p>Defines your own scripting engine to use within Magnet.</p>
+            <p>Defines a scripting engine to use within Magnet.</p>
         </li>
         <li><a href="core/script.html">script</a>
-            <p>Executes a script when running a magnet file.</p>
+            <p>Executes a script when running a Magnet file.</p>
         </li>
         <li><a href="core/protocolHandlerDef.html">protocolHandlerDef</a>
             <p>Allows specifying a custom protocol to load resources into Magnet.</p>

@@ -7,35 +7,17 @@
   <artifactId>sapia_magnet</artifactId>
   <version>2.0-SNAPSHOT</version>
 
-  <organization>
-    <name>Sapia OSS</name>
-    <url>http://www.sapia-oss.org</url>
-  </organization>
+  <parent>
+    <groupId>org.sapia</groupId>
+    <artifactId>sapia_global</artifactId>
+    <version>1.10</version>
+  </parent>
 
-  <developers>
-    <developer>
-      <id>yduchesne</id>
-      <name>Yanick Duchesne</name>
-      <email>yd@sapia-oss.org</email>
-      <url>http://www.sapia-oss.org</url>
-      <organization>Sapia</organization>
-      <organizationUrl>http://www.sapia-oss.org</organizationUrl>
-      <roles>
-        <role>architect</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>jcdesrochers</id>
-      <name>Jean-Cedric Desrochers</name>
-      <email>jc@sapia-oss.org</email>
-      <url>http://www.sapia-oss.org</url>
-      <organization>Sapia</organization>
-      <organizationUrl>http://www.sapia-oss.org</organizationUrl>
-      <roles>
-        <role>architect</role>
-      </roles>
-    </developer>
-  </developers>
+  <scm>
+    <connection>scm:svn:https://sapia.googlecode.com/svn/trunk/magnet</connection>
+    <developerConnection>scm:svn:https://sapia.googlecode.com/svn/trunk/magnet</developerConnection>
+    <url>scm:svn:https://sapia.googlecode.com/svn/trunk/magnet</url>
+  </scm>
 
   <repositories>
     <repository>
@@ -45,12 +27,6 @@
       <url>http://download.java.net/maven/2</url>
     </repository>
   </repositories>
-
-  <scm>
-    <connection>scm:svn:http://sapia.googlecode.com/svn/branches/magnet</connection>
-    <developerConnection>scm:svn:https://sapia.googlecode.com/svn/branches/magnet</developerConnection>
-    <url>scm:svn:https://sapia.googlecode.com/svn/branches/magnet</url>
-  </scm>
 
   <licenses>
     <license>
