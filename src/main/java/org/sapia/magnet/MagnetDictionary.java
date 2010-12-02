@@ -14,7 +14,8 @@ package org.sapia.magnet;
 public interface MagnetDictionary {
 
   /** Defines the namespaces URI of Magnet. */
-  public static final String NAMESPACE_URI_MAGNET = "http://schemas.sapia-oss.org/magnet/core/";
+  public static final String NAMESPACE_URI_MAGNET_OLD = "http://schemas.sapia-oss.org/magnet/core/";
+  public static final String NAMESPACE_URI_MAGNET = "http://schemas.sapia-oss.org/magnet/";
 
   /** Defines the default namespaces prefix of Magnet. */
   public static final String NAMESPACE_PREFIX_MAGNET = "MAGNET";

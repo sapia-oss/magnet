@@ -72,6 +72,8 @@ public class MagnetParser {
 
     CompositeObjectFactory aCompositeFactory = new CompositeObjectFactory();
     aCompositeFactory.registerFactory(MagnetDictionary.NAMESPACE_URI_MAGNET, aFactory);
+    // To keep backward compatibility...
+    aCompositeFactory.registerFactory(MagnetDictionary.NAMESPACE_URI_MAGNET_OLD, aFactory);
 
     // Create the Confix processor
     ConfixProcessorFactory aProcessorFactory = ConfixProcessorFactory.newFactory();
