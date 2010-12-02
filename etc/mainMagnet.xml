@@ -1,4 +1,4 @@
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/" name="MainTestMagnet" description="Test extended magnet with a system launcher">
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/" name="MainTestMagnet" description="Test extended magnet with a system launcher">
 
     <!-- We use a bean shell script to create a directory on the file system. -->
     <script type="bsh" isAbortingOnError="true">

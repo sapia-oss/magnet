@@ -1,5 +1,5 @@
 <!-- This magnet extends the mainMagnet.xml -->
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/" extends="etc/mainMagnet.xml"
+<magnet xmlns="http://schemas.sapia-oss.org/magnet/" extends="etc/mainMagnet.xml"
         name="TestSystemMagnet" description="Test magnet with a system launcher">
 
     <!-- Define global properties for this magnet. -->
