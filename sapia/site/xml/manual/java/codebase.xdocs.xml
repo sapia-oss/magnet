@@ -1,5 +1,5 @@
 <sapia:page title="java:codebase" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="java:codebase">
+  <sapia:sect1 title="codebase">
 
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
@@ -80,7 +80,7 @@
       <p>This first example creates a <sapia:command>codebase</sapia:command> element that will contain some jar files from a remote server:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="CodebaseExample1"
         description="This is a first codebase example.">
 ...
@@ -97,7 +97,7 @@
       with some other codebase that are specific to some profiles.
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="CodebaseExample1"
         description="This is a first codebase example.">
 ...

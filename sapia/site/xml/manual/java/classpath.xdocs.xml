@@ -1,5 +1,5 @@
 <sapia:page title="java:classpath" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="java:classpath">
+  <sapia:sect1 title="classpath">
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
@@ -81,7 +81,7 @@
       all the jar files from the <sapia:command>${user.dir}/lib</sapia:command> directory:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ClasspathExample1"
         description="This is a first classpath example.">
 ...
@@ -100,7 +100,7 @@
       all the jar files of the <sapia:command>${user.dir}/app-libs</sapia:command> directory:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ClasspathExample2"
         description="This is a second classpath example.">
 ...

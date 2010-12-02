@@ -1,5 +1,5 @@
 <sapia:page title="java:launcher" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="java:launcher">
+  <sapia:sect1 title="launcher">
 
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
@@ -184,7 +184,7 @@
       <p>This first example shows a basic Java launcher that runs a <sapia:class>HelloWorldApp</sapia:class>  class:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="JavaLauncherExample1"
         description="This is a first java launcher example.">
 ...
@@ -207,7 +207,7 @@
       a common classpath element that contains common jar files: 
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="JavaLauncherExample2"
         description="This is a second java launcher example.">
 

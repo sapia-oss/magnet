@@ -1,5 +1,5 @@
 <sapia:page title="core:script" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="core:script">
+  <sapia:sect1 title="script">
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
@@ -84,7 +84,7 @@
       <p>This first example uses BeanShell to print a simple message to standard output:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ScriptExample1"
         description="This is a first script example.">
 ...
@@ -102,7 +102,7 @@
         occurs creating the new directory beacause the attribute <sapia:command>isAbortingOnError</sapia:command> is set to true.
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ScriptExample2"
         description="This is a second script example.">
 ...
@@ -126,7 +126,7 @@
       </p>
       
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ScriptExample2"
         description="This is a second script example.">
 ...

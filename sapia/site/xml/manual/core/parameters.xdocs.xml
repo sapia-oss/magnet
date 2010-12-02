@@ -1,5 +1,5 @@
 <sapia:page title="core:parameters" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="core:parameters">
+  <sapia:sect1 title="parameters">
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
@@ -76,7 +76,7 @@
     <sapia:sect2 title="Examples">
 		  <p>This first example defines a parameters element that would contains global variables.</p>
 		  <sapia:code><![CDATA[
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ParametersExample1"
         description="This is a simple example.">
 ...
@@ -89,7 +89,7 @@
 		  <p>This second example defines a parameters element that would contain variables associated
 		  to a "dev" profile.</p>
 		  <sapia:code><![CDATA[
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ParametersExample2"
         description="This is a second example.">
 ...
@@ -227,7 +227,7 @@
           properties. The result is the same as adding the argument <sapia:command>-Dhostname=myhost.mydomain.com</sapia:command>
           to the command line when invoking a java VM.</p>
           <sapia:code><![CDATA[
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ParamExample2"
         description="This is a second example.">
 ...
@@ -244,7 +244,7 @@
           <sapia:command>http://192.168.57.100:80</sapia:command>.
           </p>
           <sapia:code><![CDATA[
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ParamExample3"
         description="This is a third example.">
 ...
@@ -269,7 +269,7 @@
             <sapia:command>magnet.home</sapia:command> is set.
           </p>
           <sapia:code><![CDATA[
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ParamExample3"
         description="This is a third example.">
 ...

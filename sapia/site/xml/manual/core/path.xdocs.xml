@@ -1,5 +1,5 @@
 <sapia:page title="core:path" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="core:path">
+  <sapia:sect1 title="path">
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
@@ -108,7 +108,7 @@
       select all the jar files from the directory <sapia:command>${user.dir}/lib</sapia:command>:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="PathExample1"
         description="This is a first path example.">
 ...
@@ -124,7 +124,7 @@
       files will be sorted in descending alphabetical order:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="PathExample2"
         description="This is a second path example.">
 ...
@@ -145,7 +145,7 @@
 		  <sapia:command>http://myserer:8080/commonlibs/utils.jar</sapia:command>.
 		  </p>
 		  <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="PathExample2"
         description="This is a second path example.">
 ...

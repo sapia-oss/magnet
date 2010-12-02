@@ -182,7 +182,7 @@
       <p>This first example shows a basic system launcher that calls a 'ls -la ./lib' command:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="SystemLauncherExample1"
         description="This is a first system launcher example.">
         
@@ -203,7 +203,7 @@
       <p>This second example shows how to start a web browser on a Windows box:
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="SystemLauncherExample2"
         description="This is a second system launcher example.">
 

@@ -1,5 +1,5 @@
 <sapia:page title="core:scriptHandlerDef" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="core:scriptHandlerDef">
+  <sapia:sect1 title="scriptHandlerDef">
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
@@ -63,7 +63,7 @@
       everytime the "jython" script type is used.
       </p>
       <sapia:code><![CDATA[
-<magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="ScriptHandlerDefExample1"
         description="This is a first example.">
 ...

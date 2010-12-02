@@ -1,5 +1,5 @@
 <sapia:page title="core:magnet" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="core:magnet">
+  <sapia:sect1 title="magnet">
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
@@ -128,7 +128,7 @@
       <p>This first example is a very basic Magnet configuration with a name and
       a description.</p>
 <sapia:code><![CDATA[
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="MagnetExample1"
         description="This is a simple example.">
 ...
@@ -138,7 +138,7 @@
       Magnet configuration file called <sapia:command>C:\magnet\main.xml</sapia:command>
       </p>
 <sapia:code><![CDATA[
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="MagnetExample2"
         description="This is an extend example."
         extend="C:\magnet\main.xml">
@@ -149,7 +149,7 @@
       resource called <sapia:command>http://www.mycorp.com/magnet/main.xml</sapia:command>
       </p>
 <sapia:code><![CDATA[
-<magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
+<magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
         name="MagnetExample3"
         description="This is another extens example."
         extends="http://www.mycorp.com/magnet/main.xml">
