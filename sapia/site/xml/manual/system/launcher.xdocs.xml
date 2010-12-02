@@ -1,24 +1,26 @@
 <sapia:page title="system:launcher" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="../../css/sapia.css">
-  <sapia:sect1 title="system:launcher">
+  <sapia:sect1 title="launcher">
     <sapia:section>
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
       <sapia:path name="magnet" href="../../home.html" />
       <sapia:path name="manual" href="../home.html#System%20Element" />
+      <sapia:path name="system" />      
+      <sapia:path name="launcher" />
     </sapia:section>
     
     <toc />
         
     <sapia:sect2 title="Overview">
       <p>The system <sapia:command>&lt;launcher&gt;</sapia:command> element defines a system process to be
-      started by Magnet. Based on the provided configuration Magnet will create a command string and execute
-      the command at the OS level using the Java <sapia:command>Runtime.getRuntime().exec()</sapia:command>
-      method. You can also define environment variables that will be available to your system process.
+      started by Magnet. Based on the provided configuration, Magnet will create a command string and execute
+      the command at the OS level using the Java <sapia:command>Runtime.getRuntime().exec()</sapia:command>. 
+      You can also define environment variables that will be available to your system process.
       </p>
     </sapia:sect2>
 
     <sapia:sect2 title="Attributes">
-      <p>The following list the xml attributes of the system launcher element:
+      <p>The following lists the xml attributes of the system launcher element:
       </p>
       <sapia:table>
         <sapia:th>Name</sapia:th>
@@ -27,7 +29,7 @@
         <sapia:th>Interpolation</sapia:th>
         <tr>
           <td>type</td>
-          <td>Defines the type of launcher. This attribute must have the value 'system'.</td>
+          <td>Defines the type of launcher. This attribute must have the <sapia:command>system</sapia:command> value.</td>
           <td>yes</td>
           <td>no</td>
         </tr>
@@ -51,24 +53,24 @@
         </tr>
         <tr>
           <td>os</td>
-          <td>Define a simple operating name pattern that Magnet will use to filter the launcher's
+          <td>Defines a simple operating name pattern that Magnet will use to filter the launcher's
           execution. If the value of this attribute is found in the <sapia:command>os.name</sapia:command>
-          system property the launcher will be executed, otherwise the launcher is ignored.</td>
+          system properties, the launcher will be executed; otherwise it will be ignored.</td>
           <td>no</td>
           <td>no</td>
         </tr>
         <tr>
           <td>default</td>
-          <td>The name of the default profile of this luncher. This is optionnal and allow to define
-          which profile of the launcher will be executed in the case that the profile specified at
-          runtime is not found in the launcher.</td>
+          <td>The name of the default profile of this launcher. This is optionnl and allows specifying
+          which profile of the launcher will be executed in the case that no launcher profile 
+          matches the execution profile.</td>
           <td>no</td>
           <td>no</td>
         </tr>
         <tr>
           <td>waitTime</td>
-          <td>If specified tells Magnet how many milliseconds it needs to wait after launching this
-          system process before resuming the Magnet's execution. This can be used to insert some delayy
+          <td>Tells Magnet how many milliseconds it needs to wait after launching this
+          system process before resuming its execution. This can be used to insert some delay
           between launches when you magnet file contains many launchers.</td>
           <td>no</td>
           <td>no</td>
@@ -86,7 +88,7 @@
         <tr>
           <td><a href="#Profile" target="main">profile</a></td>
           <td>1 or *</td>
-          <td>Defines how the launcher is configured by profile.</td>
+          <td>Defines how the launcher is configured, by profile.</td>
         </tr>
       </sapia:table>
     </sapia:sect2>
@@ -97,8 +99,8 @@
       operations in order:
         <ol>
           <li>Renders the appropriate <sapia:command>&lt;profile&gt;</sapia:command> child element.</li>
-          <li>Adds all the rendered parameters by the profile in the current magnet context (for variable interpolation).</li>
-          <li>Resolve the command and workingDirectory attributes (using variable interpolation).</li>
+          <li>Adds all the rendered parameters by the profile in the current Magnet context (for variable interpolation).</li>
+          <li>Renders the <sapia:command>command</sapia:command> and <sapia:command>workingDirectory</sapia:command> attributes (using variable interpolation).</li>
         </ol>
       </p>
     </sapia:sect2>
@@ -107,16 +109,16 @@
       <p>Once a system <sapia:command>&lt;launcher&gt;</sapia:command> element is rendered with success,
       it is executed with the following operations in order:
         <ol>
-          <li>Perform the validation of the os launcher attribute (if specified) with the
-              <sapia:command>os.name</sapia:command> system property. <i>The launcher is skipped if this
-              validation fails.</i></li>
+          <li>Performs the validation of the <sapia:command>os</sapia:command> attribute (if specified) with the
+              <sapia:command>os.name</sapia:command> system property. <i>The launcher is skipped if the two
+              don't match.</i></li>
           <li>Prepares all the environment variables to be passed to the system process.</li>
           <li>Validates the working directory of the system process.</li>
-          <li>Creates a new thread and call the system command using <sapia:command>Runtime.getRuntime().exec()</sapia:command>.</li>
+          <li>Creates a new thread and calls the system command using <sapia:command>Runtime.getRuntime().exec()</sapia:command>.</li>
         </ol>
       </p>
       
-      <p>Once the system process started, the running thread is used to read any output coming from the
+      <p>Once the system process starts, the launcher's thread within Magnet is used to read any data coming from the
       standard output or the error output of the process. This polling loop is performed until the system
       process terminates.
       </p>
@@ -126,8 +128,7 @@
       <sapia:sect3 title="Profile">
         <p>The system <sapia:command>&lt;profile&gt;</sapia:command> element defines the configuration of the
         launcher for a given profile. It provides a way to define parameters specific to this launcher
-        and the environment variable to use to call the system command. This can vary by profile, which
-        gives the flexibility to the programmer to fully customize various profiles based on your needs.
+        and the environment variable to use to call the system command - this can vary by profile.
         </p>
 
         <sapia:sect4 title="Attributes">
@@ -146,7 +147,7 @@
         </sapia:sect4>
         
         <sapia:sect4 title="Child Elements">
-          <p>The following list the possible child xml elements that can hold the system profile element:
+          <p>The following lists the possible child xml elements that can hold the system profile element:
           </p>
           <sapia:table>
             <sapia:th>Name</sapia:th>
@@ -155,7 +156,7 @@
             <tr>
               <td><a href="./../core/parameters.html" target="main">parameters</a></td>
               <td>0 or 1</td>
-              <td>Defines specific parameters that must be used (or overwritten) for the launcher's execution.</td>
+              <td>Defines specific parameters that must be used (or overridden) for the launcher's execution.</td>
             </tr>
             <tr>
               <td><a href="./environment.html" target="main">environment</a></td>
@@ -199,7 +200,7 @@
     </launcher>
 </magnet>]]></sapia:code>
 
-      <p>This second example shows how to start a web browser on a windows box:
+      <p>This second example shows how to start a web browser on a Windows box:
       </p>
       <sapia:code><![CDATA[
 <magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"

@@ -5,24 +5,31 @@
       <sapia:path name="projects" />
       <sapia:path name="magnet" href="../../home.html" />
       <sapia:path name="manual" href="../home.html#Java%20Elements" />
+      <sapia:path name="java" />      
+      <sapia:path name="classpath" />     
     </sapia:section>
     <toc />
         
     <sapia:sect2 title="Overview">
-      <p>The <sapia:command>&lt;classpath&gt;</sapia:command> element allow to define the classpath
-      of a java application. It provides a convenient and elegant way to declare what are the files
-      or resource directories that you need in the launch of a java application.
+      <p>
+        The <sapia:command>&lt;classpath&gt;</sapia:command> element allows defining the classpath
+        of a Java application. It provides a convenient and elegant way to declare what are the files
+        or resource directories that are needed as part of an application's classpath.
       </p>
       
-      <p>An interesting feature is that you can create an hierarchy of <sapia:command>&lt;classpath&gt;</sapia:command>
-      elements. Using the id and the parent attributes, an child classpath can refer to a parent classpath.
-      This gives you the possibility to organize you resources for reuse and give the flexibility to manage
-      the Java class loader hierarchy (discussed in more details below).
+      <p>
+        An interesting feature is that you can create a hierarchy of <sapia:command>&lt;classpath&gt;</sapia:command>
+        elements - and therefore classloaders. Using the <sapia:command>id</sapia:command> and the 
+        <sapia:command>parent</sapia:command> attributes, a child classpath can refer to a parent classpath. 
+        This gives you the possibility to organize your resources for reuse, provides the flexibility to manage 
+        the Java classloader hierarchy of your application. You could even have more than one application as 
+        part of the same Magnet configuration that share a common classpath, yet have their own one 
+        (more on classloader hierarchies further below).
       </p>
     </sapia:sect2>
         
     <sapia:sect2 title="Attributes">
-      <p>The following list the xml attributes of the classpath element:
+      <p>The following lists the xml attributes of the <sapia:command>classpath</sapia:command> element:
       </p>
       <sapia:table>
         <sapia:th>Name</sapia:th>
@@ -45,14 +52,14 @@
     </sapia:sect2>
     
     <sapia:sect2 title="Child Elements">
-      <p>The following list the possible child xml elements that can hold the classpath element:
+      <p>The following lists the possible child xml elements that can hold the <sapia:command>classpath</sapia:command> element:
       </p>
       <sapia:table>
         <sapia:th>Name</sapia:th>
         <sapia:th>Cardinality</sapia:th>
         <sapia:th>Description</sapia:th>
         <tr>
-          <td><a href="./../core/path.html" target="main">path</a></td>
+          <td><a href="../core/path.html" target="main">path</a></td>
           <td>1 or *</td>
           <td>Defines the resources of this classpath.</td>
         </tr>
@@ -63,15 +70,15 @@
       <p>When a <sapia:command>&lt;classpath&gt;</sapia:command> element is rendered, it performs the following
       operations in order:
         <ol>
-          <li>Resolve the id and parent attributes (using variable interpolation).</li>
+          <li>Resolves the id and parent attributes (using variable interpolation).</li>
           <li>Renders all the <sapia:command>&lt;path&gt;</sapia:command> child elements.</li>
         </ol>
       </p>
     </sapia:sect2>
 
     <sapia:sect2 title="Examples">
-      <p>This first example creates a classpath element that will contain all the jar files from the
-      directory <sapia:command>${user.dir}/lib</sapia:command>:
+      <p>This first example shows a <sapia:command>classpath</sapia:command> element that will contains 
+      all the jar files from the <sapia:command>${user.dir}/lib</sapia:command> directory:
       </p>
       <sapia:code><![CDATA[
 <magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
@@ -88,7 +95,7 @@
 
       <p>This second example creates a simple classpath hierarchy with a first 'api-libs' classpath
       that contains all the jar files of the <sapia:command>${user.dir}/api-interfaces</sapia:command>
-      directory and a 'app-libs' child classpath that contains the directory 
+      directory and an 'app-libs' child classpath that contains the directory 
       <sapia:command>${user.dir}/config/</sapia:command> (for easy access to configuration files) and
       all the jar files of the <sapia:command>${user.dir}/app-libs</sapia:command> directory:
       </p>
@@ -115,15 +122,15 @@
     </sapia:sect2>
 
     <sapia:sect2 title="Classloader Hierarchy">
-      <p>It is important to mention that Magnet will keep a one to one relationship between a classpath
-      element and a Java classloader. When an hierarchy of classpath element is created in your Magnet
-      configuration file, the same classloader hierarchy will be created in memory of the Java virtual
-      machine. Magnet will use the system classloader of the VM as the root of the classloader hierarchy.
+      <p>It is important to mention that Magnet will keep a one-to-one relationship between a classpath
+      element and a Java classloader. When a hierarchy of classpath elements is created in your Magnet
+      configuration file, the same classloader hierarchy will be created in the JVM's memory.
+      Magnet will use the system classloader of the JVM as the root of the classloader hierarchy.
       </p>
       
       <p>This gives the flexibility to the programmer to decide what is the scope of the classes used
-      when launching java programs with Magnet (specially when launching more than one application in
-      a single VM). It also gives an elegant way to workaround classloading issues that can arise when
+      when launching Java applications(especially when launching more than one application in
+      a single JVM). It also gives an elegant way to workaround classloading issues that can arise when
       using third party tools. 
       </p>
     </sapia:sect2>

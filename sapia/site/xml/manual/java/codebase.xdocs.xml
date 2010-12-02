@@ -6,26 +6,31 @@
       <sapia:path name="projects" />
       <sapia:path name="magnet" href="../../home.html" />
       <sapia:path name="manual" href="../home.html#Java%20Elements" />
+      <sapia:path name="java" />      
+      <sapia:path name="codebase" />
     </sapia:section>
 
     <toc />
         
     <sapia:sect2 title="Overview">
-      <p>The <sapia:command>&lt;codebase&gt;</sapia:command> element provides a convenient way to define the
-      system property <sapia:command>java.rmi.server.codebase</sapia:command>. For programmers who are using
-      Remote Method Invocation (RMI) and need to load classes from a remote host, the  <sapia:command>&lt;codebase&gt;</sapia:command>
-      element reuse the notion of path element to elegantly define the list of jar files or remote resources
-      needed.
+      <p>
+        The <sapia:command>&lt;codebase&gt;</sapia:command> element provides a convenient way to define the
+        <sapia:command>java.rmi.server.codebase</sapia:command> system property . For programmers who are using
+        Remote Method Invocation (RMI) and need to load classes from a remote host, the  <sapia:command>&lt;codebase&gt;</sapia:command>
+        element builds on the notion of "path element" to elegantly define the list of jar files or remote resources
+        that are needed.
       </p>
-      <p>The <sapia:command>&lt;codebase&gt;</sapia:command> element is <b>profile-aware</b> which means that your
-      Magnet can contains more than one codebase definition. At runtime Magnet will process the codebase for the
-      default profile and the codebase for the profile specified when running the Magnet. You can therefore have
-      a common codebase and some specific ones based on your needs. 
+      <p>
+        The <sapia:command>&lt;codebase&gt;</sapia:command> element is <b>profile-aware</b>, which means that your
+        Magnet configuration file can contain more than one codebase definition, each for a specific profile. 
+        At runtime, Magnet will process the codebase for the default profile and the codebase for the profile specified 
+        at startup. You can therefore have a common codebase and some specific ones, according to your needs. 
       </p>
     </sapia:sect2>
         
     <sapia:sect2 title="Attributes">
-      <p>The following list the xml attributes of the codebase element:
+      <p>
+        The following lists the xml attributes of the <sapia:command>codebase</sapia:command> element:
       </p>
       <sapia:table>
         <sapia:th>Name</sapia:th>
@@ -42,7 +47,7 @@
     </sapia:sect2>
     
     <sapia:sect2 title="Child Elements">
-      <p>The following list the possible child xml elements that can hold the codebase element:
+      <p>The following lists the possible child xml elements that can hold the <sapia:command>codebase</sapia:command> element:
       </p>
       <sapia:table>
         <sapia:th>Name</sapia:th>
@@ -72,7 +77,7 @@
     </sapia:sect2>
 
     <sapia:sect2 title="Examples">
-      <p>This first example creates a codebase element that will contain some jar files from a remote server:
+      <p>This first example creates a <sapia:command>codebase</sapia:command> element that will contain some jar files from a remote server:
       </p>
       <sapia:code><![CDATA[
 <magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
@@ -88,7 +93,7 @@
 ...
 </magnet>]]></sapia:code>
 
-      <p>This second example show how you can have a common codebase (no profile attribute defined) along
+      <p>This second example shows how you can have a common codebase (no profile attribute defined) along
       with some other codebase that are specific to some profiles.
       </p>
       <sapia:code><![CDATA[

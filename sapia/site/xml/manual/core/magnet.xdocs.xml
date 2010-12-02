@@ -5,27 +5,28 @@
       <sapia:path name="projects" />
       <sapia:path name="magnet" href="../../home.html" />
       <sapia:path name="manual" href="../home.html#Core%20Elements" />
-      <sapia:path name="core:magnet" />
+      <sapia:path name="core" />      
+      <sapia:path name="magnet" />
     </sapia:section>
     <toc />
         
     <sapia:sect2 title="Overview">
 			<p>The <sapia:command>&lt;magnet&gt;</sapia:command> element is the root element of a
-			magnet definition file. We can set a name to the magnet file and we can associate a
+			Magnet configuration file. We can set a name to the magnet file and we can associate a
 			brief description. Note however that these two attributes are not used by Magnet ; they
 			only provide some sort of documentation information to the programmers.
 			</p>
 	
-	    <p>One interesting feature of the magnet element is the extension mechanism that allow
-	    a given magnet definition file to extend another magnet file; somewhat like inheritance.
-	    A Magnet can only extend a single parent at a time. In such a scenario the child magnets
+	    <p>One interesting feature of the <sapia:command>magnet</sapia:command> element is the extension mechanism that allows
+	    a given Magnet configuration file to extend another Magnet configuration - somewhat like inheritance.
+	    A Magnet can only extend a single parent at a time. In such a scenario, the child Magnets
 	    can access all the parameters and values defined by the parent Magnet and all the Launchers
-	    (of the inheritance tree) are executed starting by the root Magnet.
+	    (of the inheritance tree) are executed, starting by the root Magnet.
 	    </p>
     </sapia:sect2>
 
     <sapia:sect2 title="Attributes">
-      <p>The following list the xml attributes of the magnet element:
+      <p>The following list the xml attributes of the Magnet element:
       </p>
       <sapia:table>
         <sapia:th>Name</sapia:th>
@@ -34,24 +35,24 @@
         <sapia:th>Interpolation</sapia:th>
         <tr>
           <td>name</td>
-          <td>The unique name of this magnet definition file. The system does not required
+          <td>The unique name of this Magnet configuration file. The system does not require
           the name to be unique but as a rule, it keeps things simpler if we do that.</td>
           <td>no</td>
           <td>yes</td>
         </tr>
         <tr>
           <td>description</td>
-          <td>The description of this magnet definition file ; purpose, what it does, usage, ...</td>
+          <td>The description of this Magnet configuration file ; purpose, what it does, usage, ...</td>
           <td>no</td>
           <td>no</td>
         </tr>
         <tr>
           <td>extend</td>
-          <td><p>The name of the resource that this magnet definition file extends. The name of
-          the resource can be an absolute file name or a relative file to the directory defined
+          <td><p>The name of the resource that this magnet configuration file extends. The name of
+          the resource can be an absolute file name or a file relative to the directory defined
           by the Java <sapia:command>user.dir</sapia:command> system property. The resource
-          can also be a URL of protocol <sapia:command>file://</sapia:command> or
-          <sapia:command>http://</sapia:command>.</p></td>
+          can also be a URL of corresponding to the <sapia:command>file</sapia:command> or
+          <sapia:command>http</sapia:command> protocol schemes.</p></td>
           <td>no</td>
           <td>no</td>
         </tr>
@@ -59,48 +60,48 @@
     </sapia:sect2>
 
     <sapia:sect2 title="Child Elements">
-      <p>The following list the possible child xml elements that can hold the magnet element:
+      <p>The following list the possible child xml elements that can hold the <sapia:command>magnet</sapia:command> element:
       </p>
       <sapia:table>
         <sapia:th>Name</sapia:th>
         <sapia:th>Cardinality</sapia:th>
         <sapia:th>Description</sapia:th>
         <tr>
-          <td><a href="./protocolHandlerDef.html" target="main">protocolHandlerDef</a></td>
+          <td><a href="protocolHandlerDef.html" target="main">protocolHandlerDef</a></td>
           <td>0 or *</td>
-          <td>Extension point in magnet to plug in your own protocols to resolve and load resources.
+          <td>Extension point to plug in your own protocols to resolve and load resources.
           By default Magnet handles the <sapia:command>file</sapia:command> and <sapia:command>http</sapia:command>
           schemes - corresponding to the file system and HTTP protocols.</td>
         </tr>
         <tr>
-          <td><a href="./scriptHandlerDef.html" target="main">scriptHandlerDef</a></td>
+          <td><a href="scriptHandlerDef.html" target="main">scriptHandlerDef</a></td>
           <td>0 or *</td>
-          <td>Extension point in magnet to plugin your own scripting engine. Magnet comes with
-          <a href="http://www.beanshell.org/" target="external">Beanshell</a>.</td>
+          <td>Extension point to plug in your own scripting engine. Magnet comes with
+          <a href="http://www.beanshell.org/" target="external">Beanshell</a> integration built-in.</td>
         </tr>
         <tr>
-          <td><a href="./launcherHandlerDef.html" target="main">launchHandlerDef</a></td>
+          <td><a href="launcherHandlerDef.html" target="main">launchHandlerDef</a></td>
           <td>0 or *</td>
-          <td>Extension point in magnet to plugin your own class that launches applications. Magnet
+          <td>Extension point to plug in your own class that launches applications. Magnet
           offers a <sapia:command>java</sapia:command> and a <sapia:command>system</sapia:command>
-          launcher (to start system processes).</td>
+          launcher (to start Java and native processes, respectively).</td>
         </tr>
         <tr>
-          <td><a href="./script.html" target="main">script</a></td>
+          <td><a href="script.html" target="main">script</a></td>
           <td>0 or *</td>
-          <td>A magnet can contains various script elements to perform intialization tasks. At runtime
-          magnet will render and execute the script that matches the execution profile. If no script is
-          provided for the profile and a script exists for the default, it will be executed. Only one
-          script by profile can exist within a magnet.</td>
+          <td>A Magnet configuration can contain various script elements to perform intialization tasks. At runtime
+          Magnet will render and execute the script that matches the execution profile. If no script is
+          provided for the profile and a script exists for the default one, it will be executed. Only one
+          script by profile can exist within a Magnet configuration.</td>
         </tr>
         <tr>
-          <td><a href="./parameters.html" target="main">parameters</a></td>
+          <td><a href="parameters.html" target="main">parameters</a></td>
           <td>0 or *</td>
-          <td>To define global parameters within the magnet. Parameters can be specified for a given
+          <td>To define global parameters within the Magnet. Parameters can be specified for a given
           profile or for all profiles (called the default profile).</td>
         </tr>
         <tr>
-          <td><a href="./others.html" target="main">others</a></td>
+          <td><a href="others.html" target="main">others</a></td>
           <td>0 or *</td>
           <td>TO BE COMPLETED....</td>
         </tr>
@@ -108,7 +109,7 @@
     </sapia:sect2>
 
     <sapia:sect2 title="Rendering Operations">
-      <p>When a <sapia:command>&lt;Magnet&gt;</sapia:command> element is rendered, it performs the following
+      <p>When a <sapia:command>&lt;magnet&gt;</sapia:command> element is rendered, it performs the following
       operations in order:
         <ol>
           <li>Renders the parameters of the <i>default</i> profile.</li>
@@ -124,7 +125,7 @@
     </sapia:sect2>
 
     <sapia:sect2 title="Examples">
-      <p>This first example is a very basic Magnet definition with a name and
+      <p>This first example is a very basic Magnet configuration with a name and
       a description.</p>
 <sapia:code><![CDATA[
 <magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
@@ -133,8 +134,8 @@
 ...
 </magnet>]]></sapia:code>
 
-      <p>The following example shows a Magnet definition that extends another
-      Magnet definition file called <sapia:command>C:\magnet\main.xml</sapia:command>
+      <p>The following example shows a Magnet configuration that extends another
+      Magnet configuration file called <sapia:command>C:\magnet\main.xml</sapia:command>
       </p>
 <sapia:code><![CDATA[
 <magnet xmlns="http://schemas.sapia-oss.org/magnet/core/"
@@ -144,7 +145,7 @@
 ...
 </magnet>]]></sapia:code>
 
-      <p>The third example shows a Magnet definition that extends a
+      <p>The third example shows a Magnet configuration that extends a
       resource called <sapia:command>http://www.mycorp.com/magnet/main.xml</sapia:command>
       </p>
 <sapia:code><![CDATA[

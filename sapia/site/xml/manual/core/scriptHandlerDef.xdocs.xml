@@ -5,21 +5,22 @@
       <sapia:path name="projects" />
       <sapia:path name="magnet" href="../../home.html" />
       <sapia:path name="manual" href="../home.html#Core%20Elements" />
-      <sapia:path name="core:scriptHandlerDef" />
+      <sapia:path name="core" />
+      <sapia:path name="scriptHandlerDef" />
     </sapia:section>
     <toc />
         
     <sapia:sect2 title="Overview">
 	    <p>The <sapia:command>&lt;scriptHandlerDef&gt;</sapia:command> element can be used to
 	    extend the functionality of Magnet by adding a new scripting engine to execute scripts.
-	    Magnet comes with a <a href="http://www.beanshell.org" target="beanshell_site">Beanshell</a>
-	    integration but let's say you need add support for another scripting engine like
+	    Magnet comes with <a href="http://www.beanshell.org" target="beanshell_site">Beanshell</a>
+	    integration built-in, but let's say you want to add support for another scripting engine, like
 	    <a href="http://www.jython.org" target="jython_site">Jython</a>. You would first need to implement
         the <a href="./../../project-info/apidocs/org/sapia/magnet/domain/ScriptHandlerIF.html"><sapia:class>ScriptHandlerIF</sapia:class></a>
-        interface. Your class would simply wrap the Jython interpreter passing it the script to
-        execute. Once this class is coded you need to tell Magnet how to associate the new "jython"
+        interface. Your class would simply wrap the Jython interpreter, passing it the script to
+        execute. Once this class is coded you need to tell Magnet how to associate the new <sapia:command>jython</sapia:command>
         script type to the class you just wrote. To perform the association between the script type
-        and the class that provides the handling of the scripting engine you create a script handler
+        and the class that integrates the scripting engine, you configura a so-called script handler
         definition.
 	    </p>
     </sapia:sect2>
@@ -39,7 +40,7 @@
         <tr>
           <td>classname</td>
           <td>The name of the class that implements the interface <sapia:class>ScriptHandlerIF</sapia:class>
-          and provides the handling for that script.</td>
+          and provides the handling for that script type.</td>
           <td>yes</td>
           <td>yes</td>
         </tr>
@@ -50,16 +51,16 @@
       <p>When a <sapia:command>&lt;scriptHandlerDef&gt;</sapia:command> element is rendered, it performs the following
       operations in order:
         <ol>
-          <li>Resolves the type and classname attributes (using variable interpolation).</li>
-          <li>Adds the new script handler definition to the central handler factory used by Magnet.</li>
+          <li>Resolves the <sapia:command>type</sapia:command> and <sapia:command>classname</sapia:command> attributes (using variable interpolation).</li>
+          <li>Registers the new script handler with Magnet's internals.</li>
         </ol>
       </p>
     </sapia:sect2>
 
     <sapia:sect2 title="Examples">
-      <p>This example creates a new script handler for the jython interpreter. The association defines
+      <p>This example creates a new script handler for the jython interpreter. The association specifies
       that the class <sapia:class>com.mycorp.magnet.JythonHandler</sapia:class> will be used
-      everytime the script type "jython" is used.
+      everytime the "jython" script type is used.
       </p>
       <sapia:code><![CDATA[
 <magnet xmlns:core="http://schemas.sapia-oss.org/magnet/core/"
