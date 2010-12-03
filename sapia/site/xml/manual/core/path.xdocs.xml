@@ -71,7 +71,8 @@
     </sapia:sect2>
     
     <sapia:sect2 title="Child Elements">
-      <p>The following lists the possible child xml elements that can hold the path element:
+      <p>The following lists the possible child xml elements that the <sapia:command>path</sapia:command> 
+      element can hold:
       </p>
       <sapia:table>
         <sapia:th>Name</sapia:th>
