@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.sapia</groupId>
     <artifactId>sapia_global</artifactId>
-    <version>1.10</version>
+    <version>1.11</version>
   </parent>
 
   <scm>
@@ -126,15 +126,6 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-	      <source>1.5</source>
-	      <target>1.5</target>
-        </configuration>
-      </plugin>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.0-beta-7</version>
         <configuration>
@@ -185,104 +176,9 @@
           </execution>
         </executions>
       </plugin>
-
-      <!--plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>xml-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>transform</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <forceCreation>true</forceCreation>
-          <transformationSets>
-            <transformationSet>
-              <validating>false</validating>
-              <dir>${basedir}/site/xml</dir>
-              <stylesheet>${basedir}/site/xsl/sapia.xsl</stylesheet>
-              <includes>
-                <include>**/*.xdocs</include>
-              </includes>
-              <fileMappers>
-                <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
-                  <targetExtension>html</targetExtension>
-                </fileMapper>
-              </fileMappers>
-              <outputDir>${basedir}/target/html</outputDir>
-            </transformationSet>
-          </transformationSets>
-        </configuration>
-      </plugin-->
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.4</version>
-        <executions>
-          <execution>
-            <id>generate-main-site</id>
-            <phase>pre-site</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <tasks>
-                <property name="param.site.sourceDir" value="${basedir}/site/xml"/>
-                <property name="param.site.targetDir" value="${basedir}/target/site"/>
-                <property name="param.site.xsltFile"  value="${basedir}/site/xsl/sapia.xsl"/>
-                <ant antfile="build.xml" target="generate-main-site" inheritRefs="true"/>
-              </tasks>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-            
     </plugins>
-
-    <extensions>
-      <extension>
-        <groupId>org.jvnet.wagon-svn</groupId>
-        <artifactId>wagon-svn</artifactId>
-        <version>1.9</version>
-      </extension>
-    </extensions>
-
   </build>
 
- <profiles>
-    <profile>
-      <id>release-sign-artifacts</id>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.0-alpha-4</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-  
   <reporting>
     <outputDirectory>${basedir}/target/site/project-info</outputDirectory>
     <plugins>
@@ -291,13 +187,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>2.0.1</version>
-      </plugin>
-      
-      <!-- javadoc -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
       </plugin>
       
       <!-- test report -->
@@ -314,7 +203,7 @@
         <version>2.2</version>
         <configuration>
           <linkJavadoc>true</linkJavadoc>
-          <javadocDir>${basedir}/target/site/apidocs</javadocDir>
+          <javadocDir>${basedir}/target/site/api</javadocDir>
         </configuration>
       </plugin>
       
