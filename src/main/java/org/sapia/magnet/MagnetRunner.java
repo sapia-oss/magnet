@@ -356,7 +356,7 @@ public class MagnetRunner {
    */
   public static void version() {
     StringBuffer aBuffer = new StringBuffer("\n");
-    aBuffer.append("Sapia Magnet version 1.0");
+    aBuffer.append("Sapia Magnet version 2.0");
 
     Log.info(aBuffer.toString());
   }
