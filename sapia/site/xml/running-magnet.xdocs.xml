@@ -16,11 +16,11 @@
     </sapia:section>
     
     <sapia:sect2 title="Command Line">
-      <p>The Magnet distributions comes with startup scripts to run Magnet for the command line. Under the
+      <p>The Magnet distribution comes with startup scripts to run Magnet from the command line. Under the
       /bin directory of the distribution you will find a 'magnet.bat' for Windows and a 'magnet.sh' for
-      unix like operating systems.
+      Unix/Linux operating systems.
       </p>
-      <p>The suggested installation procedure is has follow:
+      <p>The installation procedure is as follows:
         <ol>
         <li>Extract the Magnet distribution in the directory of your choice.</li>
         <li>Define the environment variable MAGNET_HOME that points to the installation directory.</li>
