@@ -107,7 +107,7 @@ public class MagnetContext implements TemplateContextIF {
     if (aParam == null && _theParent != null) {
       aParam = _theParent.getParameterFor(aName);
     }
-
+    
     return aParam;
   }
 
@@ -204,7 +204,11 @@ public class MagnetContext implements TemplateContextIF {
     Param aParameter = getParameterFor(aName);
 
     if (aParameter == null) {
-      return System.getProperty(aName);
+      String value = System.getProperty(aName);
+      if(value == null){
+        value = System.getenv().get(aName);
+      }
+      return value;
     } else {
       return aParameter.getValue();
     }
