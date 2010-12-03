@@ -27,7 +27,7 @@
       describing application runtime parameters and bootstrap configuration. To
       top it off, Magnet also supports launching multiple standalone Java 
       applications in the same JVM, each with its own classloader that operates
-      in isolation from the others. Magnet's goal is to provide for the run time
+      in isolation from the others. Magnet's goal is to provide for the run-time
       what Ant provides for the build time.
       </p>
     </sapia:sect2>
@@ -111,13 +111,13 @@
        </li>
       </ul>
 
-      <sapia:note>
-       From now on, we will use "start a magnet" instead of "start a magnet-configured application". It's way cooler. Plus the
-       more conventional approach does not help suggest the notion of "multiple applications per VM" that Magnet supports.
-     </sapia:note>
     </sapia:sect2>
 
     <sapia:sect2 title="Usage">
+      <p>
+      This section describes Magnet's usage in a summarized form.
+      </p>
+    
       <sapia:sect3 title="Installation">
         <p>To install Magnet, follow the steps below:</p>
         <ul>
@@ -155,12 +155,12 @@
         </sapia:sect4>
 
         <sapia:sect4 title="Writing the Startup Script">
-          <p>Nothing to complicated thus far: the main method expects some token as an argument - it uses a default one
+          <p>Nothing too complicated thus far: the main method expects some token as an argument - it uses a default one
         if that token is not specified. The token is used to display a "Hello &lt;some_token&gt;" message.</p>
 
           <p>Now, normally, what we would do is write a .sh/.bat script to start our childish application. That's a 
         complication already: two startup scripts for a single app... With, Magnet, this operation is replaced by
-        <b>writing a magnet file</b>. The following is our magnet's content:</p>
+        <b>writing a magnet file</b>. The following is our Magnet configuration content:</p>
           <sapia:code>        
 <![CDATA[
 <magnet xmlns:magnet="http://schemas.sapia-oss.org/magnet/"
@@ -202,8 +202,8 @@
 </magnet> 
 ]]></sapia:code>
 
-          <p>The script deserves some explanations. The following describes the above magnet, element by element - <b>look at the
-        /etc directory of the distribution for more information</b>. More exhaustive documentation about Magnet's XML markup
+          <p>The script deserves some explanations. The following describes the above configuration, element by element - <b>look at the
+        <sapia:command>/etc</sapia:command> directory of the distribution for more information</b>. More exhaustive documentation about Magnet's XML markup
         can be found in the <a href="manual/home.html">Magnet Reference</a>
           </p>
 
@@ -217,18 +217,18 @@
 
           <ul>
             <li>
-              <sapia:command>name</sapia:command>: specifies the magnet's name. This is required for eventual 
+              <sapia:command>name</sapia:command>: specifies the Magnet configuration name. This is required for eventual 
           display/information purposes.</li>
 
             <li>
-              <sapia:command>description</sapia:command>: specifies the magnet's description. Again required for  
+              <sapia:command>description</sapia:command>: specifies the configuration's description. Again required for  
           display/information purposes.</li>
 
             <li>
-              <sapia:command>extend</sapia:command>: This optional attribute indicates from which magnet the current
-          one inherits. This is an inclusion mechanism that allows a magnet file to inherit all the properties, applications,
-          etc., of a given parent magnet. The attribute's value must be the full path to an existing magnet file. When such
-          an inclusion is defined, the "parent" magnet is rendered before the current one.</li>
+              <sapia:command>extend</sapia:command>: This optional attribute indicates from which Magnet configuration the current
+          one inherits from. This is an inclusion mechanism that allows a Magnet file to inherit all the properties, applications,
+          etc., of a given parent one. The attribute's value must be the full path to an existing Magnet file. When such
+          an inclusion is defined, the "parent" configuration is rendered before the current one.</li>
           </ul>
 
           <p>
@@ -236,7 +236,7 @@
               <sapia:command>classpath</sapia:command>
             </b>
           </p>
-          <p>The <sapia:command>classpath</sapia:command> element, as its name implies, allows to define a classpath. At runtime, a ClassLoader
+          <p>The <sapia:command>classpath</sapia:command> element, as its name implies, allows to define a classpath. At runtime, a classloader
         is instantiated for every specified classpath. The element takes nested elements that allow to include or exclude jar files
         into/from the classpath - in a manner identical to Ant's <sapia:command>classpath</sapia:command> task. A classpath
         element that appears directly under the root element must specify an <sapia:command>id</sapia:command> attribute that
@@ -248,19 +248,17 @@
             </b>
           </p>
           <p>This element is where the bulk of our application's startup configuration is defined. The launcher element takes
-        a "type" attribute. This type attribute specifies what type of launcher to use to start the application. The "type of
-        launcher" concept is simple: we said to ourselves: why not be able to launch not only Java apps, but also executables? Or
-        java applications that do not necessarily have a main method? Custom launchers can thus be used to start different types
-        of application. For example, the "system" launcher is used to start a native process. In our case, we are using the "java"
-        launcher: our application has a main method.
+        a <sapia:command>type</sapia:command> attribute. This attribute specifies what type of launcher to use to start the application. 
+        The "type of launcher" concept relates to being able to launch not only Java apps, but also other types of executables - or
+        Java applications that do not necessarily have a main method. Custom launchers can thus be used to start different types
+        of applications. For example, the "system" launcher is used to start a native process. In our case, we are using the "java"
+        launcher: our application has a <sapia:command>main()</sapia:command> method.
         </p>
 
-          <sapia:note>A magnet can have more than one launcher. This is why we are saying that with Magnet, multiple Java applications
-        can share the same VM.</sapia:note>
+          <sapia:note>A Magnet config can have more than one launcher. This is why we are saying that with Magnet, multiple Java applications
+        can share the same JVM.</sapia:note>
 
-          <p>The <sapia:command>launcher</sapia:command> has a <sapia:command>type</sapia:command> attribute that must be set and 
-        identifies what type of launcher to use. The current supported types are "system" and "java". This attribute <b>must</b>
-        be set first. Then, in the case of the "java" launcher, the following attributes are specified:</p>
+          <p>In the case of the "java" launcher, the following attributes are also required:</p>
           <ul>
             <li>
               <sapia:command>name</sapia:command>: specifies "name" of the launcher. This is required for eventual 
@@ -274,18 +272,18 @@
               <sapia:command>args</sapia:command>: this optional attribute specifies the arguments that must be passed to our
           application's <sapia:command>main()</sapia:command> method. If it is not specified, the method is called with an
           empty array of strings. As can be seen, the attribute in this case corresponds to a variable whose value is
-          determined dynamically, at the magnet's rendering time. Look in the <sapia:command>parameters</sapia:command>
+          determined dynamically, at configuration rendering time. Look in the <sapia:command>parameters</sapia:command>
           element defined further below for a preview on how the value is specified...</li>
 
             <li>
               <sapia:command>default</sapia:command>: the default profile to use if the current launcher has no profile
-          element - see below - that matches the profile name that was specified when invoking magnet. This attribute is optional;
+          element - see below - that matches the profile name that was specified when invoking Magnet. This attribute is optional;
           if omitted, the application will not be started provided no corresponding profile element matches the profile name
-          specified at magnet's command line.
+          specified at Magnet's command line.
           </li>
 
             <li>
-              <sapia:command>daemon</sapia:command>: if "true", indicates that our application's thread should be a daemon.
+              <sapia:command>daemon</sapia:command>: if "true", indicates that our application's thread should be started as a daemon.
           </li>
           </ul>
           <p>
@@ -293,44 +291,46 @@
               <sapia:command>profile</sapia:command>
             </b>
           </p>
-          <p>Now, pay attention, this is an important part. We spent quite some time on the profile concept. This is where it is 
-        implemented in magnet: an application can have multiple profiles, and thus the "java" launcher can contain multiple 
-        <sapia:command>profile</sapia:command> elements. The profile element encapsulates runtime "characteristics", materialized 
+          <p>Now, pay attention, this is an important part. We spent quite some time on the profile concept. An application can have multiple profiles, 
+          and thus the "java" launcher can contain multiple <sapia:command>profile</sapia:command> elements. The profile element encapsulates 
+          runtime "characteristics", materialized 
         by a <sapia:command>classpath</sapia:command> element - whose content has been explained above, and zero-to-many 
         <sapia:command>parameter</sapia:command> element(s). The <sapia:command>parameter</sapia:command> element allows
         to define runtime parameters; a defined parameter's name can later be used for variable interpolation, through
         the <sapia:command>${param_name}</sapia:command> notation. A given <sapia:command>profile</sapia:command> element
         will only be rendered if its name (specified through the <sapia:command>name</sapia:command> attribute) matches
-        the "current" profile (i.e.: the profile that was specified at the magnet command-line).</p>
+        the execution profile (i.e.: the profile that was specified at the Magnet command-line).</p>
 
           <p>Thus, in this case, we could pass the "english", "french", or "spanish" profile name, and our application would
         be started with the corresponding classpath and runtime parameters. In our example, parameters are only defined 
         within <sapia:command>profile</sapia:command> elements. Yet, we could also have defined <sapia:command>parameter</sapia:command>
-        elements right under the magnet file's root element. In such a case, we are talking about "global" parameters - they are
-        visible from all launchers. As for the profile parameters, they are only visible from within there encapsulating
+        elements right under the Magnet file's root element. In such a case, we are talking about "global" parameters - they are
+        visible from all launchers. As for the profile parameters, they are only visible from within their encapsulating
         launcher.</p>
 
           <sapia:note>
-        Note that we can use system properties for variable interpolation - thus we could refer to user.dir, java.home, etc.
+        Note that we can use system properties and environment variables for variable interpolation 
+        - thus we could refer to user.dir, java.home, JAVA_HOME, etc. Magnet's parameters are first looked up when peforming interpolation,
+        then a fallback is done on the JVM's system properties, and environment variables are searched as a last resort.
         </sapia:note>
 
-          <p>At runtime, Magnet starts our application in its own thread; the thread is set a classloader whose classpath
-        consists of the jars that are specified in the profile that matches the current profile name; the runtime parameters are
+          <p>At runtime, Magnet starts our application in its own thread; the thread is assigned classloader whose classpath
+        corresponds to the current execution profile - as explained above; the runtime parameters are
         also rendered on a per-profile basis, and made available to the current launcher. In the case of the "java" launcher, these
-        parameters can be recuperated in its <sapia:command>args</sapia:command> attribute.</p>
+        parameters can be recuperated in the <sapia:command>args</sapia:command> attribute.</p>
 
           <sapia:note>
         The profiles that we have defined have their classpaths "point" to the global classpath defined at the beginning
         of the file. Our application's classloader will thus have the global classpath's classloader as a parent. A global
-        classpath - matching to a global classloader - is visible from all launchers. Thus, if starting multiple Java applications
-        in the same VM, you can share libraries amongst these multiple applications. This is convenient if you want to implement
-        "true" singletons, or if you want some in-VM communication between your applications without risking 
+        classpath - matching to a global classloader - is visible from all launchers. Thus, when starting multiple Java applications
+        in the same JVM, you can share libraries among them. This is convenient if you want to implement
+        "true" singletons, or if you want some in-JVM communication between your applications without risking 
         <sapia:command>ClassCastException</sapia:command>s.
         </sapia:note>
 
           <p>Lastly, notice the <sapia:command>default</sapia:command> attribute defined on the launcher; it is given the name
-        of an existing profile has a value. Imagine that we start our magnet with the "german" profile; nothing matches that in 
-        our configuration. In this case, Magnet will use the profile that is specified by the attribute - in this case, the "english"
+        of an existing profile has a value. Imagine that we start our Magnet config with the "german" profile; nothing matches that in 
+        our configuration. In this case, Magnet will use the profile that is specified by the attribute - i.e.: the "english"
         profile.</p>
         </sapia:sect4>
 
@@ -348,7 +348,7 @@ magnet -f helloWorld.xml -p english
 magnet -help or magnet -h
 </sapia:code>
           <p/>
-          <sapia:note>Magnet allows you to pass in VM properties (-Dprop=name), -X options, etc.</sapia:note>
+          <sapia:note>Magnet allows passing in VM properties (-Dprop=name), -X options, etc.</sapia:note>
 
         </sapia:sect4>
       </sapia:sect3>
@@ -357,20 +357,20 @@ magnet -help or magnet -h
     <sapia:sect2 title="Advanced Issues">
       <sapia:sect3 title="Rendering and Startup">
         <p>Magnet uses the <a href="http://www.sapia-oss.org/projects/utils/confix/index.html" target="sapia_confix">Confix</a> API
-        to parse a magnet file and create an object representation of it. This dynamically generated object graph is then
+        to parse a Magnet file and create an object representation of it. This dynamically generated object graph is then
         traversed; each object performs its "rendering"; it is passed a context that holds, among other things, the
         parameters that were previously declared through <sapia:command>parameters</sapia:command> elements. Rendering
         thus consists of variable interpolation and initialization.</p>
-        <p>If a given magnet inherits from another one, the latter is rendered first; the parent magnet's global parameters and
-        classpaths are accessible from the child magnet, and so on.
+        <p>If a given Magnet config inherits from another one, the latter is rendered first; the parent Magnet's global parameters and
+        classpaths are accessible from the child Magnet, and so on.
         </p>
-        <p>Once a magnet has been properly rendered and initialized, it is "started": each launcher is started in its own thread, in
+        <p>Once a Magnet config has been properly rendered and initialized, it is "started": each launcher is started in its own thread, in
         the order in which it appears.</p>
       </sapia:sect3>
 
       <sapia:sect3 title="More on Parameters and Variable Interpolation">
         <p>Magnet parameters can be declared at the "global" level, or (in the case of the "java" launcher), at the "profile"
-        level. When declaring parameters at the global level, one can opt to "export" parameters to the VM's system properties.
+        level. When declaring parameters at the global level, one can opt to "export" parameters to the JVM's system properties.
         In such a case, the name/value pair of an exported parameter becomes the name/value pair of a system property, and is
         thus accessible VM-wide. The following shows how to export a parameter to the system properties:</p>
 
@@ -401,13 +401,13 @@ magnet -help or magnet -h
         value must in this case correspond to the current profile for the encapsulated parameters to be rendered.</p>
 
         <p>If a given parameter is declared twice, the second declaration overrides the first (this rule also applies to system 
-        properties: a magnet parameter that is exported to the system properties can potentially override an existing system
+        properties: a Magnet parameter that is exported to the system properties can potentially override an existing system
         property, so handle with care). Parameters that have "local" scope - defined at the profile level - will not be exported to the system
         properties; a local parameter can override (for a given launcher) a global parameter. More clearly, an override defined 
         "locally" will only take effect locally; all other launchers will still "see" the global parameter in its original
         state.</p>
 
-        <p>As was explained in the Hello example, parameters are used to perform variable interpolation. The interpolation mechanism 
+        <p>As was explained in the Hello example, parameters can be used in the context of variable interpolation. The interpolation mechanism 
         is tightly coupled to parameter scope; when Magnet tries to substitute a variable by its value, it will search for that
         value in the current scope, and then "up" if no value is found. For example, given the following snippet:</p>
 
@@ -424,15 +424,14 @@ magnet -help or magnet -h
       </sapia:sect3>
 
       <sapia:sect3 title="Using Application Arguments">
-        <p>Application arguments are parameters that can be passed to a main() method of a Java class when invoking
+        <p>Application arguments are parameters that can be passed to a <sapia:command>main()</sapia:command> method of a Java class when invoking
         the Java virtual machine (list of arguments after the main class name when calling the java command). Magnet
-        provides a way to access those arguments that can be passed to the main class when calling Magnet. Through the
-        usage of variable interpolation, these arguments could be used within your magnet file to benefit the extra
-        flexibility it can provide. See the <a href="./running-magnet.html">running magnet</a> page for more details
-        on how to pass application arguments when running a magnet. 
+        provides a way to access those arguments. Through the usage of variable interpolation, these arguments could be used within your Magnet file. 
+        See the <a href="./running-magnet.html">running magnet</a> page for more details
+        on how to pass application arguments when running a Magnet config. 
         </p>
 
-        <p>For each application argument received Magnet will create a system property in the Java virtual machine. The
+        <p>For each application argument received, Magnet will create a system property in the JVM. The
         property name uses the pattern <sapia:command>magnet.args.n</sapia:command> where 'n' is the number of the argument,
         starting with 1.
         </p>
@@ -474,7 +473,7 @@ magnet -help or magnet -h
         Magnet supports <a href="http://www.beanshell.org" target="beanshell_site">Beanshell</a>. Beanshell is a Java
         interpreter that can be used in a magnet by specifying the "bsh" value for the <sapia:command>type</sapia:command>
         attribute on the <sapia:command>script</sapia:command> element. The <sapia:command>isAbortingOnError</sapia:command>
-        attribute indicates if the current magnet's execution should be stopped provided the script generates an error.
+        attribute indicates if the current Magnet's execution should be stopped provided the script generates an error.
         </p>
         <p>The <sapia:command>script</sapia:command> element goes under the root element. Magnet will execute the script - if
         any - as the first step in the rendering proceess.</p>
@@ -536,24 +535,23 @@ magnet -help or magnet -h
 </magnet>
 ]]></sapia:code>
 
-        <p>The previous example shows how we can start Internet Explorer on a Windows machine using a system launcher. This magnet
-        would start the browser with the Yahoo or Google start page  - depending on the passed in profile. Let's examine this example
+        <p>The previous example shows how we can start Internet Explorer on a Windows machine using a system launcher. This Magnet
+        config would start the browser with the Yahoo or Google start page  - depending on the passed in profile. Let's examine this example
         to understand how it works: you can see that the child elements of this launcher sightly differ from the ones of the "java" launcher. 
         The <sapia:command>environment</sapia:command> element is used to define environment variables that will be passed to the system
         process. Because the information required to start a Java program differs from the one required to start a system process, the
-        attributes of <sapia:command>launcher</sapia:command> element are different: the <sapia:command>command</sapia:command> attribute
+        attributes of the <sapia:command>launcher</sapia:command> element are different: the <sapia:command>command</sapia:command> attribute
         replaces the <sapia:command>mainClass</sapia:command> used in the Java launcher and a <sapia:command>workingDirectory</sapia:command>
         attribute is added.
         </p>
-        <sapia:note>See the /etc directory of the distribution for more examples.</sapia:note>
-        <!--sapia:note>For the complete details on how to use the system extension see the Magnet reference manual.</sapia:note-->
+        <sapia:note>See the <sapia:command>launcher</sapia:command> directory of the distribution for more examples.</sapia:note>
       </sapia:sect3>
     </sapia:sect2>
 
     <sapia:sect2 title="Conclusion">
       <p>As you can see, Magnet can free you from the start-up script nightmare. It also allows you to start multiple applications
-      per VM, and supports the "profile" concept in order to greatly simplify bootstrap configuration. To learn more, well, download
-      and try! You will find examples in the /etc directory of Magnet's distribution. Have fun!</p>
+      per JVM, and sports a "profile" feature that simplifies application startup across different environments. To learn more, download
+      and try. You will find examples in the <sapia:command>/etc</sapia:command> directory of Magnet's distribution. Have fun!</p>
     </sapia:sect2>
 
   </sapia:sect1>

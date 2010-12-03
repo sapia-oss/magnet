@@ -4,7 +4,7 @@
       <sapia:path name="home" href="../../../../home.html" />
       <sapia:path name="projects" />
       <sapia:path name="magnet" href="../../home.html" />
-      <sapia:path name="manual" href="../home.html#Core%20Elements" />
+      <sapia:path name="reference" href="../home.html#Core%20Elements" />
       <sapia:path name="core" />
       <sapia:path name="script" />
     </sapia:section>
