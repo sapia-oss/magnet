@@ -74,7 +74,7 @@
             <p>Defines how to start a Java application by calling a <sapia:command>main</sapia:command> method on a class.</p>
         </li>
         <li><a href="java/launcher.html#Profile">profile</a>
-            <p>Define the configuration set of a java launcher for a specific profile name.</p>
+            <p>Defines the parameter set corresponding to a specific profile.</p>
         </li>
       </ul>
     </sapia:sect2>
@@ -82,7 +82,7 @@
     <sapia:sect2 title="System Elements">
       <ul>
         <li><a href="system/environment.html">environment</a>
-            <p>Define a group of environment variables to be exported into a system process.</p>
+            <p>Defines a group of environment variables to be exported into a system process.</p>
         </li>
         <li><a href="system/environment.html#Variable">variable</a>
             <p>Define a single name-value pair environment variable.</p>
@@ -91,7 +91,7 @@
             <p>Define how to execute a system process by calling a command.</p>
         </li>
         <li><a href="system/launcher.html#Profile">profile</a>
-            <p>Define the configuration set of a system launcher for a specific profile name.</p>
+            <p>Defines the parameter set corresponding to a specific profile.</p>
         </li>
       </ul>
     </sapia:sect2>
