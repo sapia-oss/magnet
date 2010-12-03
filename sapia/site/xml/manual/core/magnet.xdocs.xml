@@ -60,7 +60,7 @@
     </sapia:sect2>
 
     <sapia:sect2 title="Child Elements">
-      <p>The following list the possible child xml elements that the <sapia:command>magnet</sapia:command> element
+      <p>The following list the possible child xml elements the <sapia:command>magnet</sapia:command> element
       can hold:
       </p>
       <sapia:table>
