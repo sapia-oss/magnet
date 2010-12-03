@@ -12,19 +12,17 @@
         
     <sapia:sect2 title="Overview">
 	    <p>The <sapia:command>&lt;parameters&gt;</sapia:command> element defines a group
-	    of variables in a Magnet configuration file. By itself this element does not define
-	    any variable but rather contains a list of <sapia:command>&lt;param&gt;</sapia:command>
-	    elements. The rational behind this element is to be able to associate all the variables
+	    of parameters (child <sapia:command>&lt;param&gt;</sapia:command> elements). 
+	    The rationale behind this element is to be able to associate all the variables
 	    it contains to a given profile - thus making it <b>profile-aware</b>.
 	    </p>
 	
 	    <p>
-	    Specifying the profile is done by specifying the <sapia:command>profile</sapia:command> attribute. 
-	    This attribute is optional and its presence (or absence) has the following meaning: if the profile is not
-	    specified, then all the variables the element contains are considered "global" and they
-	    are always rendered and available. If the profile attribute is specified, the 
-	    variables the element contains will only be rendered and made available when that profile is
-	    specified at startup.
+	    The profile is specified with the <sapia:command>profile</sapia:command> attribute. 
+	    This attribute is optional. If it is not specified, then all the variables the element 
+	    contains are considered "global" and they are always rendered and available. If the profile 
+	    attribute is specified, the variables the element contains will only be rendered and made 
+	    available if the attribute matches the profile that is specified at startup.
 	    </p>
     </sapia:sect2>
 
