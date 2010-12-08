@@ -168,7 +168,7 @@ public class Log {
     for (Iterator<Object> it = new TreeSet<Object>(someProperties.keySet()).iterator(); it.hasNext(); ) {
       String aName = (String) it.next();
       String aValue = someProperties.getProperty(aName);
-      aBuffer.append(aName).append("=").append(aValue).append("\n");
+      aBuffer.append(aName).append("=").append(aName.indexOf("password") >= 0 ? "***********" : aValue).append("\n");
     }
     
     return aBuffer.toString();
