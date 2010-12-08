@@ -5,7 +5,6 @@
     <sapia:vsection name="Magnet in 5 Steps" href="quick-overview.html"/>
     <sapia:vsection name="Running Magnet" href="running-magnet.html"/>
     <sapia:vsection name="Reference" href="manual/home.html"/>
-    <sapia:vsection name="Project Info" href="project-info/index.html"/>
     <sapia:vsection name="Download" href="download.html"/>
     <sapia:vsection name="Mailing List" href="list.html"/>
   </sapia:vmenu>
