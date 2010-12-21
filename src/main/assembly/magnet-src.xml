@@ -1,0 +1,75 @@
+<assembly>
+  <id>src</id>
+  
+  <formats>
+    <format>tar.gz</format>
+    <format>zip</format>
+  </formats>
+  
+  <includeBaseDirectory>true</includeBaseDirectory>
+  
+  <fileSets>
+  
+    <!-- root -->
+    <fileSet>
+       <directory>${basedir}</directory>
+       <outputDirectory>/</outputDirectory>
+       <includes>
+          <include>*.txt</include>
+          <include>*.license</include>
+       </includes>
+    </fileSet>
+    
+    <!-- lib -->
+    <fileSet>
+       <directory>target/dist/lib</directory>
+       <outputDirectory>lib</outputDirectory>
+    </fileSet>
+    
+    <!-- bin -->
+    <fileSet>
+       <directory>bin</directory>
+       <includes>
+          <include>*.sh</include>
+       </includes>
+       <fileMode>0777</fileMode>
+       <lineEnding>unix</lineEnding>
+    </fileSet>
+    <fileSet>
+       <directory>bin</directory>
+       <outputDirectory>bin</outputDirectory>
+       <includes>
+          <include>*.bat</include>
+       </includes>
+    </fileSet>
+    
+    <!-- etc -->
+    <fileSet>
+       <directory>etc</directory>
+    </fileSet>
+
+    <!-- doc -->
+    <fileSet>
+       <directory>target/site</directory>
+       <outputDirectory>doc/site</outputDirectory>
+       <includes>
+          <include>**/*</include>
+       </includes>
+    </fileSet>
+
+    <!-- src -->
+    <fileSet>
+       <directory>src</directory>
+       <outputDirectory>src</outputDirectory>
+       <includes>
+          <include>main/**/*</include>
+          <include>test/**/*</include>
+       </includes>
+       <excludes>
+         <exclude>**/assembly/**</exclude>
+       </excludes>
+    </fileSet>
+
+  </fileSets>
+  
+</assembly>

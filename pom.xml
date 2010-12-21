@@ -1,4 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <name>Sapia Magnet</name>
   <description>Magnet allows launching a Java applications from the command-line in a generic way</description>
@@ -62,7 +63,7 @@
     <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.7.0</version>
+        <version>1.7.1</version>
     </dependency>
 
     <dependency>
@@ -108,6 +109,13 @@
       <version>2.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_corus_client</artifactId>
+      <version>2.0-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <distributionManagement>
@@ -124,6 +132,7 @@
     <testOutputDirectory>target/test-classes</testOutputDirectory>
 
     <plugins>
+      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
@@ -133,6 +142,7 @@
         </configuration>
       </plugin>
       
+      <!-- Unit tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -144,10 +154,102 @@
         </configuration>
       </plugin>
       
+      <!-- Building Jar Files -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+        
+          <!-- building server jar that's put in magnet classpath -->
+          <execution>
+            <id>magnet-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <!--classifier>magnet</classifier-->
+              <outputDirectory>${basedir}/target/dist/lib/magnet</outputDirectory>
+              <excludes>
+                <exclude>**/test/**/*</exclude>
+                <exclude>**/examples/**/*</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+
+          <!-- building demo jar that's put in server classpath -->
+          <execution>
+            <id>example-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>example</classifier>
+              <!--finalName>sapia_corus</finalName-->
+              <outputDirectory>${basedir}/target/dist/lib/examples</outputDirectory>
+              <includes>
+                <include>**/examples/**/*</include>
+              </includes>
+            </configuration>
+          </execution>
+          
+        </executions>
+      </plugin>
+      
+      <!-- Clean copied jar files -->
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>target/dist/lib</directory>
+              <includes>
+                <include>**/*</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      
+      <!--  -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
+        
         <executions>
+          <!-- copy bootstrap jars -->
+          <execution>
+            <id>copy-bootstrap-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/dist/lib/bootstrap</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <includeArtifactIds>sapia_as</includeArtifactIds>
+            </configuration>
+          </execution>
+
+          <!-- copy magnet jars -->
+          <execution>
+            <id>copy-magnet-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/dist/lib/magnet</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <includeArtifactIds>ant,bsh,log4j,piccolo,sapia_console,sapia_corus_iop,sapia_utils</includeArtifactIds>
+            </configuration>
+          </execution>
+
           <execution>
             <id>copy</id>
             <phase>process-resources</phase>
@@ -159,7 +261,6 @@
                 <artifactItem>
                   <groupId>org.sapia</groupId>
                   <artifactId>sapia_ubik</artifactId>
-                  <version>2.5.5</version>                  
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
@@ -169,13 +270,67 @@
                   <type>jar</type>
                 </artifactItem>
               </artifactItems>
-              <outputDirectory>${basedir}/lib/examples</outputDirectory>
+              <outputDirectory>target/dist/lib/examples</outputDirectory>
               <overWriteReleases>true</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
           </execution>
         </executions>
       </plugin>
+      
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-magnet-bin-dist</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/magnet-bin.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+          
+          <execution>
+            <id>make-magnet-src-dist</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/magnet-src.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
     </plugins>
   </build>
+  
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <aggregate>true</aggregate>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <id>non-aggregate</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+    
 </project>
