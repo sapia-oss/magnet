@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <name>Sapia Magnet</name>
+  <name>Magnet</name>
   <description>Magnet allows launching a Java applications from the command-line in a generic way</description>
   <url>http://www.sapia-oss.org/projects/magnet/index.html</url>
   <groupId>org.sapia</groupId>
