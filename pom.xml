@@ -249,7 +249,7 @@
                   <type>jar</type>
                 </artifactItem>
               </artifactItems>
-              <outputDirectory>${basedir}/dist/lib/examples</outputDirectory>
+              <outputDirectory>${basedir}/lib/examples</outputDirectory>
               <overWriteReleases>true</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
