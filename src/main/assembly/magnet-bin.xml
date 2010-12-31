@@ -24,6 +24,9 @@
     <fileSet>
        <directory>target/dist/lib</directory>
        <outputDirectory>lib</outputDirectory>
+       <excludes>
+          <exclude>examples/*.*</include>
+       </excludes>
     </fileSet>
     
     <!-- bin -->
