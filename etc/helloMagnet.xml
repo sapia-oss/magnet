@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE magnet PUBLIC "-//SAPIA OSS//Magnet DTD 2.0//EN"
+                 "http://www.sapia-oss.org/dtd/magnet-2.0.dtd"> 
+
 <magnet xmlns="http://schemas.sapia-oss.org/magnet/"
         name="HelloMagnet" description="A very simple Hello application">
 
@@ -16,8 +20,7 @@
     <param name="magnet.home" value="${user.dir}" unless="magnet.home" scope="system"/>
     <param name="msg2" value="${magnet.home}" if="magnet.home" scope="system"/>
   </parameters>
-    
-        
+  
   <!-- Define a classpath using hello_cp as identifier. -->
   <classpath id="hello_cp">
     
@@ -32,6 +35,7 @@
   </classpath>
 
   
+
   <!-- Define a codebase - it will set the java.rmi.server.codebase system property -->
   <codebase>
     <path protocol="http" host="localhost:8080" directory="/config">

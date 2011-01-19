@@ -15,7 +15,7 @@
     <sapia:sect2 title="Overview">
       <p>
         The <sapia:command>&lt;codebase&gt;</sapia:command> element provides a convenient way to define the
-        <sapia:command>java.rmi.server.codebase</sapia:command> system property . For programmers who are using
+        <sapia:command>java.rmi.server.codebase</sapia:command> system property. For programmers who are using
         Remote Method Invocation (RMI) and need to load classes from a remote host, the  <sapia:command>&lt;codebase&gt;</sapia:command>
         element builds on the notion of "path element" to elegantly define the list of jar files or remote resources
         that are needed.

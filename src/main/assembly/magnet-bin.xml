@@ -50,6 +50,12 @@
     <fileSet>
        <directory>etc</directory>
     </fileSet>
+    
+    <!-- dtd -->
+    <fileSet>
+       <directory>src/main/dtd</directory>
+       <outputDirectory>dtd</outputDirectory>
+    </fileSet>
 
     <!-- doc -->
     <fileSet>

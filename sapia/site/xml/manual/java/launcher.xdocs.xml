@@ -54,7 +54,7 @@
           <td>yes</td>
         </tr>
         <tr>
-          <td>arguments</td>
+          <td>args</td>
           <td>Defines the application arguments that will be passed to the <sapia:command>main()</sapia:command> method of the main class.</td>
           <td>no</td>
           <td>yes</td>

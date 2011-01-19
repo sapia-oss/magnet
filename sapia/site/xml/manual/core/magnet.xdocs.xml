@@ -81,7 +81,7 @@
           <a href="http://www.beanshell.org/" target="external">Beanshell</a> integration built-in.</td>
         </tr>
         <tr>
-          <td><a href="launcherHandlerDef.html" target="main">launchHandlerDef</a></td>
+          <td><a href="launchHandlerDef.html" target="main">launchHandlerDef</a></td>
           <td>0 or *</td>
           <td>Extension point to plug in your own class that launches applications. Magnet
           offers a <sapia:command>java</sapia:command> and a <sapia:command>system</sapia:command>
@@ -102,9 +102,30 @@
           profile or for all profiles (called the default profile).</td>
         </tr>
         <tr>
-          <td><a href="others.html" target="main">others</a></td>
+          <td><a href="../java/codebase.html" target="main">codebase</a></td>
           <td>0 or *</td>
-          <td>TO BE COMPLETED....</td>
+          <td>To define the value of the <sapia:command>java.rmi.server.codebase</sapia:command> system property</td>
+        </tr>
+        <tr>
+          <td><a href="../java/classpath.html" target="main">classpath</a></td>
+          <td>0 or *</td>
+          <td>To define common classpaths that can be reused later in java launchers. Creating classpaths at this level
+          provides a handy way to manage the classloader hierarchy of the Java VM.</td>
+        </tr>
+        <tr>
+          <td><a href="../system/environment.html" target="main">environment</a></td>
+          <td>0 or *</td>
+          <td>To define environment variables when using a system launcher.</td>
+        </tr>
+        <tr>
+          <td><a href="../java/launcher.html" target="main">launcher</a> (java)</td>
+          <td>0 or *</td>
+          <td>To start a Java VM calling the main() method of a given class.</td>
+        </tr>
+        <tr>
+          <td><a href="../system/launcher.html" target="main">launcher</a> (system)</td>
+          <td>0 or *</td>
+          <td>To start a system process by calling a command line.</td>
         </tr>
       </sapia:table>
     </sapia:sect2>
