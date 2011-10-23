@@ -18,6 +18,19 @@ import org.sapia.magnet.render.RenderingException;
  */
 public class Include extends AbstractRenderable {
 
+  /**
+   * Factory method that creates a new {@link Include} instance witht the provided pattern.
+   * 
+   * @param aPattern The pattern of the new include.
+   * @return The instance created.
+   */
+  public static Include createNew(String aPattern) {
+    Include created = new Include();
+    created.setPattern(aPattern);
+    
+    return created;
+  }
+  
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////  INSTANCE ATTRIBUTES  /////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
