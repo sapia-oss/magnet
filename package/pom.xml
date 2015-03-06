@@ -1,0 +1,197 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <name>Magnet Package</name>
+  <description>Builds the Magnet package</description>
+  <url>http://www.sapia-oss.org/projects/magnet/index.html</url>
+
+  <artifactId>sapia_magnet_package</artifactId>
+
+  <parent>
+    <groupId>org.sapia</groupId>
+    <artifactId>sapia_magnet_parent</artifactId>
+    <version>develop-SNAPSHOT</version>
+  </parent>
+
+  <packaging>jar</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_magnet</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_as</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+    
+      <!-- Skipping deployment -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      
+      <!-- Clean copied jar files -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.6.1</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>target/dist/lib</directory>
+              <includes>
+                <include>**/*</include>
+              </includes>
+            </fileset>
+            <fileset>
+              <directory>lib</directory>
+              <includes>
+                <include>**/*</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      
+      <!-- Copy dependencies -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.9</version>
+        
+        <executions>
+          <!-- copy bootstrap jars -->
+          <execution>
+            <id>copy-bootstrap-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/dist/lib/bootstrap</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <includeArtifactIds>sapia_as</includeArtifactIds>
+            </configuration>
+          </execution>
+
+          <!-- copy magnet jars -->
+          <execution>
+            <id>copy-magnet-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/dist/lib/magnet</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <includeArtifactIds>sapia_magnet,ant,bsh,log4j,piccolo,sapia_console,sapia_corus_iop,sapia_corus_iop_api,sapia_utils</includeArtifactIds>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-magnet-bin-dist</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/magnet-bin.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+    </plugins>
+  </build>
+  
+  <profiles>
+    <profile>
+      <id>package-upload</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.ju-n.maven.plugins</groupId>
+            <artifactId>checksum-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate-checksums</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>files</goal>
+                </goals>
+                <configuration>
+                  <fileSets>
+                    <fileSet>
+                      <directory>${project.build.directory}</directory>
+                      <includes>
+                        <include>*.gz</include>
+                        <include>*.zip</include>
+                      </includes>
+                    </fileSet>
+                  </fileSets>
+                  <algorithms>
+                    <algorithm>MD5</algorithm>
+                  </algorithms>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sapia</groupId>
+            <artifactId>sapia_mediafire_plugin</artifactId>
+            <executions>
+              <execution>
+                <id>upload-linux-packages</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>upload</goal>
+                </goals>
+                <configuration>
+                  <folder>sapiaoss/packages/magnet</folder>
+                  <files>
+                    <file>${project.build.directory}/sapia_corus_server_package-${project.version}-bin.tar.gz</file>
+                    <file>${project.build.directory}/sapia_corus_server_package-${project.version}-bin.tar.gz.md5</file>
+                  </files>
+                </configuration>
+              </execution>
+              <execution>
+                <id>upload-zip-packages</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>upload</goal>
+                </goals>
+                <configuration>
+                  <folder>sapiaoss/packages/magnet</folder>
+                  <files>
+                    <file>${project.build.directory}/sapia_corus_server_package-${project.version}-bin.zip</file>
+                    <file>${project.build.directory}/sapia_corus_server_package-${project.version}-bin.zip.md5</file>
+                  </files>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

@@ -1,0 +1,17 @@
+<sapia:page title="Magnet - Mailing List" xmlns:sapia="http://www.sapia-oss.org/2003/XSL/Transform" cssPath="css/sapia.css">
+  <sapia:vmenu>
+    <sapia:vsection name="Project Home" href="home.html"/>
+    <sapia:vsection name="Magnet in 5 Steps" href="quick-overview.html"/>
+    <sapia:vsection name="Running Magnet" href="running-magnet.html"/>
+    <sapia:vsection name="Reference" href="manual/home.html"/>
+    <sapia:vsection name="Download" href="download.html"/>
+  </sapia:vmenu>
+  
+  <sapia:sect1 title="Mailing List">
+    <sapia:sect-desc>
+      <p>The mailing list for this project is hosted on Google groups. You must 
+      <a href="https://groups.google.com/forum/#!forum/sapia-support" target="googleGroups">subscribe</a>
+      prior to post messages.</p>
+    </sapia:sect-desc>
+  </sapia:sect1>
+</sapia:page>

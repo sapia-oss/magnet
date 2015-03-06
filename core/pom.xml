@@ -1,0 +1,112 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <name>Magnet Core</name>
+  <description>Magnet allows launching a Java applications from the command-line in a generic way</description>
+  <url>http://www.sapia-oss.org/projects/magnet/index.html</url>
+
+  <artifactId>sapia_magnet</artifactId>
+
+  <parent>
+    <groupId>org.sapia</groupId>
+    <artifactId>sapia_magnet_parent</artifactId>
+    <version>develop-SNAPSHOT</version>
+  </parent>
+
+  <packaging>jar</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_utils</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_as</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_ubik</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_ubik_example</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_console</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_corus_iop_api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sapia</groupId>
+      <artifactId>sapia_corus_iop</artifactId>
+    </dependency>
+  
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>piccolo</groupId>
+        <artifactId>piccolo</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.ant</groupId>
+        <artifactId>ant</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.beanshell</groupId>
+        <artifactId>bsh</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.simpleframework</groupId>
+      <artifactId>simple</artifactId>
+      <scope>test</scope>        
+    </dependency>         
+
+  </dependencies>
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/examples/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>    
+    
+      <!-- Unit tests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.18.1</version>
+        <configuration>
+          <excludes>
+            <exclude>**/Test*.java</exclude>
+          </excludes>
+          <forkMode>pertest</forkMode>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+     
+</project>
