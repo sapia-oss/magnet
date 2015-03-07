@@ -169,8 +169,8 @@
                 <configuration>
                   <folder>sapiaoss/packages/magnet</folder>
                   <files>
-                    <file>${project.build.directory}/sapia_corus_server_package-${project.version}-bin.tar.gz</file>
-                    <file>${project.build.directory}/sapia_corus_server_package-${project.version}-bin.tar.gz.md5</file>
+                    <file>${project.build.directory}/sapia_magnet_package-${project.version}-bin.tar.gz</file>
+                    <file>${project.build.directory}/sapia_magnet_package-${project.version}-bin.tar.gz.md5</file>
                   </files>
                 </configuration>
               </execution>
@@ -183,8 +183,8 @@
                 <configuration>
                   <folder>sapiaoss/packages/magnet</folder>
                   <files>
-                    <file>${project.build.directory}/sapia_corus_server_package-${project.version}-bin.zip</file>
-                    <file>${project.build.directory}/sapia_corus_server_package-${project.version}-bin.zip.md5</file>
+                    <file>${project.build.directory}/sapia_magnet_package-${project.version}-bin.zip</file>
+                    <file>${project.build.directory}/sapia_magnet_package-${project.version}-bin.zip.md5</file>
                   </files>
                 </configuration>
               </execution>
