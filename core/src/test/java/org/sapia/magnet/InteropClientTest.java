@@ -2,9 +2,10 @@ package org.sapia.magnet;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.sapia.corus.interop.Context;
-import org.sapia.corus.interop.Param;
-import org.sapia.corus.interop.Status;
+import org.sapia.corus.interop.api.message.ContextMessagePart;
+import org.sapia.corus.interop.api.message.ParamMessagePart;
+import org.sapia.corus.interop.api.message.StatusMessageCommand;
+import org.sapia.corus.interop.client.CyclicIdGenerator;
 import org.sapia.corus.interop.client.InteropClient;
 import org.sapia.corus.interop.http.HttpProtocol;
 
@@ -39,16 +40,19 @@ public class InteropClientTest extends BaseMagnetTestCase {
     DummyServer aServer = new DummyServer();
     safellySetInteropProtocol();
     Assert.assertTrue("The server is already shudown", !aServer.isShutdown());
-    
-    Status aStatus = new Status();
-    InteropClient.getInstance().processStatus(aStatus);
-    Assert.assertEquals("", 1, aStatus.getContexts().size());
 
-    Context aContext = (Context) aStatus.getContexts().get(0);
-    Assert.assertEquals("", "DummyServer", aContext.getName());
-    Assert.assertEquals("", 1, aContext.getParams().size());
+    InteropClient client = InteropClient.getInstance();
+    StatusMessageCommand.Builder statusBuilder = client.getProtocol().getMessageBuilderFactory().newStatusMessageBuilder();
+    statusBuilder.commandId(CyclicIdGenerator.newCommandId());
+    InteropClient.getInstance().processStatus(statusBuilder);
+    StatusMessageCommand status = statusBuilder.build();
+    Assert.assertEquals(1, status.getContexts().size());
+
+    ContextMessagePart context = (ContextMessagePart) status.getContexts().get(0);
+    Assert.assertEquals("DummyServer", context.getName());
+    Assert.assertEquals(1, context.getParams().size());
     
-    Param anParam = (Param) aContext.getParams().get(0);
+    ParamMessagePart anParam = context.getParams().get(0);
     Assert.assertEquals("", "isShutdown", anParam.getName());
     Assert.assertEquals("", "false", anParam.getValue());
     

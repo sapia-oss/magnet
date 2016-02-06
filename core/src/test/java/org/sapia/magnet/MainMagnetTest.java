@@ -1,6 +1,7 @@
 package org.sapia.magnet;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -21,6 +22,7 @@ public class MainMagnetTest extends BaseMagnetTestCase {
   }
 
   @Test
+  @Ignore
   public void testSystemMagnet() throws Exception {
     try {
       StringBuffer aName = new StringBuffer().
@@ -36,6 +38,7 @@ public class MainMagnetTest extends BaseMagnetTestCase {
   }
 
   @Test
+  @Ignore
   public void testSystemMagnet_NoProfile() throws Exception {
     try {
       StringBuffer aName = new StringBuffer().

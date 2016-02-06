@@ -62,8 +62,8 @@ public class MagnetRendererTest extends BaseMagnetTestCase {
     aParameters.addParam(new Param("value", "${protocol}-value"));
     aParameters.addParam(new Param("base", "${host}/index.html"));
 
-    aMagnet.addLauncher(createWindowsLauncher());
-    aMagnet.addLauncher(createMacLauncher());
+    //aMagnet.addLauncher(createWindowsLauncher());
+    //aMagnet.addLauncher(createMacLauncher());
 
     return aMagnet;
   }

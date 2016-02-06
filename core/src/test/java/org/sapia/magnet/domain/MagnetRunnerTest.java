@@ -1,6 +1,7 @@
 package org.sapia.magnet.domain;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.sapia.magnet.BaseMagnetTestCase;
 import org.sapia.magnet.MagnetRunner;
@@ -37,6 +38,7 @@ public class MagnetRunnerTest extends BaseMagnetTestCase {
   }
 
   @Test
+  @Ignore
   public void testSystemLauncher() throws Exception {
     MagnetRunner.runFile("etc/systemMagnet.xml","dev");
   }

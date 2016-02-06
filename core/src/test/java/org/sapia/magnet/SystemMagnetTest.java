@@ -1,6 +1,7 @@
 package org.sapia.magnet;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -23,6 +24,7 @@ public class SystemMagnetTest extends BaseMagnetTestCase {
   }
 
   @Test
+  @Ignore
   public void testSystemMagnet() throws Exception {
     if(System.getProperty("os.name").toLowerCase().indexOf("windows") < 0){
       System.out.println("Not launching System magnet - needs to run on Windows platform");
