@@ -34,7 +34,7 @@
     <sapia_utils.version>2.3</sapia_utils.version>
     <sapia_console.version>2.1</sapia_console.version>
     <sapia_ubik.version>4.4</sapia_ubik.version>
-    <sapia_corus_iop.version>protobuf-SNAPSHOT</sapia_corus_iop.version>
+    <sapia_corus_iop.version>3.0</sapia_corus_iop.version>
   </properties>
 
   <modules>
