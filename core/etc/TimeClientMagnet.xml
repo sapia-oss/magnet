@@ -17,7 +17,7 @@
         
           <!-- Defines the classpath of the ubik example jars. -->
           <classpath parent="ubik">
-            <path directory="${magnet.home}/lib/examples">
+            <path directory="${magnet.home}/target/lib">
               <include pattern="*example*.jar" />
             </path>
           </classpath>

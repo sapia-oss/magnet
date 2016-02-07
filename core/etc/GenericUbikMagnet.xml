@@ -24,7 +24,7 @@
   <!-- Defines the classpath of the ubik example jars. -->
   <classpath id="ubik">
     <!-- The path will contain the files that matche the provided pattern. -->
-    <path directory="${magnet.home}/lib/examples">
+    <path directory="${magnet.home}/target/lib">
       <include pattern="*.jar" />
       <exclude pattern="*example*.jar" />
     </path>

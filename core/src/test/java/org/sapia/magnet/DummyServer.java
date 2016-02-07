@@ -1,11 +1,11 @@
 package org.sapia.magnet;
 
-import org.sapia.corus.interop.Param;
-import org.sapia.corus.interop.Status;
-import org.sapia.corus.interop.Context;
-import org.sapia.corus.interop.client.InteropClient;
 import org.sapia.corus.interop.api.ShutdownListener;
 import org.sapia.corus.interop.api.StatusRequestListener;
+import org.sapia.corus.interop.api.message.ContextMessagePart;
+import org.sapia.corus.interop.api.message.InteropMessageBuilderFactory;
+import org.sapia.corus.interop.api.message.StatusMessageCommand;
+import org.sapia.corus.interop.client.InteropClient;
 
 
 /**
@@ -35,23 +35,21 @@ public class DummyServer implements ShutdownListener, StatusRequestListener {
   public boolean isShutdown() {
     return _isShutdown;
   }
-  
-  /* (non-Javadoc)
-   * @see org.sapia.corus.interop.api.ShutdownListener#onShutdown()
-   */
+
+  @Override
   public void onShutdown() {
     _isShutdown = true;
     System.out.println("Shutting down the dummy server...");
   }
 
-  /* (non-Javadoc)
-   * @see org.sapia.corus.interop.api.StatusRequestListener#onStatus(org.sapia.corus.interop.Status)
-   */
-  public void onStatus(Status status) {
-    Param anParam = new Param("isShutdown", (_isShutdown? "true": "false"));
-    Context aContext = new Context("DummyServer");
-    aContext.addParam(anParam);
-    status.addContext(aContext); 
+  
+  @Override
+  public void onStatus(StatusMessageCommand.Builder statusBuilder, InteropMessageBuilderFactory factory) {
+    ContextMessagePart context = factory.newContextBuilder()
+        .name("DummyServer")
+        .param("isShutdown", Boolean.toString(_isShutdown? true : false))
+        .build();
+    statusBuilder.context(context); 
   }
   
 }

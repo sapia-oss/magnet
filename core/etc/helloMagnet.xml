@@ -28,7 +28,7 @@
     <path directory="${magnet.home}" sorting="ascending">
       <include pattern="**/sapia_magnet_examples*.jar" />
     </path>
-    <path directory="lib" sorting="ascending">
+    <path directory="target/lib" sorting="ascending">
       <include pattern="**/*.jar" />
     </path>
     
