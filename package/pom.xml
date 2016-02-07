@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.sapia</groupId>
     <artifactId>sapia_magnet_parent</artifactId>
-    <version>develop-SNAPSHOT</version>
+    <version>3.0</version>
   </parent>
 
   <packaging>jar</packaging>
