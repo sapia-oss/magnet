@@ -3,6 +3,8 @@ package org.sapia.magnet;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.sapia.corus.interop.api.Consts;
+import org.sapia.corus.interop.client.InteropClient;
 
 
 /**
@@ -23,8 +25,8 @@ public class SystemMagnetTest extends BaseMagnetTestCase {
     super.baseSetUp();
   }
 
-  @Test
   @Ignore
+  @Test
   public void testSystemMagnet() throws Exception {
     if(System.getProperty("os.name").toLowerCase().indexOf("windows") < 0){
       System.out.println("Not launching System magnet - needs to run on Windows platform");
@@ -48,6 +50,24 @@ public class SystemMagnetTest extends BaseMagnetTestCase {
         
       Thread.sleep(1000);
     }
+  }
+
+  @Test
+  public void testSystemMagnet_osx() throws Exception {
+    if(System.getProperty("os.name").toLowerCase().indexOf("os x") < 0 &&
+       System.getProperty("os.name").toLowerCase().indexOf("linux") < 0 ) {
+      System.out.println("Not launching test - needs to run on os x or linux platform");
+      return;
+    }
+    
+    StringBuffer aName = new StringBuffer().
+          append(System.getProperty("user.dir")).
+          append(java.io.File.separator).append("etc").
+          append(java.io.File.separator).append("systemMagnet-osx.xml");    
+    
+    MagnetRunner.main(new String[] { "-magnetfile", aName.toString(), "-info", "-p", "dev" } );
+        
+    Thread.sleep(2000);
   }
   
 }

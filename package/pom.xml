@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.sapia</groupId>
     <artifactId>sapia_magnet_parent</artifactId>
-    <version>3.0</version>
+    <version>3.1</version>
   </parent>
 
   <packaging>jar</packaging>
@@ -97,7 +97,7 @@
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
-              <includeArtifactIds>sapia_magnet,ant,bsh,log4j,piccolo,sapia_console,sapia_corus_iop,sapia_corus_iop_api,sapia_utils</includeArtifactIds>
+              <includeArtifactIds>sapia_magnet,ant,bsh,log4j,sapia_console,sapia_corus_iop,sapia_corus_iop_api,sapia_utils</includeArtifactIds>
             </configuration>
           </execution>
         </executions>
