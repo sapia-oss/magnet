@@ -97,7 +97,7 @@
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
-              <includeArtifactIds>sapia_magnet,ant,bsh,log4j,piccolo,sapia_console,sapia_corus_iop,sapia_corus_iop_api,sapia_utils</includeArtifactIds>
+              <includeArtifactIds>sapia_magnet,ant,bsh,log4j,sapia_console,sapia_corus_iop,sapia_corus_iop_api,sapia_utils</includeArtifactIds>
             </configuration>
           </execution>
         </executions>
